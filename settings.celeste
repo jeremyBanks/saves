@@ -9,7 +9,7 @@
   <Rumble>true</Rumble>
   <MusicVolume>2</MusicVolume>
   <SFXVolume>10</SFXVolume>
-  <SpeedrunClock>File</SpeedrunClock>
+  <SpeedrunClock>true</SpeedrunClock>
   <LastSaveFile>0</LastSaveFile>
   <Language>english</Language>
   <Pico8OnMainMenu>true</Pico8OnMainMenu>
