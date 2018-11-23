@@ -4,9 +4,9 @@ cd ~/Library/"Application Support"/Celeste/Saves;
 
 user="$(whoami)@$(hostname)";
 
-git commit -m "$user old staged" --allow-empty-message &> /dev/null || true;
+git commit -m "⚠ $user old staged" --allow-empty-message &> /dev/null || true;
 
-git commit . -m "$user old unstaged" --allow-empty-message &> /dev/null || true;
+git commit . -m "⚠ $user old unstaged" --allow-empty-message &> /dev/null || true;
 
 git fetch &> /dev/null;
 
@@ -16,9 +16,10 @@ git fetch &> /dev/null;
 
 git push &> /dev/null;
 
+echo "🍓";
 open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/null || open -W /Applications/Celeste.app;
 
-git commit . -m "$user new session" --allow-empty-message &> /dev/null &&
+git commit . -m "🍓 $user" --allow-empty-message &> /dev/null &&
     echo "Saved changes." || echo "No changes to save.";
 
 git push &> /dev/null && echo "Synced.";
