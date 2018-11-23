@@ -22,6 +22,8 @@ echo "🍓 Celeste";
 
 open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/null || open -W /Applications/Celeste.app;
 
-git commit . -m "🍓 $user" --allow-empty-message &> /dev/null;
-
-git push &> /dev/null && echo "✅ Synced";
+if git commit . -m "🍓 $user" --allow-empty-message &> /dev/null; then
+    git push &> /dev/null && echo "✅ Synced" || echo "⚠ Sync failed";
+else
+    echo "🆗 No changes to sync"
+fi
