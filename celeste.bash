@@ -21,4 +21,4 @@ open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/nu
 git commit . -m "" --allow-empty-message &> /dev/null &&
     echo "Committed new changes." || echo "No changes to commit.";
 
-git push &> /dev/null && echo "Changes synced to server.";
+git push &> /dev/null && echo "Synced with server.";
