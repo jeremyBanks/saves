@@ -32,7 +32,7 @@
     <string>mc</string>
     <string>osr</string>
   </Poem>
-  <LastArea ID="1" Mode="Normal" />
+  <LastArea ID="2" Mode="Normal" />
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
