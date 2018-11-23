@@ -21,4 +21,3 @@ git commit . -m "" --allow-empty-message &> /dev/null &&
     echo "Committed new changes." || echo "No changes to commit.";
 
 git push;
-
