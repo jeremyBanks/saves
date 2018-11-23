@@ -16,7 +16,7 @@ git fetch &> /dev/null;
 
 git push &> /dev/null;
 
-echo "🍓";
+echo "🍓 Running Celeste 🍓";
 open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/null || open -W /Applications/Celeste.app;
 
 git commit . -m "🍓 $user" --allow-empty-message &> /dev/null &&
