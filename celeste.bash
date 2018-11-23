@@ -1,4 +1,4 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash -veuo pipefail
 
 function celeste {
     cd ~/Library/"Application Support"/Celeste/Saves;
