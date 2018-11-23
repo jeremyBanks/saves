@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Fullscreen>true</Fullscreen>
-  <WindowScale>5</WindowScale>
+  <WindowScale>4</WindowScale>
   <ViewportPadding>0</ViewportPadding>
   <VSync>true</VSync>
   <DisableFlashes>false</DisableFlashes>
   <DisableScreenShake>false</DisableScreenShake>
   <Rumble>true</Rumble>
-  <MusicVolume>10</MusicVolume>
+  <MusicVolume>2</MusicVolume>
   <SFXVolume>10</SFXVolume>
   <SpeedrunClock>true</SpeedrunClock>
   <LastSaveFile>0</LastSaveFile>
   <Language>english</Language>
-  <Pico8OnMainMenu>false</Pico8OnMainMenu>
-  <SetViewportOnce>false</SetViewportOnce>
+  <Pico8OnMainMenu>true</Pico8OnMainMenu>
+  <SetViewportOnce>true</SetViewportOnce>
   <Left>None</Left>
   <Right>None</Right>
   <Down>None</Down>
@@ -46,10 +46,10 @@
     <Keys>R</Keys>
   </QuickRestart>
   <BtnGrab>
-    <Buttons>LeftTrigger</Buttons>
-    <Buttons>RightTrigger</Buttons>
     <Buttons>LeftShoulder</Buttons>
     <Buttons>RightShoulder</Buttons>
+    <Buttons>RightTrigger</Buttons>
+    <Buttons>LeftTrigger</Buttons>
   </BtnGrab>
   <BtnJump>
     <Buttons>A</Buttons>
