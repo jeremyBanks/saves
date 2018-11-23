@@ -2,15 +2,13 @@
 
 cd ~/Library/"Application Support"/Celeste/Saves;
 
-git commit -m "" --allow-empty-message &> /dev/null &&
-    echo "Committed old partially saved changes.";
+git commit -m "" --allow-empty-message &> /dev/null || true;
 
-git commit . -m "" --allow-empty-message &> /dev/null &&
-    echo "Committed old unsaved changes.";
+git commit . -m "" --allow-empty-message &> /dev/null || true;
 
-git fetch  &> /dev/null;
+git fetch &> /dev/null;
 
-git pull --ff-only  &> /dev/null || (
+(git pull --ff-only &> /dev/null && echo "Synced") || (
     echo "Sync conflict. Archiving remote data and replacing with local." &&
     git pull -s ours --no-edit);
 
@@ -21,4 +19,4 @@ open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/nu
 git commit . -m "" --allow-empty-message &> /dev/null &&
     echo "Committed new changes." || echo "No changes to commit.";
 
-git push &> /dev/null && echo "Synced with server.";
+git push &> /dev/null && echo "Synced.";
