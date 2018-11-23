@@ -13,7 +13,7 @@ git fetch  &> /dev/null;
 git pull --ff-only || (
     echo "Sync conflict. Archiving remote data and replacing with local." && git pull -s ours);
 
-git push 2&> /dev/null;
+git push &> /dev/null;
 
 open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app || open -W /Applications/Celeste.app;
 
@@ -22,4 +22,3 @@ git commit . -m "" --allow-empty-message &> /dev/null &&
 
 git push;
 
-cd - 2&> /dev/null;
