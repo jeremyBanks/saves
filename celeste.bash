@@ -10,16 +10,18 @@ git commit . -m "⚠ $user old unstaged" --allow-empty-message &> /dev/null || t
 
 git fetch &> /dev/null;
 
-(git pull --ff-only &> /dev/null && echo "Synced.") || (
-    echo "Sync conflict. Archiving remote data and replacing with local." &&
+git pull --ff-only &> /dev/null || (
+    echo "⚠ Sync conflict. Archiving remote data and replacing with local." &&
     git pull -s ours --no-edit);
 
 git push &> /dev/null;
 
-echo "🍓 Running Celeste 🍓";
+echo "✅ Synced"
+
+echo "🍓 Celeste";
+
 open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/null || open -W /Applications/Celeste.app;
 
-git commit . -m "🍓 $user" --allow-empty-message &> /dev/null &&
-    echo "Saved changes." || echo "No changes to save.";
+git commit . -m "🍓 $user" --allow-empty-message &> /dev/null;
 
-git push &> /dev/null && echo "Synced.";
+git push &> /dev/null && echo "✅ Synced";
