@@ -11,7 +11,7 @@ git commit . -m "" --allow-empty-message &> /dev/null &&
 git fetch  &> /dev/null;
 
 git pull --ff-only || (
-    echo "Sync conflict. Archiving remote data and replacing with local." && git pull -s ours);
+    echo "Sync conflict. Archiving remote data and replacing with local." && git pull -s ours --no-edit);
 
 git push &> /dev/null;
 
