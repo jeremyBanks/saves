@@ -46,14 +46,14 @@
     <Keys>R</Keys>
   </QuickRestart>
   <BtnGrab>
-    <Buttons>LeftShoulder</Buttons>
     <Buttons>RightShoulder</Buttons>
     <Buttons>RightTrigger</Buttons>
-    <Buttons>LeftTrigger</Buttons>
   </BtnGrab>
   <BtnJump>
     <Buttons>A</Buttons>
     <Buttons>Y</Buttons>
+    <Buttons>LeftShoulder</Buttons>
+    <Buttons>LeftTrigger</Buttons>
   </BtnJump>
   <BtnDash>
     <Buttons>X</Buttons>
