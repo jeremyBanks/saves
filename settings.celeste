@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Fullscreen>true</Fullscreen>
-  <WindowScale>4</WindowScale>
+  <WindowScale>3</WindowScale>
   <ViewportPadding>0</ViewportPadding>
   <VSync>true</VSync>
   <DisableFlashes>false</DisableFlashes>
