@@ -7,7 +7,7 @@
   <DisableFlashes>false</DisableFlashes>
   <DisableScreenShake>false</DisableScreenShake>
   <Rumble>true</Rumble>
-  <MusicVolume>2</MusicVolume>
+  <MusicVolume>10</MusicVolume>
   <SFXVolume>10</SFXVolume>
   <SpeedrunClock>true</SpeedrunClock>
   <LastSaveFile>0</LastSaveFile>
@@ -46,21 +46,20 @@
     <Keys>R</Keys>
   </QuickRestart>
   <BtnGrab>
-    <Buttons>RightShoulder</Buttons>
     <Buttons>RightTrigger</Buttons>
+    <Buttons>LeftTrigger</Buttons>
+    <Buttons>LeftShoulder</Buttons>
+    <Buttons>RightShoulder</Buttons>
   </BtnGrab>
   <BtnJump>
     <Buttons>A</Buttons>
-    <Buttons>Y</Buttons>
-    <Buttons>LeftShoulder</Buttons>
-    <Buttons>LeftTrigger</Buttons>
   </BtnJump>
   <BtnDash>
     <Buttons>X</Buttons>
     <Buttons>B</Buttons>
   </BtnDash>
   <BtnTalk>
-    <Buttons>B</Buttons>
+    <Buttons>Y</Buttons>
   </BtnTalk>
   <BtnAltQuickRestart />
   <LaunchWithFMODLiveUpdate>false</LaunchWithFMODLiveUpdate>
