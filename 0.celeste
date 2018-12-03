@@ -17,9 +17,9 @@
   <TotalDeaths>7789</TotalDeaths>
   <TotalStrawberries>77</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>55569</TotalJumps>
-  <TotalWallJumps>10226</TotalWallJumps>
-  <TotalDashes>38138</TotalDashes>
+  <TotalJumps>55604</TotalJumps>
+  <TotalWallJumps>10227</TotalWallJumps>
+  <TotalDashes>38186</TotalDashes>
   <Flags>
     <string>MetTheo</string>
     <string>TheoKnowsName</string>
@@ -32,7 +32,7 @@
     <string>mc</string>
     <string>osr</string>
   </Poem>
-  <LastArea ID="1" Mode="BSide" />
+  <LastArea ID="8" Mode="Normal" />
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
@@ -285,7 +285,7 @@
     </AreaStats>
     <AreaStats ID="8" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="0" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="0" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="48" BestDeaths="0" HeartGem="false">
           <Strawberries />
           <Checkpoints />
         </AreaModeStats>
