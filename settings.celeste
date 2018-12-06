@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Version>1.2.5.1</Version>
   <Fullscreen>true</Fullscreen>
   <WindowScale>3</WindowScale>
   <ViewportPadding>0</ViewportPadding>
@@ -7,13 +8,14 @@
   <DisableFlashes>false</DisableFlashes>
   <DisableScreenShake>false</DisableScreenShake>
   <Rumble>true</Rumble>
-  <MusicVolume>10</MusicVolume>
-  <SFXVolume>10</SFXVolume>
-  <SpeedrunClock>true</SpeedrunClock>
+  <MusicVolume>1</MusicVolume>
+  <SFXVolume>4</SFXVolume>
+  <SpeedrunClock>false</SpeedrunClock>
   <LastSaveFile>0</LastSaveFile>
   <Language>english</Language>
   <Pico8OnMainMenu>true</Pico8OnMainMenu>
   <SetViewportOnce>true</SetViewportOnce>
+  <VariantsUnlocked>false</VariantsUnlocked>
   <Left>None</Left>
   <Right>None</Right>
   <Down>None</Down>
