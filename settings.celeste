@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Version>1.2.5.1</Version>
+  <Version>1.2.5.2</Version>
   <Fullscreen>true</Fullscreen>
   <WindowScale>3</WindowScale>
   <ViewportPadding>0</ViewportPadding>
@@ -10,7 +10,7 @@
   <Rumble>true</Rumble>
   <MusicVolume>1</MusicVolume>
   <SFXVolume>4</SFXVolume>
-  <SpeedrunClock>false</SpeedrunClock>
+  <SpeedrunClock>File</SpeedrunClock>
   <LastSaveFile>0</LastSaveFile>
   <Language>english</Language>
   <Pico8OnMainMenu>true</Pico8OnMainMenu>
