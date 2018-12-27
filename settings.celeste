@@ -15,7 +15,7 @@
   <Language>english</Language>
   <Pico8OnMainMenu>true</Pico8OnMainMenu>
   <SetViewportOnce>true</SetViewportOnce>
-  <VariantsUnlocked>false</VariantsUnlocked>
+  <VariantsUnlocked>true</VariantsUnlocked>
   <Left>None</Left>
   <Right>None</Right>
   <Down>None</Down>
