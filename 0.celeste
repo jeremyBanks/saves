@@ -2,7 +2,7 @@
 <SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Name>&lt;PlayAsBadeline&gt;true&lt;/PlayAsBadeline&gt;</Name>
-  <Time>10034420000</Time>
+  <Time>10089840000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
   <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
@@ -32,7 +32,7 @@
   <Flags />
   <Poem />
   <LastArea ID="1" Mode="Normal" />
-  <CurrentSession Level="9b" Time="832320000" StartedFromBeginning="true" Deaths="3" Dashes="39" DashesAtLevelStart="39" DeathsInCurrentLevel="1" InArea="false" FirstLevel="false" Cassette="false" HeartGem="false" Dreaming="false" LightingAlphaAdd="0" BloomBaseAdd="0" DarkRoomAlpha="0.75" CoreMode="None" GrabbedGolden="false" HitCheckpoint="true">
+  <CurrentSession Level="9b" Time="27200000" StartedFromBeginning="false" Deaths="0" Dashes="0" DashesAtLevelStart="0" DeathsInCurrentLevel="0" InArea="false" StartCheckpoint="9b" FirstLevel="true" Cassette="false" HeartGem="false" Dreaming="false" LightingAlphaAdd="0" BloomBaseAdd="0" DarkRoomAlpha="0.75" CoreMode="None" GrabbedGolden="false" HitCheckpoint="false">
     <Area ID="1" Mode="Normal" />
     <RespawnPoint>
       <X>3608</X>
@@ -60,28 +60,10 @@
     </Inventory>
     <Flags />
     <LevelFlags>
-      <string>1</string>
-      <string>2</string>
-      <string>3</string>
-      <string>4</string>
-      <string>3b</string>
-      <string>5</string>
-      <string>6</string>
-      <string>6a</string>
-      <string>6b</string>
-      <string>6c</string>
-      <string>7</string>
-      <string>8</string>
-      <string>8b</string>
-      <string>9</string>
       <string>9b</string>
     </LevelFlags>
-    <Strawberries>
-      <EntityID Key="3b:2" />
-    </Strawberries>
-    <DoNotLoad>
-      <EntityID Key="3b:2" />
-    </DoNotLoad>
+    <Strawberries />
+    <DoNotLoad />
     <Keys />
     <Counters />
     <SummitGems>
@@ -94,9 +76,14 @@
     </SummitGems>
     <OldStats ID="1" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="0" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
-          <Strawberries />
-          <Checkpoints />
+        <AreaModeStats TotalStrawberries="1" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="3" TimePlayed="853400000" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+          <Strawberries>
+            <EntityID Key="3b:2" />
+          </Strawberries>
+          <Checkpoints>
+            <string>6</string>
+            <string>9b</string>
+          </Checkpoints>
         </AreaModeStats>
         <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="0" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
           <Strawberries />
@@ -131,7 +118,7 @@
     </AreaStats>
     <AreaStats ID="1" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="1" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="3" TimePlayed="853400000" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="1" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="3" TimePlayed="908820000" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
           <Strawberries>
             <EntityID Key="3b:2" />
           </Strawberries>
