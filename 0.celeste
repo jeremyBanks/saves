@@ -24,7 +24,7 @@
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>9</UnlockedAreas>
   <TotalDeaths>28</TotalDeaths>
-  <TotalStrawberries>1</TotalStrawberries>
+  <TotalStrawberries>0</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
   <TotalJumps>471</TotalJumps>
   <TotalWallJumps>104</TotalWallJumps>
@@ -78,10 +78,8 @@
     </SummitGems>
     <OldStats ID="1" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="1" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="26" TimePlayed="7503630000" BestTime="1161610000" BestFullClearTime="0" BestDashes="61" BestDeaths="0" HeartGem="false">
-          <Strawberries>
-            <EntityID Key="3b:2" />
-          </Strawberries>
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="26" TimePlayed="7503630000" BestTime="1161610000" BestFullClearTime="0" BestDashes="61" BestDeaths="0" HeartGem="false">
+          <Strawberries />
           <Checkpoints>
             <string>6</string>
             <string>9b</string>
