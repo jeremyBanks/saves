@@ -14,6 +14,8 @@ cd /mnt/d/Program\ Files/Celeste/Saves &> /dev/null;
 
 user="$(whoami)@$(hostname)";
 
+-qq git add *.celeste;
+
 -qq git commit -m "⚠ $user old staged" --allow-empty-message || true;
 
 -qq git commit . -m "⚠ $user old unstaged" --allow-empty-message || true;
