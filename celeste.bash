@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail;
+set -euxo pipefail;
 
 cd ~/Library/"Application Support"/Celeste/Saves || \
 cd /mnt/d/Program\ Files/Celeste/Saves; 
