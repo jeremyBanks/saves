@@ -1,6 +1,8 @@
-#!/bin/bash -euo pipefail
+#!/bin/bash
+set -euo pipefail;
 
-cd ~/Library/"Application Support"/Celeste/Saves;
+cd ~/Library/"Application Support"/Celeste/Saves || \
+cd /mnt/d/Program\ Files/Celeste/Saves; 
 
 user="$(whoami)@$(hostname)";
 
@@ -20,7 +22,9 @@ echo "✅ Synced"
 
 echo "🍓 Celeste";
 
-open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/null || open -W /Applications/Celeste.app;
+open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/null || \
+open -W /Applications/Celeste.app || \
+/mnt/d/Program\ Files/Celeste/Celeste.exe;
 
 if git commit . -m "🍓 $user" --allow-empty-message &> /dev/null; then
     git push &> /dev/null && echo "✅ Synced" || echo "⚠ Sync failed";
