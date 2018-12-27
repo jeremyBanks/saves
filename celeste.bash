@@ -1,33 +1,37 @@
 #!/bin/bash
 set -euxo pipefail;
 
-cd ~/Library/"Application Support"/Celeste/Saves || \
-cd /mnt/d/Program\ Files/Celeste/Saves; 
+quiet() {
+    "$@" &> /dev/null
+}
+
+cd ~/Library/"Application Support"/Celeste/Saves &> /dev/null || \
+cd /mnt/d/Program\ Files/Celeste/Saves &> /dev/null; 
 
 user="$(whoami)@$(hostname)";
 
-git commit -m "⚠ $user old staged" --allow-empty-message &> /dev/null || true;
+quiet git commit -m "⚠ $user old staged" --allow-empty-message || true;
 
-git commit . -m "⚠ $user old unstaged" --allow-empty-message &> /dev/null || true;
+quiet git commit . -m "⚠ $user old unstaged" --allow-empty-message || true;
 
-git fetch &> /dev/null;
+quiet git fetch;
 
-git pull --ff-only &> /dev/null || (
+quiet git pull --ff-only || (
     echo "⚠ Sync conflict. Archiving remote data and replacing with local." &&
     git pull -s ours --no-edit);
 
-git push &> /dev/null;
+quiet git push;
 
 echo "✅ Synced"
 
 echo "🍓 Celeste";
 
-open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app &> /dev/null || \
-open -W /Applications/Celeste.app || \
+quiet open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app || \
+quiet open -W /Applications/Celeste.app || \
 /init /mnt/d/Program\ Files/Celeste/Celeste.exe;
 
-if git commit . -m "🍓 $user" --allow-empty-message &> /dev/null; then
-    git push &> /dev/null && echo "✅ Synced" || echo "⚠ Sync failed";
+if quiet git commit . -m "🍓 $user" --allow-empty-message; then
+    quiet git push && echo "✅ Synced" || echo "⚠ Sync failed";
 else
     echo "🆗 No changes to sync"
 fi
