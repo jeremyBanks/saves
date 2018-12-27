@@ -4,9 +4,11 @@
   <Name>PlayAsBadeline</Name>
   <Time>8071430000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
+
   <CheatMode>true</CheatMode>
+
   <AssistMode>false</AssistMode>
-  <VariantMode>true</VariantMode>
+  <VariantMode>false</VariantMode>
   <Assists>
     <GameSpeed>10</GameSpeed>
     <Invincible>false</Invincible>
@@ -19,7 +21,9 @@
     <LowFriction>false</LowFriction>
     <SuperDashing>false</SuperDashing>
     <Hiccups>false</Hiccups>
-    <PlayAsBadeline>false</PlayAsBadeline>
+
+    <PlayAsBadeline>true</PlayAsBadeline>
+
   </Assists>
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>9</UnlockedAreas>
