@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<SaveData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Name>Adny</Name>
-  <Time>883235170000</Time>
+  <Time>883333600000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
-  <CheatMode>false</CheatMode>
+  <CheatMode>true</CheatMode>
   <AssistMode>false</AssistMode>
   <VariantMode>false</VariantMode>
   <Assists>
@@ -26,7 +26,7 @@
   <TotalDeaths>4907</TotalDeaths>
   <TotalStrawberries>188</TotalStrawberries>
   <TotalGoldenStrawberries>13</TotalGoldenStrawberries>
-  <TotalJumps>41814</TotalJumps>
+  <TotalJumps>41815</TotalJumps>
   <TotalWallJumps>11678</TotalWallJumps>
   <TotalDashes>38186</TotalDashes>
   <Flags>
@@ -59,11 +59,11 @@
     <boolean>true</boolean>
     <boolean>true</boolean>
   </SummitGems>
-  <LastArea ID="7" Mode="Normal" />
+  <LastArea ID="0" Mode="Normal" />
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="0" TimePlayed="816340000" BestTime="800530000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="0" TimePlayed="914770000" BestTime="800530000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
           <Strawberries />
           <Checkpoints />
         </AreaModeStats>
