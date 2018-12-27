@@ -1,8 +1,12 @@
 #!/bin/bash
-set -euxo pipefail;
+set -euo pipefail;
 
 -q() {
-    "$@" &> /dev/null
+    "$@" 1> /dev/null
+}
+
+-qq() {
+    "$@" 1> /dev/null 2> /dev/null
 }
 
 cd ~/Library/"Application Support"/Celeste/Saves &> /dev/null || \
