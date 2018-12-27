@@ -19,7 +19,7 @@
     <LowFriction>false</LowFriction>
     <SuperDashing>false</SuperDashing>
     <Hiccups>false</Hiccups>
-    <PlayAsBadeline>true</PlayAsBadeline>
+    <PlayAsBadeline>false</PlayAsBadeline>
   </Assists>
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>9</UnlockedAreas>
