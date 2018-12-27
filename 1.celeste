@@ -5,10 +5,10 @@
   <Time>8071430000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
 
-  <CheatMode>true</CheatMode>
+  <CheatMode>false</CheatMode>
 
   <AssistMode>false</AssistMode>
-  <VariantMode>false</VariantMode>
+  <VariantMode>true</VariantMode>
   <Assists>
     <GameSpeed>10</GameSpeed>
     <Invincible>false</Invincible>
