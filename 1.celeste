@@ -4,9 +4,9 @@
   <Name>PlayAsBadeline</Name>
   <Time>7350630000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
-  <CheatMode>true</CheatMode>
+  <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
-  <VariantMode>true</VariantMode>
+  <VariantMode>false</VariantMode>
   <Assists>
     <GameSpeed>10</GameSpeed>
     <Invincible>false</Invincible>
@@ -14,7 +14,7 @@
     <InfiniteStamina>false</InfiniteStamina>
     <MirrorMode>false</MirrorMode>
     <ThreeSixtyDashing>false</ThreeSixtyDashing>
-    <InvisibleMotion>true</InvisibleMotion>
+    <InvisibleMotion>false</InvisibleMotion>
     <NoGrabbing>false</NoGrabbing>
     <LowFriction>false</LowFriction>
     <SuperDashing>false</SuperDashing>
