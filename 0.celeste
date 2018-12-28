@@ -4,9 +4,9 @@
   <Name>Badeline</Name>
   <Time>975800000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
-  <CheatMode>true</CheatMode>
+  <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
-  <VariantMode>true</VariantMode>
+  <VariantMode>false</VariantMode>
   <Assists>
     <GameSpeed>10</GameSpeed>
     <Invincible>false</Invincible>
