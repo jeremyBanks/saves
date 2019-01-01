@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail;
+set -v;
 
 -q() {
     "$@" 1> /dev/null
@@ -35,6 +36,9 @@ echo "🍓 Celeste";
 -qq open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app || \
 -qq open -W /Applications/Celeste.app || \
 /mnt/d/Program\ Files/Celeste/Celeste.exe;
+
+-qq cargo run > info.txt
+-qq git add info.txt;
 
 if -q git commit . -m "🍓 $user" --allow-empty-message; then
     -q git push && echo "✅ Synced" || echo "⚠ Sync failed";
