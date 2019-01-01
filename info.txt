@@ -1,0 +1,66 @@
+Badeline
+  Forsaken City
+    A, any% in 97.58s
+  Old Site
+  Celestial Resort
+  Golden Ridge
+  Mirror Temple
+  Reflection
+  The Summit
+  Core
+
+Banks
+  Forsaken City
+    A, any% in 89.471s, 100% in 364.038s
+    B, any% in 630.887s
+  Old Site
+    A, any% in 206.21s
+    B, any% in 3216.808s
+  Celestial Resort
+    A, any% in 1975.893s
+    B, any% in 6832.181s
+  Golden Ridge
+    A, any% in 3946.346s
+  Mirror Temple
+    A, any% in 6191.553s
+  Reflection
+    A, any% in 9171.313s
+  The Summit
+    A, any% in 8653.187s
+  Core
+    A
+
+Adny
+  Forsaken City
+    A, any% in 86.632s, 100% in 353.124s
+    B, any% in 181.543s
+    C, any% in 45.628s
+  Old Site
+    A, any% in 184.824s, 100% in 414.086s
+    B, any% in 187.051s
+    C, any% in 33.507s
+  Celestial Resort
+    A, any% in 1195.151s, 100% in 1195.151s
+    B, any% in 1378.428s
+    C, any% in 45.033s
+  Golden Ridge
+    A, any% in 338.045s, 100% in 1374.416s
+    B, any% in 2114.375s
+    C, any% in 37.604s
+  Mirror Temple
+    A, any% in 1689.409s, 100% in 2280.873s
+    B, any% in 1878.466s
+    C, any% in 34.476s
+  Reflection
+    A, any% in 1752.377s, 100% in 1752.377s
+    B, any% in 3315.816s
+    C, any% in 59.143s
+  The Summit
+    A, any% in 1460.113s, 100% in 5035.706s
+    B, any% in 3821.804s
+    C, any% in 68.289s
+  Core
+    A, any% in 1244.723s, 100% in 1244.723s
+    B, any% in 2679.948s
+    C, any% in 80.699s
+
