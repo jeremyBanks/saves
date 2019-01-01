@@ -1,0 +1,10 @@
+[package]
+name = "celeste-saves"
+version = "0.1.0"
+authors = ["Jeremy Banks <_@jeremy.ca>"]
+edition = "2018"
+
+[dependencies]
+minidom = "0.10.0"
+itertools = "0.8.0"
+derive_more = "0.13.0"
