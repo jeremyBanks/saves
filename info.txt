@@ -41,7 +41,7 @@ Banks:
     A   any%:  2h24m13.187s   min dashes: 641   min deaths: 701
          4 / 47 red berries   no  cassette      no  crystal heart
   Epilogue
-    A   any%:            0    min dashes:   1   min deaths:   0
+    A   any%:            0    min dashes:   0   min deaths:   0
   Core
     A   completed, but not in a single run
          0 / 5  red berries   has cassette      has crystal heart
