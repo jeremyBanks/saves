@@ -52,7 +52,11 @@ mod durationutils {
 }
 
 fn main() {
-    let saves = vec![include_str!("../0.celeste"), include_str!("../1.celeste"), include_str!("../2.celeste")];
+    let saves = vec![
+        include_str!("../0.celeste"),
+        include_str!("../1.celeste"),
+        include_str!("../2.celeste"),
+    ];
 
     for save in saves {
         let root = save.parse::<Element>().unwrap();
@@ -68,7 +72,7 @@ fn main() {
                     print!("   any%: {}", duration.formatted());
                     if !world_stats.has_winged_golden() {
                         print!(
-                            "   min dashes: {:>3}",
+                            "   min dashes: {:>4}",
                             world_stats.a_side.common.fewest_dashes.unwrap()
                         );
                     } else {
@@ -76,7 +80,7 @@ fn main() {
                     }
                     if !world_stats.has_golden_a() {
                         print!(
-                            "   min deaths: {:>3}",
+                            "   min deaths: {:>4}",
                             world_stats.a_side.common.fewest_deaths.unwrap()
                         );
                     } else {
@@ -91,18 +95,22 @@ fn main() {
                     println!("    A   full: {}", duration.formatted());
                 } else if world_stats.world.has_unlockables() {
                     if world_stats.world.red_berries() > 0 {
-                        print!(
-                            "    A   {:>2} / {:<2} red berries",
-                            world_stats.a_side.common.berry_count(),
-                            world_stats.world.red_berries()
-                        );
+                        if world_stats.red_berries() < world_stats.world.red_berries() {
+                            print!(
+                                "    A   {:>2} / {:<2} red berries",
+                                world_stats.red_berries(),
+                                world_stats.world.red_berries()
+                            );
+                        } else {
+                            print!("    A   has all red berries")
+                        }
                     } else {
                         print!("                           ");
                     }
                     if world_stats.a_side.cassette {
-                        print!("   has cassette   ");
+                        print!("   has cassette    ");
                     } else {
-                        print!("   no  cassette   ");
+                        print!("   no  cassette    ");
                     }
                     if world_stats.a_side.cassette {
                         print!("   has crystal heart");
@@ -119,12 +127,12 @@ fn main() {
                 if let Some(duration) = world_stats.b_side.common.single_run {
                     print!("   any%: {}", duration.formatted());
                     print!(
-                        "   min dashes: {:>3}",
+                        "   min dashes: {:>4}",
                         world_stats.b_side.common.fewest_dashes.unwrap()
                     );
                     if !world_stats.has_golden_b() {
                         print!(
-                            "   min deaths: {:>3}",
+                            "   min deaths: {:>4}",
                             world_stats.b_side.common.fewest_deaths.unwrap()
                         );
                     } else {
@@ -142,12 +150,12 @@ fn main() {
                 if let Some(duration) = world_stats.c_side.common.single_run {
                     print!("   any%: {}", duration.formatted());
                     print!(
-                        "   min dashes: {:>3}",
+                        "   min dashes: {:>4}",
                         world_stats.c_side.common.fewest_dashes.unwrap()
                     );
                     if !world_stats.has_golden_c() {
                         print!(
-                            "   min deaths: {:>3}",
+                            "   min deaths: {:>4}",
                             world_stats.c_side.common.fewest_deaths.unwrap()
                         );
                     } else {
@@ -182,6 +190,20 @@ pub struct WorldStats {
 }
 
 impl WorldStats {
+    pub fn red_berries(&self) -> u32 {
+        let actual = self.a_side.common.berry_count();
+        let max = self.world.red_berries();
+        if actual <= max {
+            actual
+        } else if actual == max + 1 {
+            max
+        } else if self.world == ForsakenCity && actual == max + 2 {
+            max
+        } else {
+            panic!("impossibly large number of berries")
+        }
+    }
+
     pub fn has_golden_a(&self) -> bool {
         self.a_side.common.berry_count() > self.world.red_berries()
     }
@@ -195,7 +217,8 @@ impl WorldStats {
     }
 
     pub fn has_winged_golden(&self) -> bool {
-        self.a_side.common.berry_count() > self.world.red_berries() + 1
+        self.world == ForsakenCity
+            && self.a_side.common.berry_count() > self.world.red_berries() + 1
     }
 }
 
