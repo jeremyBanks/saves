@@ -2,7 +2,7 @@
 <SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Name>Banks</Name>
-  <Time>1436823170000</Time>
+  <Time>1437278430000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
   <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
@@ -26,7 +26,7 @@
   <TotalDeaths>9664</TotalDeaths>
   <TotalStrawberries>91</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>64579</TotalJumps>
+  <TotalJumps>64627</TotalJumps>
   <TotalWallJumps>12512</TotalWallJumps>
   <TotalDashes>43877</TotalDashes>
   <Flags>
@@ -42,11 +42,11 @@
     <string>osr</string>
     <string>crr</string>
   </Poem>
-  <LastArea ID="8" Mode="Normal" />
+  <LastArea ID="0" Mode="Normal" />
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="4" TimePlayed="4480860000" BestTime="445910000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="4" TimePlayed="4936120000" BestTime="439450000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
           <Strawberries />
           <Checkpoints />
         </AreaModeStats>
