@@ -44,7 +44,7 @@ mod durationutils {
             if !pieces.is_empty() || millis > 0 {
                 pieces.push_str(&format!(".{:>03}s", millis));
             } else {
-                pieces.push_str("n/a");
+                pieces.push_str("0 ");
             }
 
             format!("{:>13}", pieces)
@@ -63,7 +63,7 @@ fn main() {
         let root = save.parse::<Element>().unwrap();
         let stats = Stats::from_save(&root);
 
-        println!("{}:", stats.name);
+        println!("{}", stats.name);
         for world_stats in stats.worlds {
             println!("  {}", world_stats.world);
 
@@ -89,15 +89,15 @@ fn main() {
                     }
                     println!();
                 } else {
-                    println!("   completed, but not in a single run")
+                    println!("   completed but not in a single run")
                 }
 
                 if let Some(duration) = world_stats.a_side.full_clear {
-                    println!("        full: {}", duration.formatted());
+                    println!("    A   full: {}", duration.formatted());
                 } else if world_stats.world.has_unlockables() {
                     if world_stats.world.red_berries() > 0 {
                         print!(
-                            "        {:>2} / {:<2} red berries",
+                            "    A   {:>2} / {:<2} red berries",
                             world_stats.a_side.common.berry_count(),
                             world_stats.world.red_berries()
                         );
