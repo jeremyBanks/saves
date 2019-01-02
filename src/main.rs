@@ -1,8 +1,56 @@
-use crate::domutils::DomUtils;
+#![feature(duration_as_u128)]
+#![feature(try_from)]
+use crate::{domutils::DomUtils, durationutils::DurationUtils};
 use minidom::Element;
+use serde_derive::{Deserialize, Serialize};
 use std::{collections::BTreeSet, time::Duration};
 
 mod domutils;
+mod durationutils {
+    pub trait DurationUtils {
+        fn formatted(&self) -> String;
+    }
+
+    impl DurationUtils for std::time::Duration {
+        fn formatted(&self) -> String {
+            let mut pieces = String::new();
+
+            let millis_left = self.as_millis();
+            let millis = millis_left % 1000;
+            let seconds_left = millis_left / 1000;
+            let seconds = seconds_left % 60;
+            let minutes_left = seconds_left / 60;
+            let minutes = minutes_left % 60;
+            let hours = minutes_left / 60;
+
+            if !pieces.is_empty() {
+                pieces.push_str(&format!("{:>02}h", hours));
+            } else if hours > 0 {
+                pieces.push_str(&format!("{:>2}h", hours));
+            }
+
+            if !pieces.is_empty() {
+                pieces.push_str(&format!("{:>02}m", minutes));
+            } else if minutes > 0 {
+                pieces.push_str(&format!("{:>2}m", minutes));
+            }
+
+            if !pieces.is_empty() {
+                pieces.push_str(&format!("{:>02}", seconds));
+            } else if seconds > 0 {
+                pieces.push_str(&format!("{:>2}", seconds));
+            }
+
+            if !pieces.is_empty() || millis > 0 {
+                pieces.push_str(&format!(".{:>03}s", millis));
+            } else {
+                pieces.push_str("0 ");
+            }
+
+            format!("{:>13}", pieces)
+        }
+    }
+}
 
 fn main() {
     let saves = vec![
@@ -15,39 +63,112 @@ fn main() {
         let root = save.parse::<Element>().unwrap();
         let stats = Stats::from_save(&root);
 
-        println!("{}", stats.name);
+        println!("{}:", stats.name);
         for world_stats in stats.worlds {
             println!("  {}", world_stats.world);
+
             if world_stats.a_side.common.completed {
                 print!("    A");
                 if let Some(duration) = world_stats.a_side.common.single_run {
-                    print!(", any% in {:?}", duration);
+                    print!("   any%: {}", duration.formatted());
+                    if !world_stats.has_winged_golden() {
+                        print!(
+                            "   min dashes: {:>3}",
+                            world_stats.a_side.common.fewest_dashes.unwrap()
+                        );
+                    } else {
+                        print!("   has winged berry");
+                    }
+                    if !world_stats.has_golden_a() {
+                        print!(
+                            "   min deaths: {:>3}",
+                            world_stats.a_side.common.fewest_deaths.unwrap()
+                        );
+                    } else {
+                        print!("   has golden berry");
+                    }
+                    println!();
+                } else {
+                    println!("   completed, but not in a single run")
                 }
+
                 if let Some(duration) = world_stats.a_side.full_clear {
-                    print!(", 100% in {:?}", duration);
+                    println!("        full: {}", duration.formatted());
+                } else if world_stats.world.has_unlockables() {
+                    if world_stats.world.red_berries() > 0 {
+                        print!(
+                            "        {:>2} / {:<2} red berries",
+                            world_stats.a_side.common.berry_count(),
+                            world_stats.world.red_berries()
+                        );
+                    } else {
+                        print!("                           ");
+                    }
+                    if world_stats.a_side.cassette {
+                        print!("   has cassette   ");
+                    } else {
+                        print!("   no  cassette   ");
+                    }
+                    if world_stats.a_side.cassette {
+                        print!("   has crystal heart");
+                    } else {
+                        print!("   no  crystal heart");
+                    }
+                    println!();
                 }
-                println!();
             }
+
             if world_stats.b_side.common.completed {
                 print!("    B");
+
                 if let Some(duration) = world_stats.b_side.common.single_run {
-                    print!(", any% in {:?}", duration);
+                    print!("   any%: {}", duration.formatted());
+                    print!(
+                        "   min dashes: {:>3}",
+                        world_stats.b_side.common.fewest_dashes.unwrap()
+                    );
+                    if !world_stats.has_golden_b() {
+                        print!(
+                            "   min deaths: {:>3}",
+                            world_stats.b_side.common.fewest_deaths.unwrap()
+                        );
+                    } else {
+                        print!("   has golden berry");
+                    }
+                    println!();
+                } else {
+                    println!("   completed, but not in a single run")
                 }
-                println!();
             }
+
             if world_stats.c_side.common.completed {
                 print!("    C");
+
                 if let Some(duration) = world_stats.c_side.common.single_run {
-                    print!(", any% in {:?}", duration);
+                    print!("   any%: {}", duration.formatted());
+                    print!(
+                        "   min dashes: {:>3}",
+                        world_stats.c_side.common.fewest_dashes.unwrap()
+                    );
+                    if !world_stats.has_golden_c() {
+                        print!(
+                            "   min deaths: {:>3}",
+                            world_stats.c_side.common.fewest_deaths.unwrap()
+                        );
+                    } else {
+                        print!("   has golden berry");
+                    }
+                    println!();
+                } else {
+                    println!("   completed, but not in a single run")
                 }
-                println!();
             }
         }
         println!();
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Stats {
     pub version: String,
     pub cheat_mode: bool,
@@ -57,7 +178,7 @@ pub struct Stats {
     pub worlds: Vec<WorldStats>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WorldStats {
     pub world: World,
     pub a_side: ASideStats,
@@ -65,7 +186,25 @@ pub struct WorldStats {
     pub c_side: CSideStats,
 }
 
-#[derive(Debug, Clone)]
+impl WorldStats {
+    pub fn has_golden_a(&self) -> bool {
+        self.a_side.common.berry_count() > self.world.red_berries()
+    }
+
+    pub fn has_golden_b(&self) -> bool {
+        self.b_side.common.berry_count() > 0
+    }
+
+    pub fn has_golden_c(&self) -> bool {
+        self.c_side.common.berry_count() > 0
+    }
+
+    pub fn has_winged_golden(&self) -> bool {
+        self.a_side.common.berry_count() > self.world.red_berries() + 1
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SideStatsCommon {
     pub completed: bool,
     pub single_run: Option<Duration>,
@@ -74,7 +213,13 @@ pub struct SideStatsCommon {
     pub berries: BTreeSet<String>,
 }
 
-#[derive(Debug, Clone)]
+impl SideStatsCommon {
+    pub fn berry_count(&self) -> u32 {
+        self.berries.len() as u32
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ASideStats {
     pub cassette: bool,
     pub heart: bool,
@@ -82,17 +227,17 @@ pub struct ASideStats {
     pub common: SideStatsCommon,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BSideStats {
     pub common: SideStatsCommon,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CSideStats {
     pub common: SideStatsCommon,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Copy)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash, Copy)]
 pub enum World {
     Prologue,
     ForsakenCity,
@@ -109,32 +254,45 @@ pub enum World {
 pub use self::World::*;
 
 impl World {
-    pub fn is_playable(self) -> bool {
+    pub fn name(self) -> &'static str {
+        match self {
+            Prologue => "Prologue",
+            ForsakenCity => "Forsaken City",
+            OldSite => "Old Site",
+            CelestialResort => "Celestial Resort",
+            GoldenRidge => "Golden Ridge",
+            MirrorTemple => "Mirror Temple",
+            Reflection => "Reflection",
+            TheSummit => "The Summit",
+            Epilogue => "Epilogue",
+            Core => "Core",
+        }
+    }
+
+    pub fn has_unlockables(self) -> bool {
         match self {
             Prologue | Epilogue => false,
             _ => true,
+        }
+    }
+
+    pub fn red_berries(self) -> u32 {
+        match self {
+            Prologue | Reflection | Epilogue => 0,
+            ForsakenCity => 20,
+            OldSite => 18,
+            CelestialResort => 25,
+            GoldenRidge => 29,
+            MirrorTemple => 31,
+            TheSummit => 47,
+            Core => 5,
         }
     }
 }
 
 impl std::fmt::Display for World {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            match self {
-                Prologue => "Prologue",
-                ForsakenCity => "Forsaken City",
-                OldSite => "Old Site",
-                CelestialResort => "Celestial Resort",
-                GoldenRidge => "Golden Ridge",
-                MirrorTemple => "Mirror Temple",
-                Reflection => "Reflection",
-                TheSummit => "The Summit",
-                Epilogue => "Epilogue",
-                Core => "Core",
-            }
-        )
+        write!(f, "{}", self.name())
     }
 }
 
@@ -190,7 +348,7 @@ impl Stats {
             .expect_child("Areas")
             .children()
             .map(WorldStats::from_save)
-            .filter(|stats| stats.world.is_playable())
+            // .filter(|stats| stats.world.has_unlockables())
             .collect();
 
         Self {
