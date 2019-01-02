@@ -44,7 +44,7 @@ mod durationutils {
             if !pieces.is_empty() || millis > 0 {
                 pieces.push_str(&format!(".{:>03}s", millis));
             } else {
-                pieces.push_str("0 ");
+                pieces.push_str("n/a");
             }
 
             format!("{:>13}", pieces)
