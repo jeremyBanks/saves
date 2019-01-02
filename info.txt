@@ -77,3 +77,49 @@ Adny
     B   any%:    44m39.948s   min dashes: 134   min deaths: 319
     C   any%:     1m20.699s   min dashes:  40   has golden berry
 
+Scratch
+  Prologue
+    A   any%:     1m33.687s   min dashes:   0   min deaths:   0
+  Forsaken City
+    A   any%:     3m39.878s   has winged berry   has golden berry
+    A   22 / 20 red berries   has cassette      has crystal heart
+    B   any%:     2m59.656s   min dashes:  51   has golden berry
+    C   any%:       40.477s   min dashes:  45   has golden berry
+  Old Site
+    A   any%:     8m06.251s   min dashes: 118   has golden berry
+    A   19 / 18 red berries   has cassette      has crystal heart
+    B   any%:     4m37.729s   min dashes:   7   has golden berry
+    C   any%:       44.897s   min dashes:  68   has golden berry
+  Celestial Resort
+    A   any%:    21m37.406s   min dashes: 175   has golden berry
+    A   26 / 25 red berries   has cassette      has crystal heart
+    B   any%:            0    min dashes:  26   has golden berry
+    C   any%:     1m10.805s   min dashes:  64   has golden berry
+  Golden Ridge
+    A   any%:     7m43.930s   min dashes: 493   has golden berry
+    A   30 / 29 red berries   has cassette      has crystal heart
+    B   any%:            0    min dashes:  53   has golden berry
+    C   any%:       38.012s   min dashes:  32   has golden berry
+  Mirror Temple
+    A   any%:    20m32.262s   min dashes: 710   has golden berry
+    A   32 / 31 red berries   has cassette      has crystal heart
+    B   any%:            0    min dashes:  60   has golden berry
+    C   any%:       33.201s   min dashes:  43   has golden berry
+  Reflection
+    A   any%:    14m54.727s   min dashes: 346   has golden berry
+                              has cassette      has crystal heart
+    B   any%:            0    min dashes:   6   has golden berry
+    C   any%:       37.264s   min dashes:  58   has golden berry
+  The Summit
+    A   any%:    13m30.866s   min dashes: 219   has golden berry
+    A   48 / 47 red berries   has cassette      has crystal heart
+    B   any%:            0    min dashes: 329   has golden berry
+    C   any%:       58.293s   min dashes:  86   has golden berry
+  Epilogue
+    A   any%:            0    min dashes:   0   min deaths:   0
+  Core
+    A   any%:     5m05.932s   min dashes: 375   has golden berry
+    A    6 / 5  red berries   has cassette      has crystal heart
+    B   any%:     4m54.253s   min dashes: 331   has golden berry
+    C   any%:     1m06.249s   min dashes: 100   has golden berry
+
