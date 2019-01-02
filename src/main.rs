@@ -52,7 +52,7 @@ mod durationutils {
 }
 
 fn main() {
-    let saves = vec![include_str!("../0.celeste"), include_str!("../1.celeste")];
+    let saves = vec![include_str!("../0.celeste"), include_str!("../1.celeste"), include_str!("../2.celeste")];
 
     for save in saves {
         let root = save.parse::<Element>().unwrap();
