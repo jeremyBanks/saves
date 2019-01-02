@@ -36,7 +36,7 @@ echo "🍓 Celeste";
 -qq open -W /Applications/Celeste.app || \
 /mnt/d/Program\ Files/Celeste/Celeste.exe;
 
-cargo +nightly run 1> info.txt 2> /dev/null;
+cargo run 1> info.txt 2> /dev/null;
 -qq git add info.txt;
 
 if -q git commit . -m "🍓 $user" --allow-empty-message; then
