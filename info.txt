@@ -1,66 +1,94 @@
-Badeline
+Badeline:
+  Prologue
+    A   any%:            0    min dashes:   0   min deaths:   0
   Forsaken City
-    A, any% in 97.58s
+    A   any%:     1m37.580s   min dashes:  59   min deaths:   0
+         0 / 20 red berries   no  cassette      no  crystal heart
   Old Site
   Celestial Resort
   Golden Ridge
   Mirror Temple
   Reflection
   The Summit
+  Epilogue
   Core
 
-Banks
+Banks:
+  Prologue
+    A   any%:       44.591s   min dashes:   0   min deaths:   0
   Forsaken City
-    A, any% in 89.471s, 100% in 364.038s
-    B, any% in 630.887s
+    A   any%:     1m29.471s   min dashes:  54   min deaths:   0
+        full:     6m04.038s
+    B   any%:    10m30.887s   min dashes:  54   min deaths:  60
   Old Site
-    A, any% in 206.21s
-    B, any% in 3216.808s
+    A   any%:     3m26.210s   min dashes: 113   min deaths:   2
+        18 / 18 red berries   has cassette      has crystal heart
+    B   any%:    53m36.808s   min dashes: 341   min deaths: 353
   Celestial Resort
-    A, any% in 1975.893s
-    B, any% in 6832.181s
+    A   any%:    32m55.893s   min dashes: 301   min deaths: 171
+        25 / 25 red berries   has cassette      has crystal heart
+    B   any%:  1h53m52.181s   min dashes: 123   min deaths: 963
   Golden Ridge
-    A, any% in 3946.346s
+    A   any%:  1h05m46.346s   min dashes: 227   min deaths: 346
+        14 / 29 red berries   no  cassette      no  crystal heart
   Mirror Temple
-    A, any% in 6191.553s
+    A   any%:  1h43m11.553s   min dashes: 618   min deaths: 334
+        10 / 31 red berries   no  cassette      no  crystal heart
   Reflection
-    A, any% in 9171.313s
+    A   any%:  2h32m51.313s   min dashes: 580   min deaths: 776
+                              has cassette      has crystal heart
   The Summit
-    A, any% in 8653.187s
+    A   any%:  2h24m13.187s   min dashes: 641   min deaths: 701
+         4 / 47 red berries   no  cassette      no  crystal heart
+  Epilogue
+    A   any%:            0    min dashes:   1   min deaths:   0
   Core
-    A
+    A   completed, but not in a single run
+         0 / 5  red berries   has cassette      has crystal heart
 
-Adny
+Adny:
+  Prologue
+    A   any%:     1m20.053s   min dashes:   0   min deaths:   0
   Forsaken City
-    A, any% in 86.632s, 100% in 353.124s
-    B, any% in 181.543s
-    C, any% in 45.628s
+    A   any%:     1m26.632s   min dashes:  48   has golden berry
+        full:     5m53.124s
+    B   any%:     3m01.543s   min dashes:  45   has golden berry
+    C   any%:       45.628s   min dashes:  15   has golden berry
   Old Site
-    A, any% in 184.824s, 100% in 414.086s
-    B, any% in 187.051s
-    C, any% in 33.507s
+    A   any%:     3m04.824s   min dashes: 115   has golden berry
+        full:     6m54.086s
+    B   any%:     3m07.051s   min dashes: 106   has golden berry
+    C   any%:       33.507s   min dashes:  24   has golden berry
   Celestial Resort
-    A, any% in 1195.151s, 100% in 1195.151s
-    B, any% in 1378.428s
-    C, any% in 45.033s
+    A   any%:    19m55.151s   min dashes: 265   min deaths:  44
+        full:    19m55.151s
+    B   any%:    22m58.428s   min dashes:  96   min deaths: 162
+    C   any%:       45.033s   min dashes:  21   has golden berry
   Golden Ridge
-    A, any% in 338.045s, 100% in 1374.416s
-    B, any% in 2114.375s
-    C, any% in 37.604s
+    A   any%:     5m38.045s   min dashes: 164   has golden berry
+        full:    22m54.416s
+    B   any%:    35m14.375s   min dashes: 132   min deaths: 212
+    C   any%:       37.604s   min dashes:  14   has golden berry
   Mirror Temple
-    A, any% in 1689.409s, 100% in 2280.873s
-    B, any% in 1878.466s
-    C, any% in 34.476s
+    A   any%:    28m09.409s   min dashes: 290   min deaths:  61
+        full:    38m00.873s
+    B   any%:    31m18.466s   min dashes: 125   min deaths: 165
+    C   any%:       34.476s   min dashes:  19   has golden berry
   Reflection
-    A, any% in 1752.377s, 100% in 1752.377s
-    B, any% in 3315.816s
-    C, any% in 59.143s
+    A   any%:    29m12.377s   min dashes: 369   min deaths:  56
+        full:    29m12.377s
+    B   any%:    55m15.816s   min dashes: 192   min deaths: 314
+    C   any%:       59.143s   min dashes:  29   has golden berry
   The Summit
-    A, any% in 1460.113s, 100% in 5035.706s
-    B, any% in 3821.804s
-    C, any% in 68.289s
+    A   any%:    24m20.113s   min dashes: 570   min deaths:  78
+        full:  1h23m55.706s
+    B   any%:  1h03m41.804s   min dashes: 414   min deaths: 417
+    C   any%:     1m08.289s   min dashes:  71   has golden berry
+  Epilogue
+    A   any%:            0    min dashes:   1   min deaths:   0
   Core
-    A, any% in 1244.723s, 100% in 1244.723s
-    B, any% in 2679.948s
-    C, any% in 80.699s
+    A   any%:    20m44.723s   min dashes: 166   min deaths:  87
+        full:    20m44.723s
+    B   any%:    44m39.948s   min dashes: 134   min deaths: 319
+    C   any%:     1m20.699s   min dashes:  40   has golden berry
 
