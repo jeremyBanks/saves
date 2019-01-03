@@ -1,172 +1,185 @@
 #![feature(try_from)]
-use crate::{domutils::DomUtils, durationutils::DurationUtils};
 use minidom::Element;
 use serde_derive::{Deserialize, Serialize};
 use std::{collections::BTreeSet, time::Duration};
 
 mod domutils;
-mod durationutils {
-    pub trait DurationUtils {
-        fn formatted(&self) -> String;
-    }
+mod durationutils;
+mod stringutils;
 
-    impl DurationUtils for std::time::Duration {
-        fn formatted(&self) -> String {
-            let mut pieces = String::new();
-
-            let millis_left = self.as_millis();
-            let millis = millis_left % 1000;
-            let seconds_left = millis_left / 1000;
-            let seconds = seconds_left % 60;
-            let minutes_left = seconds_left / 60;
-            let minutes = minutes_left % 60;
-            let hours = minutes_left / 60;
-
-            if !pieces.is_empty() {
-                pieces.push_str(&format!("{:>02}h", hours));
-            } else if hours > 0 {
-                pieces.push_str(&format!("{:>2}h", hours));
-            }
-
-            if !pieces.is_empty() {
-                pieces.push_str(&format!("{:>02}m", minutes));
-            } else if minutes > 0 {
-                pieces.push_str(&format!("{:>2}m", minutes));
-            }
-
-            if !pieces.is_empty() {
-                pieces.push_str(&format!("{:>02}", seconds));
-            } else if seconds > 0 {
-                pieces.push_str(&format!("{:>2}", seconds));
-            }
-
-            if !pieces.is_empty() || millis > 0 {
-                pieces.push_str(&format!(".{:>03}s", millis));
-            } else {
-                pieces.push_str("0 ");
-            }
-
-            format!("{:>13}", pieces)
-        }
-    }
-}
+use crate::{domutils::*, durationutils::*, stringutils::*};
 
 fn main() {
-    let saves = vec![
-        include_str!("../0.celeste"),
-        include_str!("../1.celeste"),
-        include_str!("../2.celeste"),
-    ];
+    let saves = vec![include_str!("../0.celeste"), include_str!("../1.celeste")];
 
     for save in saves {
         let root = save.parse::<Element>().unwrap();
         let stats = Stats::from_save(&root);
 
-        println!("{}", stats.name);
+        println!(" {}", stats.name.underline());
+
         for world_stats in stats.worlds {
-            println!("  {}", world_stats.world);
+            println!(
+                "{}",
+                format!(" {:<64}", world_stats.world.to_string())
+                    .color(Black)
+                    .background(White)
+            );
 
             if world_stats.a_side.common.completed {
-                print!("    A");
+                print!("{} ", " ".background(DarkGray));
+                print!("{}", "A".color(White));
+                print!(" {} ", " ".background(DarkGray));
                 if let Some(duration) = world_stats.a_side.common.single_run {
-                    print!("   any%: {}", duration.formatted());
+                    print!("{}", format!("any%: {}", duration.formatted()));
+
+                    print!(" {} ", " ".background(DarkGray));
                     if !world_stats.has_winged_golden() {
                         print!(
-                            "   min dashes: {:>4}",
+                            "min dashes: {:>4}",
                             world_stats.a_side.common.fewest_dashes.unwrap()
                         );
                     } else {
-                        print!("   has winged berry");
+                        print!("has winged berry");
                     }
+
+                    print!(" {} ", " ".background(DarkGray));
                     if !world_stats.has_golden_a() {
                         print!(
-                            "   min deaths: {:>4}",
+                            "min deaths: {:>4}",
                             world_stats.a_side.common.fewest_deaths.unwrap()
                         );
                     } else {
-                        print!("   has golden berry");
+                        print!("{}", "has golden berry".color(Yellow));
                     }
+                    print!(" {}", " ".background(DarkGray));
                     println!();
                 } else {
-                    println!("   completed but not in a single run")
+                    print!(
+                        "{:<67}",
+                        "completed but not in a single run".color(DarkGray)
+                    );
+                    print!(" {}", " ".background(DarkGray));
+                    println!();
                 }
 
                 if let Some(duration) = world_stats.a_side.full_clear {
-                    println!("    A   full: {}", duration.formatted());
+                    print!("{} ", " ".background(DarkGray));
+                    print!("{}", "A".color(White));
+                    print!(" {} ", " ".background(DarkGray));
+                    print!(
+                        "{}",
+                        format!("full: {}", duration.formatted()).color(Yellow)
+                    );
+                    print!(" {:<38}{} ", "", " ".background(DarkGray));
+                    println!();
                 } else if world_stats.world.has_unlockables() {
+                    print!("{} ", " ".background(DarkGray));
+                    print!("{}", "A".color(White));
+                    print!(" {} ", " ".background(DarkGray));
                     if world_stats.world.red_berries() > 0 {
                         if world_stats.red_berries() < world_stats.world.red_berries() {
                             print!(
-                                "    A   {:>2} / {:<2} red berries",
-                                world_stats.red_berries(),
-                                world_stats.world.red_berries()
+                                "{}",
+                                format!(
+                                    "{:>2} / {:<2} red berries",
+                                    world_stats.red_berries(),
+                                    world_stats.world.red_berries()
+                                )
+                                .color(White)
                             );
                         } else {
-                            print!("    A   has all red berries")
+                            print!("{}", "has all red berries".color(Magenta))
                         }
                     } else {
-                        print!("                           ");
+                        print!("                   ");
                     }
+                    print!(" {} ", " ".background(DarkGray));
                     if world_stats.a_side.cassette {
-                        print!("   has cassette    ");
+                        print!("{}", "has cassette    ".color(Magenta));
                     } else {
-                        print!("   no  cassette    ");
+                        print!("{}", "no  cassette    ".dim());
                     }
+                    print!(" {} ", " ".background(DarkGray));
                     if world_stats.a_side.cassette {
-                        print!("   has crystal heart");
+                        print!("{}", "has crystal heart".color(Magenta));
                     } else {
-                        print!("   no  crystal heart");
+                        print!("{}", "no  crystal heart".dim());
                     }
+                    print!(" {}", " ".background(DarkGray));
                     println!();
                 }
             }
 
             if world_stats.b_side.common.completed {
-                print!("    B");
+                print!("{} ", " ".background(DarkGray));
+                print!("{}", "B".color(Magenta));
+                print!(" {} ", " ".background(DarkGray));
 
                 if let Some(duration) = world_stats.b_side.common.single_run {
-                    print!("   any%: {}", duration.formatted());
+                    print!("any%: {}", duration.formatted());
+                    print!(" {} ", " ".background(DarkGray));
                     print!(
-                        "   min dashes: {:>4}",
+                        "min dashes: {:>4}",
                         world_stats.b_side.common.fewest_dashes.unwrap()
                     );
+                    print!(" {} ", " ".background(DarkGray));
                     if !world_stats.has_golden_b() {
                         print!(
-                            "   min deaths: {:>4}",
+                            "min deaths: {:>4}",
                             world_stats.b_side.common.fewest_deaths.unwrap()
                         );
                     } else {
-                        print!("   has golden berry");
+                        print!("has golden berry");
                     }
+                    print!(" {}", " ".background(DarkGray));
                     println!();
                 } else {
-                    println!("   completed, but not in a single run")
+                    print!(
+                        "{:<67}",
+                        "completed but not in a single run".color(DarkGray)
+                    );
+                    print!(" {}", " ".background(DarkGray));
+                    println!();
                 }
             }
 
             if world_stats.c_side.common.completed {
-                print!("    C");
+                print!("{} ", " ".background(DarkGray));
+                print!("{}", "C".color(Yellow));
+                print!(" {} ", " ".background(DarkGray));
 
                 if let Some(duration) = world_stats.c_side.common.single_run {
-                    print!("   any%: {}", duration.formatted());
+                    print!("any%: {}", duration.formatted());
+                    print!(" {} ", " ".background(DarkGray));
                     print!(
-                        "   min dashes: {:>4}",
+                        "min dashes: {:>4}",
                         world_stats.c_side.common.fewest_dashes.unwrap()
                     );
+
+                    print!(" {} ", " ".background(DarkGray));
                     if !world_stats.has_golden_c() {
                         print!(
-                            "   min deaths: {:>4}",
+                            "min deaths: {:>4}",
                             world_stats.c_side.common.fewest_deaths.unwrap()
                         );
                     } else {
-                        print!("   has golden berry");
+                        print!("has golden berry");
                     }
+                    print!(" {}", " ".background(DarkGray));
                     println!();
                 } else {
-                    println!("   completed, but not in a single run")
+                    print!(
+                        "{:<67}",
+                        "completed but not in a single run".color(DarkGray)
+                    );
+                    print!(" {}", " ".background(DarkGray));
+                    println!();
                 }
             }
         }
+
+        println!("{}", format!(" {:<64}", "").color(Black).background(White));
         println!();
     }
 }
