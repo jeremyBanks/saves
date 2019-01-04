@@ -41,9 +41,9 @@ fn main() {
         if atty::is(atty::Stream::Stdout) {
             print!("{} ", " ".background(DIVIDER));
             print!("{}", side.to_string().color(color));
-            print!(" {} ", " ".background(DIVIDER));
+            print!(" {}", " ".background(DIVIDER));
         } else {
-            print!("  {}   ", side.to_string());
+            print!("  {}  ", side.to_string());
         }
     }
 
@@ -62,10 +62,10 @@ fn main() {
         }
         s.push_str(&right);
         if atty::is(atty::Stream::Stdout) {
-            print!("{}", s.color(color));
+            print!(" {}", s.color(color));
             print!(" {} ", " ".background(DIVIDER));
         } else {
-            print!("{}   ", s);
+            print!(" {}   ", s);
         }
     }
 
