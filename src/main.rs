@@ -1,16 +1,25 @@
 #![feature(try_from)]
+use atty;
 use minidom::Element;
 use serde_derive::{Deserialize, Serialize};
-use std::string::ToString;
-use std::{collections::BTreeSet, time::Duration};
+use std::{collections::BTreeSet, env, fs, string::ToString, time::Duration};
 
 mod domutils;
 mod durationutils;
 mod stringutils;
-
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
 fn main() {
+    let saves = env::args()
+        .skip(1)
+        .map(|name| fs::read_to_string(name).expect("file should exist"))
+        .collect::<Vec<_>>();
+
+    if saves.len() == 0 {
+        eprintln!("Error: no arguments provided. One more more Celeste save file paths expected.");
+        return;
+    }
+
     const HEADER_FG: AnsiColor = Black;
     const HEADER_BG: AnsiColor = White;
     const DIVIDER: AnsiColor = DarkGray;
@@ -21,18 +30,21 @@ fn main() {
     const BEST: AnsiColor = Yellow;
 
     fn print_divider(content: impl ToString) {
-        println!(
-            "{}",
-            format!(" {:<64} ", content.to_string())
-                .color(HEADER_FG)
-                .background(HEADER_BG)
-        );
+        let mut s = format!("  {:<62}  ", content.to_string());
+        if atty::is(atty::Stream::Stdout) {
+            s = s.color(HEADER_FG).background(HEADER_BG)
+        }
+        println!("{}", s);
     }
 
     fn print_side(side: impl ToString, color: AnsiColor) {
-        print!("{} ", " ".background(DIVIDER));
-        print!("{}", side.to_string().color(color));
-        print!(" {} ", " ".background(DIVIDER));
+        if atty::is(atty::Stream::Stdout) {
+            print!("{} ", " ".background(DIVIDER));
+            print!("{}", side.to_string().color(color));
+            print!(" {} ", " ".background(DIVIDER));
+        } else {
+            print!("  {}   ", side.to_string());
+        }
     }
 
     fn print_cell(left: impl ToString, right: impl ToString, color: AnsiColor, max_len: usize) {
@@ -49,8 +61,12 @@ fn main() {
             s.push_str(" ");
         }
         s.push_str(&right);
-        print!("{}", s.color(color));
-        print!(" {} ", " ".background(DIVIDER));
+        if atty::is(atty::Stream::Stdout) {
+            print!("{}", s.color(color));
+            print!(" {} ", " ".background(DIVIDER));
+        } else {
+            print!("{}   ", s);
+        }
     }
 
     fn print_time_or_reds(left: impl ToString, right: impl ToString, color: AnsiColor) {
@@ -66,8 +82,6 @@ fn main() {
         println!();
     }
 
-    let saves = vec![include_str!("../0.celeste"), include_str!("../1.celeste")];
-
     for save in saves {
         let root = save.parse::<Element>().unwrap();
         let stats = Stats::from_save(&root);
@@ -80,11 +94,15 @@ fn main() {
             _ => panic!("more than 200 berries"),
         };
 
-        println!(
-            " {} {}🍓",
-            stats.name.underline(),
-            stats.total_berries.to_string().color(berry_color)
-        );
+        if atty::is(atty::Stream::Stdout) {
+            println!(
+                " {} {}🍓",
+                stats.name.underline(),
+                stats.total_berries.to_string().color(berry_color)
+            );
+        } else {
+            println!(" {} {}🍓", stats.name, stats.total_berries.to_string());
+        }
 
         for world_stats in stats.worlds {
             print_divider(world_stats.world);
@@ -106,8 +124,11 @@ fn main() {
                 print_side("e", SUBPAR);
                 print_time_or_reds("timeless", "", NORMAL);
                 let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
-                print_dashes_or_cassette("min dashes:", format!("{:>4}", min_dashes), 
-                    if min_dashes > 0 { NORMAL } else { BEST },);
+                print_dashes_or_cassette(
+                    "min dashes:",
+                    format!("{:>4}", min_dashes),
+                    if min_dashes > 0 { NORMAL } else { BEST },
+                );
                 print_deaths_or_heart("undying", "", NORMAL);
                 continue;
             }
@@ -361,16 +382,16 @@ pub use self::World::*;
 impl World {
     pub fn name(self) -> &'static str {
         match self {
-            Prologue => "Prologue",
-            ForsakenCity => "Forsaken City",
-            OldSite => "Old Site",
-            CelestialResort => "Celestial Resort",
-            GoldenRidge => "Golden Ridge",
-            MirrorTemple => "Mirror Temple",
-            Reflection => "Reflection",
-            TheSummit => "The Summit",
-            Epilogue => "Epilogue",
-            Core => "Core",
+            Prologue => "    Prologue",
+            ForsakenCity => "1.  Forsaken City",
+            OldSite => "2.  Old Site",
+            CelestialResort => "3.  Celestial Resort",
+            GoldenRidge => "4.  Golden Ridge",
+            MirrorTemple => "5.  Mirror Temple",
+            Reflection => "6.  Reflection",
+            TheSummit => "7.  The Summit",
+            Epilogue => "    Epilogue",
+            Core => "8.  Core",
         }
     }
 

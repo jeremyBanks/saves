@@ -36,8 +36,12 @@ echo "🍓 Celeste";
 -qq open -W /Applications/Celeste.app || \
 /mnt/d/Program\ Files/Celeste/Celeste.exe;
 
-cargo run 1> info.txt 2> /dev/null;
--qq git add info.txt;
+rm -f 0.celeste.txt; cargo run 0.celeste 1> 0.celeste.txt 2> /dev/null || rm -f 0.celeste.txt;
+rm -f 1.celeste.txt; cargo run 1.celeste 1> 1.celeste.txt 2> /dev/null || rm -f 1.celeste.txt;
+rm -f 2.celeste.txt; cargo run 2.celeste 1> 2.celeste.txt 2> /dev/null || rm -f 2.celeste.txt;
+cargo run 0.celeste;
+
+-qq git add .;
 
 if -q git commit . -m "🍓 $user" --allow-empty-message; then
     -q git push && echo "✅ Synced" || echo "⚠ Sync failed";
