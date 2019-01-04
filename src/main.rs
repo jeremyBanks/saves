@@ -106,7 +106,8 @@ fn main() {
                 print_side("e", SUBPAR);
                 print_time_or_reds("timeless", "", NORMAL);
                 let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
-                print_dashes_or_cassette("min dashes:", format!("{:>4}", min_dashes), NORMAL);
+                print_dashes_or_cassette("min dashes:", format!("{:>4}", min_dashes), 
+                    if min_dashes > 0 { NORMAL } else { BEST },);
                 print_deaths_or_heart("undying", "", NORMAL);
                 continue;
             }
@@ -148,7 +149,7 @@ fn main() {
                     print_side("A", NORMAL);
 
                     if let Some(duration) = world_stats.a_side.full_clear {
-                        print_time_or_reds("full%:", duration.formatted(), BEST);
+                        print_time_or_reds("full:", duration.formatted(), BEST);
                         print_dashes_or_cassette("has cassette", "", BEST);
                         print_deaths_or_heart("has crystal heart", "", BEST);
                     } else {
