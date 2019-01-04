@@ -1,0 +1,34 @@
+ Banks 91🍓
+      Prologue                                                    
+  p   any%:       43.945s   undashable         min deaths:     0   
+  1.  Forsaken City                                               
+  A   any%:     1m29.471s   min dashes:   54   min deaths:     0   
+  A   full:     6m04.038s   has cassette       has crystal heart   
+  B   any%:    10m30.887s   min dashes:   54   min deaths:    60   
+  2.  Old Site                                                    
+  A   any%:     3m26.210s   min dashes:  113   min deaths:     2   
+  A   18 / 18 red berries   has cassette       has crystal heart   
+  B   any%:    53m36.808s   min dashes:  341   min deaths:   353   
+  3.  Celestial Resort                                            
+  A   any%:    32m55.893s   min dashes:  301   min deaths:   171   
+  A   25 / 25 red berries   has cassette       has crystal heart   
+  B   any%:  1h53m52.181s   min dashes:  123   min deaths:   963   
+  4.  Golden Ridge                                                
+  A   any%:  1h05m46.346s   min dashes:  227   min deaths:   346   
+  A   14 / 29 red berries   no cassette        no crystal heart    
+  5.  Mirror Temple                                               
+  A   any%:  1h43m11.553s   min dashes:  618   min deaths:   334   
+  A   10 / 31 red berries   no cassette        no crystal heart    
+  6.  Reflection                                                  
+  A   any%:  2h32m51.313s   min dashes:  580   min deaths:   776   
+  A   none available here   has cassette       has crystal heart   
+  7.  The Summit                                                  
+  A   any%:  2h24m13.187s   min dashes:  641   min deaths:   701   
+  A    4 / 47 red berries   no cassette        no crystal heart    
+      Epilogue                                                    
+  e   timeless              min dashes:    0   undying             
+  8.  Core                                                        
+  A   segmented             segmented          segmented           
+  A    0 / 5  red berries   has cassette       has crystal heart   
+                                                                  
+
