@@ -63,9 +63,9 @@ fn main() {
         s.push_str(&right);
         if atty::is(atty::Stream::Stdout) {
             print!(" {}", s.color(color));
-            print!(" {} ", " ".background(DIVIDER));
+            print!(" {}", " ".background(DIVIDER));
         } else {
-            print!(" {}   ", s);
+            print!(" {}  ", s);
         }
     }
 
