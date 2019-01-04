@@ -89,6 +89,28 @@ fn main() {
         for world_stats in stats.worlds {
             print_divider(world_stats.world);
 
+            if world_stats.world == Prologue {
+                let duration = world_stats.a_side.common.single_run.unwrap();
+                print_side("p", SUBPAR);
+                print_time_or_reds("any%:", duration.formatted(), NORMAL);
+                print_dashes_or_cassette("undashable", "", NORMAL);
+                let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap();
+                print_deaths_or_heart(
+                    "min deaths:",
+                    format!("{:>4}", min_deaths),
+                    if min_deaths > 0 { NORMAL } else { BEST },
+                );
+                continue;
+            }
+            if world_stats.world == Epilogue {
+                print_side("e", SUBPAR);
+                print_time_or_reds("timeless", "", NORMAL);
+                let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
+                print_dashes_or_cassette("min dashes:", format!("{:>4}", min_dashes), NORMAL);
+                print_deaths_or_heart("undying", "", NORMAL);
+                continue;
+            }
+
             if world_stats.a_side.common.completed {
                 print_side("A", NORMAL);
 
@@ -99,7 +121,7 @@ fn main() {
                         let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
                         print_dashes_or_cassette(
                             "min dashes:",
-                            format!(" {:>4}", min_dashes),
+                            format!("{:>4}", min_dashes),
                             if min_dashes > 0 { NORMAL } else { BEST },
                         );
                     } else {
@@ -110,16 +132,16 @@ fn main() {
                         let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap();
                         print_deaths_or_heart(
                             "min deaths:",
-                            format!(" {:>4}", min_deaths),
+                            format!("{:>4}", min_deaths),
                             if min_deaths > 0 { NORMAL } else { BEST },
                         );
                     } else {
                         print_deaths_or_heart("has golden berry", "", BEST);
                     }
                 } else {
-                    print_time_or_reds("any%:", "segmented", SUBPAR);
-                    print_dashes_or_cassette("", "segmented", SUBPAR);
-                    print_deaths_or_heart("", "segmented", SUBPAR);
+                    print_time_or_reds("segmented", "", SUBPAR);
+                    print_dashes_or_cassette("segmented", "", SUBPAR);
+                    print_deaths_or_heart("segmented", "", SUBPAR);
                 }
 
                 if world_stats.world.has_unlockables() {
@@ -138,19 +160,19 @@ fn main() {
                                     world_stats.world.red_berries()
                                 ),
                                 "red berries",
-                                
                                 if world_stats.red_berries() > 0 {
-                                    if world_stats.red_berries() >= world_stats.world.red_berries() {
+                                    if world_stats.red_berries() >= world_stats.world.red_berries()
+                                    {
                                         GOOD
                                     } else {
                                         NORMAL
                                     }
                                 } else {
                                     SUBPAR
-                                }
+                                },
                             );
                         } else {
-                            print_time_or_reds("", "", NORMAL);
+                            print_time_or_reds("", "none available here", NORMAL);
                         }
 
                         if world_stats.a_side.cassette {
@@ -177,7 +199,7 @@ fn main() {
                     let min_dashes = world_stats.b_side.common.fewest_dashes.unwrap();
                     print_dashes_or_cassette(
                         "min dashes:",
-                        format!(" {:>4}", min_dashes),
+                        format!("{:>4}", min_dashes),
                         if min_dashes > 0 { NORMAL } else { BEST },
                     );
 
@@ -185,16 +207,16 @@ fn main() {
                         let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap();
                         print_deaths_or_heart(
                             "min deaths:",
-                            format!(" {:>4}", min_deaths),
+                            format!("{:>4}", min_deaths),
                             if min_deaths > 0 { NORMAL } else { BEST },
                         );
                     } else {
                         print_deaths_or_heart("has golden berry", "", BEST);
                     }
                 } else {
-                    print_time_or_reds("any%:", "segmented", SUBPAR);
-                    print_dashes_or_cassette("", "", SUBPAR);
-                    print_deaths_or_heart("", "", SUBPAR);
+                    print_time_or_reds("segmented", "", SUBPAR);
+                    print_dashes_or_cassette("segmented", "", SUBPAR);
+                    print_deaths_or_heart("segmented", "", SUBPAR);
                 }
             }
 
@@ -207,7 +229,7 @@ fn main() {
                     let min_dashes = world_stats.c_side.common.fewest_dashes.unwrap();
                     print_dashes_or_cassette(
                         "min dashes:",
-                        format!(" {:>4}", min_dashes),
+                        format!("{:>4}", min_dashes),
                         if min_dashes > 0 { NORMAL } else { BEST },
                     );
 
@@ -215,16 +237,16 @@ fn main() {
                         let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap();
                         print_deaths_or_heart(
                             "min deaths:",
-                            format!(" {:>4}", min_deaths),
+                            format!("{:>4}", min_deaths),
                             if min_deaths > 0 { NORMAL } else { BEST },
                         );
                     } else {
                         print_deaths_or_heart("has golden berry", "", BEST);
                     }
                 } else {
-                    print_time_or_reds("any%:", "segmented", SUBPAR);
-                    print_dashes_or_cassette("", "", SUBPAR);
-                    print_deaths_or_heart("", "", SUBPAR);
+                    print_time_or_reds("segmented", "", SUBPAR);
+                    print_dashes_or_cassette("segmented", "", SUBPAR);
+                    print_deaths_or_heart("segmented", "", SUBPAR);
                 }
             }
         }
@@ -432,7 +454,7 @@ impl Stats {
             .expect_child("Areas")
             .children()
             .map(WorldStats::from_save)
-            .filter(|stats| stats.world.has_unlockables())
+            // .filter(|stats| stats.world.has_unlockables())
             .collect();
 
         Self {
