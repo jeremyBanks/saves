@@ -55,10 +55,7 @@ fn main() {
                     print!(" {}", " ".background(DarkGray));
                     println!();
                 } else {
-                    print!(
-                        "{:<67}",
-                        "completed but not in a single run".color(DarkGray)
-                    );
+                    print!("{:<67}", "segmented completion".color(DarkGray));
                     print!(" {}", " ".background(DarkGray));
                     println!();
                 }
@@ -135,10 +132,7 @@ fn main() {
                     print!(" {}", " ".background(DarkGray));
                     println!();
                 } else {
-                    print!(
-                        "{:<67}",
-                        "completed but not in a single run".color(DarkGray)
-                    );
+                    print!("{:<67}", "segmented completion".color(DarkGray));
                     print!(" {}", " ".background(DarkGray));
                     println!();
                 }
@@ -169,10 +163,7 @@ fn main() {
                     print!(" {}", " ".background(DarkGray));
                     println!();
                 } else {
-                    print!(
-                        "{:<67}",
-                        "completed but not in a single run".color(DarkGray)
-                    );
+                    print!("{:<67}", "segmented completion".color(DarkGray));
                     print!(" {}", " ".background(DarkGray));
                     println!();
                 }
