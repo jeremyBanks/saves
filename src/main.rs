@@ -16,7 +16,7 @@ fn main() {
         .collect::<Vec<_>>();
 
     if saves.len() == 0 {
-        eprintln!("Error: no arguments provided. One more more Celeste save file paths expected.");
+        eprintln!("Error: no arguments provided. One or more Celeste save file paths expected.");
         return;
     }
 
@@ -122,7 +122,7 @@ fn main() {
             }
             if world_stats.world == Epilogue {
                 print_side("e", SUBPAR);
-                print_time_or_reds("timeless", "", NORMAL);
+                print_time_or_reds("untimed", "", NORMAL);
                 let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
                 print_dashes_or_cassette(
                     "min dashes:",
@@ -225,7 +225,7 @@ fn main() {
                         if min_dashes > 0 { NORMAL } else { BEST },
                     );
 
-                    if !world_stats.has_golden_a() {
+                    if !world_stats.has_golden_b() {
                         let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap();
                         print_deaths_or_heart(
                             "min deaths:",
@@ -255,7 +255,7 @@ fn main() {
                         if min_dashes > 0 { NORMAL } else { BEST },
                     );
 
-                    if !world_stats.has_golden_a() {
+                    if !world_stats.has_golden_c() {
                         let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap();
                         print_deaths_or_heart(
                             "min deaths:",
