@@ -1,6 +1,7 @@
 #![feature(try_from)]
 use minidom::Element;
 use serde_derive::{Deserialize, Serialize};
+use std::string::ToString;
 use std::{collections::BTreeSet, time::Duration};
 
 mod domutils;
@@ -10,167 +11,225 @@ mod stringutils;
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
 fn main() {
+    const HEADER_FG: AnsiColor = Black;
+    const HEADER_BG: AnsiColor = White;
+    const DIVIDER: AnsiColor = DarkGray;
+
+    const SUBPAR: AnsiColor = DarkGray;
+    const NORMAL: AnsiColor = White;
+    const GOOD: AnsiColor = Magenta;
+    const BEST: AnsiColor = Yellow;
+
+    fn print_divider(content: impl ToString) {
+        println!(
+            "{}",
+            format!(" {:<64} ", content.to_string())
+                .color(HEADER_FG)
+                .background(HEADER_BG)
+        );
+    }
+
+    fn print_side(side: impl ToString, color: AnsiColor) {
+        print!("{} ", " ".background(DIVIDER));
+        print!("{}", side.to_string().color(color));
+        print!(" {} ", " ".background(DIVIDER));
+    }
+
+    fn print_cell(left: impl ToString, right: impl ToString, color: AnsiColor, max_len: usize) {
+        let left = left.to_string();
+        let right = right.to_string();
+        let padding = if left.len() + right.len() < max_len {
+            max_len - left.len() - right.len()
+        } else {
+            0
+        };
+        let mut s = String::new();
+        s.push_str(&left);
+        for _ in 0..padding {
+            s.push_str(" ");
+        }
+        s.push_str(&right);
+        print!("{}", s.color(color));
+        print!(" {} ", " ".background(DIVIDER));
+    }
+
+    fn print_time_or_reds(left: impl ToString, right: impl ToString, color: AnsiColor) {
+        print_cell(left, right, color, "any%:    19m55.151s".len());
+    }
+
+    fn print_dashes_or_cassette(left: impl ToString, right: impl ToString, color: AnsiColor) {
+        print_cell(left, right, color, "min dashes:  265".len());
+    }
+
+    fn print_deaths_or_heart(left: impl ToString, right: impl ToString, color: AnsiColor) {
+        print_cell(left, right, color, "has crystal heart".len());
+        println!();
+    }
+
     let saves = vec![include_str!("../0.celeste"), include_str!("../1.celeste")];
 
     for save in saves {
         let root = save.parse::<Element>().unwrap();
         let stats = Stats::from_save(&root);
 
-        println!(" {}", stats.name.underline());
+        let berry_color = match stats.total_berries {
+            0 => SUBPAR,
+            1..=174 => NORMAL,
+            175..=199 => GOOD,
+            200 => BEST,
+            _ => panic!("more than 200 berries"),
+        };
+
+        println!(
+            " {} {}🍓",
+            stats.name.underline(),
+            stats.total_berries.to_string().color(berry_color)
+        );
 
         for world_stats in stats.worlds {
-            println!(
-                "{}",
-                format!(" {:<64}", world_stats.world.to_string())
-                    .color(Black)
-                    .background(White)
-            );
+            print_divider(world_stats.world);
 
             if world_stats.a_side.common.completed {
-                print!("{} ", " ".background(DarkGray));
-                print!("{}", "A".color(White));
-                print!(" {} ", " ".background(DarkGray));
+                print_side("A", NORMAL);
+
                 if let Some(duration) = world_stats.a_side.common.single_run {
-                    print!("{}", format!("any%: {}", duration.formatted()));
+                    print_time_or_reds("any%:", duration.formatted(), NORMAL);
 
-                    print!(" {} ", " ".background(DarkGray));
                     if !world_stats.has_winged_golden() {
-                        print!(
-                            "min dashes: {:>4}",
-                            world_stats.a_side.common.fewest_dashes.unwrap()
+                        let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
+                        print_dashes_or_cassette(
+                            "min dashes:",
+                            format!(" {:>4}", min_dashes),
+                            if min_dashes > 0 { NORMAL } else { BEST },
                         );
                     } else {
-                        print!("has winged berry");
+                        print_dashes_or_cassette("has winged berry", "", BEST);
                     }
 
-                    print!(" {} ", " ".background(DarkGray));
                     if !world_stats.has_golden_a() {
-                        print!(
-                            "min deaths: {:>4}",
-                            world_stats.a_side.common.fewest_deaths.unwrap()
+                        let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap();
+                        print_deaths_or_heart(
+                            "min deaths:",
+                            format!(" {:>4}", min_deaths),
+                            if min_deaths > 0 { NORMAL } else { BEST },
                         );
                     } else {
-                        print!("{}", "has golden berry".color(Yellow));
+                        print_deaths_or_heart("has golden berry", "", BEST);
                     }
-                    print!(" {}", " ".background(DarkGray));
-                    println!();
                 } else {
-                    print!("{:<67}", "segmented completion".color(DarkGray));
-                    print!(" {}", " ".background(DarkGray));
-                    println!();
+                    print_time_or_reds("any%:", "segmented", SUBPAR);
+                    print_dashes_or_cassette("", "segmented", SUBPAR);
+                    print_deaths_or_heart("", "segmented", SUBPAR);
                 }
 
-                if let Some(duration) = world_stats.a_side.full_clear {
-                    print!("{} ", " ".background(DarkGray));
-                    print!("{}", "A".color(White));
-                    print!(" {} ", " ".background(DarkGray));
-                    print!(
-                        "{}",
-                        format!("full: {}", duration.formatted()).color(Yellow)
-                    );
-                    print!(" {:<38}{} ", "", " ".background(DarkGray));
-                    println!();
-                } else if world_stats.world.has_unlockables() {
-                    print!("{} ", " ".background(DarkGray));
-                    print!("{}", "A".color(White));
-                    print!(" {} ", " ".background(DarkGray));
-                    if world_stats.world.red_berries() > 0 {
-                        if world_stats.red_berries() < world_stats.world.red_berries() {
-                            print!(
-                                "{}",
+                if world_stats.world.has_unlockables() {
+                    print_side("A", NORMAL);
+
+                    if let Some(duration) = world_stats.a_side.full_clear {
+                        print_time_or_reds("full%:", duration.formatted(), BEST);
+                        print_dashes_or_cassette("has cassette", "", BEST);
+                        print_deaths_or_heart("has crystal heart", "", BEST);
+                    } else {
+                        if world_stats.world.red_berries() > 0 {
+                            print_time_or_reds(
                                 format!(
-                                    "{:>2} / {:<2} red berries",
+                                    "{:>2} / {:<2}",
                                     world_stats.red_berries(),
                                     world_stats.world.red_berries()
-                                )
-                                .color(White)
+                                ),
+                                "red berries",
+                                
+                                if world_stats.red_berries() > 0 {
+                                    if world_stats.red_berries() >= world_stats.world.red_berries() {
+                                        GOOD
+                                    } else {
+                                        NORMAL
+                                    }
+                                } else {
+                                    SUBPAR
+                                }
                             );
                         } else {
-                            print!("{}", "has all red berries".color(Magenta))
+                            print_time_or_reds("", "", NORMAL);
                         }
-                    } else {
-                        print!("                   ");
+
+                        if world_stats.a_side.cassette {
+                            print_dashes_or_cassette("has cassette", "", GOOD);
+                        } else {
+                            print_dashes_or_cassette("no cassette", "", NORMAL);
+                        }
+
+                        if world_stats.a_side.cassette {
+                            print_deaths_or_heart("has crystal heart", "", GOOD);
+                        } else {
+                            print_deaths_or_heart("no crystal heart", "", NORMAL);
+                        }
                     }
-                    print!(" {} ", " ".background(DarkGray));
-                    if world_stats.a_side.cassette {
-                        print!("{}", "has cassette    ".color(Magenta));
-                    } else {
-                        print!("{}", "no  cassette    ".dim());
-                    }
-                    print!(" {} ", " ".background(DarkGray));
-                    if world_stats.a_side.cassette {
-                        print!("{}", "has crystal heart".color(Magenta));
-                    } else {
-                        print!("{}", "no  crystal heart".dim());
-                    }
-                    print!(" {}", " ".background(DarkGray));
-                    println!();
                 }
             }
 
             if world_stats.b_side.common.completed {
-                print!("{} ", " ".background(DarkGray));
-                print!("{}", "B".color(Magenta));
-                print!(" {} ", " ".background(DarkGray));
+                print_side("B", GOOD);
 
                 if let Some(duration) = world_stats.b_side.common.single_run {
-                    print!("any%: {}", duration.formatted());
-                    print!(" {} ", " ".background(DarkGray));
-                    print!(
-                        "min dashes: {:>4}",
-                        world_stats.b_side.common.fewest_dashes.unwrap()
+                    print_time_or_reds("any%:", duration.formatted(), NORMAL);
+
+                    let min_dashes = world_stats.b_side.common.fewest_dashes.unwrap();
+                    print_dashes_or_cassette(
+                        "min dashes:",
+                        format!(" {:>4}", min_dashes),
+                        if min_dashes > 0 { NORMAL } else { BEST },
                     );
-                    print!(" {} ", " ".background(DarkGray));
-                    if !world_stats.has_golden_b() {
-                        print!(
-                            "min deaths: {:>4}",
-                            world_stats.b_side.common.fewest_deaths.unwrap()
+
+                    if !world_stats.has_golden_a() {
+                        let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap();
+                        print_deaths_or_heart(
+                            "min deaths:",
+                            format!(" {:>4}", min_deaths),
+                            if min_deaths > 0 { NORMAL } else { BEST },
                         );
                     } else {
-                        print!("has golden berry");
+                        print_deaths_or_heart("has golden berry", "", BEST);
                     }
-                    print!(" {}", " ".background(DarkGray));
-                    println!();
                 } else {
-                    print!("{:<67}", "segmented completion".color(DarkGray));
-                    print!(" {}", " ".background(DarkGray));
-                    println!();
+                    print_time_or_reds("any%:", "segmented", SUBPAR);
+                    print_dashes_or_cassette("", "", SUBPAR);
+                    print_deaths_or_heart("", "", SUBPAR);
                 }
             }
 
             if world_stats.c_side.common.completed {
-                print!("{} ", " ".background(DarkGray));
-                print!("{}", "C".color(Yellow));
-                print!(" {} ", " ".background(DarkGray));
+                print_side("C", BEST);
 
                 if let Some(duration) = world_stats.c_side.common.single_run {
-                    print!("any%: {}", duration.formatted());
-                    print!(" {} ", " ".background(DarkGray));
-                    print!(
-                        "min dashes: {:>4}",
-                        world_stats.c_side.common.fewest_dashes.unwrap()
+                    print_time_or_reds("any%:", duration.formatted(), NORMAL);
+
+                    let min_dashes = world_stats.c_side.common.fewest_dashes.unwrap();
+                    print_dashes_or_cassette(
+                        "min dashes:",
+                        format!(" {:>4}", min_dashes),
+                        if min_dashes > 0 { NORMAL } else { BEST },
                     );
 
-                    print!(" {} ", " ".background(DarkGray));
-                    if !world_stats.has_golden_c() {
-                        print!(
-                            "min deaths: {:>4}",
-                            world_stats.c_side.common.fewest_deaths.unwrap()
+                    if !world_stats.has_golden_a() {
+                        let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap();
+                        print_deaths_or_heart(
+                            "min deaths:",
+                            format!(" {:>4}", min_deaths),
+                            if min_deaths > 0 { NORMAL } else { BEST },
                         );
                     } else {
-                        print!("has golden berry");
+                        print_deaths_or_heart("has golden berry", "", BEST);
                     }
-                    print!(" {}", " ".background(DarkGray));
-                    println!();
                 } else {
-                    print!("{:<67}", "segmented completion".color(DarkGray));
-                    print!(" {}", " ".background(DarkGray));
-                    println!();
+                    print_time_or_reds("any%:", "segmented", SUBPAR);
+                    print_dashes_or_cassette("", "", SUBPAR);
+                    print_deaths_or_heart("", "", SUBPAR);
                 }
             }
         }
 
-        println!("{}", format!(" {:<64}", "").color(Black).background(White));
+        print_divider("");
         println!();
     }
 }
@@ -183,6 +242,7 @@ pub struct Stats {
     pub variant_mode: bool,
     pub name: String,
     pub worlds: Vec<WorldStats>,
+    pub total_berries: u32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -366,11 +426,13 @@ impl Stats {
         let assist_mode = save_data.expect_parse_child("AssistMode");
         let variant_mode = save_data.expect_parse_child("VariantMode");
 
+        let total_berries = save_data.expect_parse_child("TotalStrawberries");
+
         let worlds = save_data
             .expect_child("Areas")
             .children()
             .map(WorldStats::from_save)
-            // .filter(|stats| stats.world.has_unlockables())
+            .filter(|stats| stats.world.has_unlockables())
             .collect();
 
         Self {
@@ -379,6 +441,7 @@ impl Stats {
             cheat_mode,
             assist_mode,
             variant_mode,
+            total_berries,
             worlds,
         }
     }
