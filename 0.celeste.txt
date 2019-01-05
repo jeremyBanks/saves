@@ -1,6 +1,6 @@
  Banks 101🍓
       Prologue                                                    
-  p   any%:       43.945s   undashable         min deaths:     0  
+  p   any%:       43.945s   can't dash here    min deaths:     0  
   1.  Forsaken City                                               
   A   any%:     1m29.471s   min dashes:   54   min deaths:     0  
   A   full:     6m04.038s   has cassette       has crystal heart  
@@ -27,7 +27,7 @@
   A   any%:  2h24m13.187s   min dashes:  641   min deaths:   701  
   A   11 / 47 red berries   no cassette        no crystal heart   
       Epilogue                                                    
-  e   untimed               min dashes:    0   undying            
+  e   not timed here        min dashes:    0   can't die here     
   8.  Core                                                        
   A   segmented             segmented          segmented          
   A    0 / 5  red berries   has cassette       mandatory heart    
