@@ -105,6 +105,13 @@ fn main() {
         }
 
         for world_stats in stats.worlds {
+            if !(world_stats.a_side.common.completed
+                || world_stats.b_side.common.completed
+                || world_stats.c_side.common.completed)
+            {
+                continue;
+            }
+
             print_divider(world_stats.world);
 
             if world_stats.world == Prologue {
