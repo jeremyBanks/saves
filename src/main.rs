@@ -24,8 +24,8 @@ fn main() {
     const HEADER_BG: AnsiColor = White;
     const DIVIDER: AnsiColor = DarkGray;
 
-    const SUBPAR: AnsiColor = DarkGray;
     const IRRELEVANT: AnsiColor = DarkGray;
+    const SUBPAR: AnsiColor = DarkRed;
     const NORMAL: AnsiColor = White;
     const GOOD: AnsiColor = Magenta;
     const BEST: AnsiColor = Yellow;
