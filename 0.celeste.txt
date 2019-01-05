@@ -30,6 +30,6 @@
   e   untimed               min dashes:    0   undying            
   8.  Core                                                        
   A   segmented             segmented          segmented          
-  A    0 / 5  red berries   has cassette       heart is mandatory  
+  A    0 / 5  red berries   has cassette       mandatory heart    
                                                                   
 
