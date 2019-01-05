@@ -97,9 +97,9 @@ fn main() {
 
         if atty::is(atty::Stream::Stdout) {
             println!(
-                " {} {}🍓",
-                stats.name.underline(),
-                stats.total_berries.to_string().color(berry_color)
+                " {} {}",
+                stats.name.underline().color(White),
+                format!("{}🍓", stats.total_berries).color(berry_color)
             );
         } else {
             println!(" {} {}🍓", stats.name, stats.total_berries.to_string());
