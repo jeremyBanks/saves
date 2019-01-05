@@ -32,7 +32,7 @@ echo "✅ Synced"
 
 echo "🍓 Celeste";
 
-test "OFF" -eq "${CELESTE:ON}" ||\
+test "OFF" -eq "${CELESTE:-ON}" ||\
 -qq open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app || \
 -qq open -W /Applications/Celeste.app || \
 /mnt/d/Program\ Files/Celeste/Celeste.exe;
