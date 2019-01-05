@@ -212,7 +212,7 @@ fn main() {
                         }
 
                         if world_stats.world == Core {
-                            print_deaths_or_heart("mandatory heart", "", IRRELEVANT);
+                            print_deaths_or_heart("mandatory heartz", "", IRRELEVANT);
                         } else if world_stats.a_side.heart {
                             print_deaths_or_heart("has crystal heart", "", GOOD);
                         } else {
