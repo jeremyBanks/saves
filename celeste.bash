@@ -37,10 +37,11 @@ test "OFF" = "${CELESTE:-ON}" ||\
 -qq open -W /Applications/Celeste.app || \
 /mnt/d/Program\ Files/Celeste/Celeste.exe;
 
-rm -f 0.celeste.txt; cargo run 0.celeste 1> 0.celeste.txt 2> /dev/null || rm -f 0.celeste.txt;
-rm -f 1.celeste.txt; cargo run 1.celeste 1> 1.celeste.txt 2> /dev/null || rm -f 1.celeste.txt;
-rm -f 2.celeste.txt; cargo run 2.celeste 1> 2.celeste.txt 2> /dev/null || rm -f 2.celeste.txt;
-cargo run 0.celeste;
+cargo run build;
+rm -f 0.celeste.txt; target/debug/celeste-saves 0.celeste 1> 0.celeste.txt 2> /dev/null || rm -f 0.celeste.txt;
+rm -f 1.celeste.txt; target/debug/celeste-saves 1.celeste 1> 1.celeste.txt 2> /dev/null || rm -f 1.celeste.txt;
+rm -f 2.celeste.txt; target/debug/celeste-saves 2.celeste 1> 2.celeste.txt 2> /dev/null || rm -f 2.celeste.txt;
+target/debug/celeste-saves 0.celeste;
 
 -qq git add .;
 
