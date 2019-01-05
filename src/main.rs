@@ -130,14 +130,14 @@ fn main() {
             }
             if world_stats.world == Epilogue {
                 print_side("e", IRRELEVANT);
-                print_time_or_reds("untimed", "", NORMAL);
+                print_time_or_reds("untimed", "", IRRELEVANT);
                 let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
                 print_dashes_or_cassette(
                     "min dashes:",
                     format!("{:>4}", min_dashes),
                     if min_dashes > 0 { NORMAL } else { BEST },
                 );
-                print_deaths_or_heart("undying", "", NORMAL);
+                print_deaths_or_heart("undying", "", IRRELEVANT);
                 continue;
             }
 
@@ -202,7 +202,7 @@ fn main() {
                                 },
                             );
                         } else {
-                            print_time_or_reds("", "none available here", IRRELEVANT);
+                            print_time_or_reds("", "no red berries", IRRELEVANT);
                         }
 
                         if world_stats.a_side.cassette {
