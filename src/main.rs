@@ -202,7 +202,7 @@ fn main() {
                                 },
                             );
                         } else {
-                            print_time_or_reds("", "no red berries", IRRELEVANT);
+                            print_time_or_reds("no red berries here", "", IRRELEVANT);
                         }
 
                         if world_stats.a_side.cassette {
