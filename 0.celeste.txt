@@ -1,4 +1,4 @@
- Banks 101🍓
+ Banks 107🍓
       Prologue                                                    
   p   any%:       43.945s   can't dash         min deaths:     0  
   1.  Forsaken City                                               
@@ -19,7 +19,7 @@
   B   any%:  1h44m37.845s   min dashes:  124   min deaths:   837  
   5.  Mirror Temple                                               
   A   any%:  1h43m11.553s   min dashes:  618   min deaths:   334  
-  A   12 / 31 red berries   no cassette        no crystal heart   
+  A   18 / 31 red berries   no cassette        no crystal heart   
   6.  Reflection                                                  
   A   any%:  2h32m51.313s   min dashes:  580   min deaths:   776  
   A   no red berries        has cassette       no crystal heart   
