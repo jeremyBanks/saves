@@ -46,7 +46,7 @@ rm -f 2.celeste.txt; target/debug/celeste-saves 2.celeste 1> 2.celeste.txt 2> /d
 
 if -qq git commit . -m "🍓 $user" --allow-empty-message; then
     -qq git push && echo "✅ Synced" || echo "⚠ Sync failed";
-    git diff -U2 --ws-error-highlight=none HEAD~1..HEAD *.celeste.txt;
+    git diff -U4 --ws-error-highlight=none HEAD~1..HEAD *.celeste.txt;
 else
     echo "🆗 No changes to sync"
 fi
