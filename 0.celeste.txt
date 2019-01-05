@@ -10,7 +10,7 @@
   A   18 / 18 red berries   has cassette       has crystal heart  
   B   any%:    53m36.808s   min dashes:  341   min deaths:   353  
   3.  Celestial Resort                                            
-  A   any%:    32m55.893s   min dashes:  301   min deaths:   171  
+  A   any%:    18m31.307s   min dashes:  262   min deaths:    79  
   A   25 / 25 red berries   has cassette       has crystal heart  
   B   any%:  1h53m52.181s   min dashes:  123   min deaths:   963  
   4.  Golden Ridge                                                
