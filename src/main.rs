@@ -321,7 +321,7 @@ impl std::fmt::Display for World {
 impl From<u32> for World {
     fn from(id: u32) -> Self {
         match id {
-            0 => Prologu0e,
+            0 => Prologue,
             1 => ForsakenCity,
             2 => OldSite,
             3 => CelestialResort,
