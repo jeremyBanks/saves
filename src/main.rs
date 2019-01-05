@@ -203,7 +203,7 @@ fn main() {
                             print_dashes_or_cassette("no cassette", "", NORMAL);
                         }
 
-                        if world_stats.a_side.cassette {
+                        if world_stats.a_side.heart {
                             print_deaths_or_heart("has crystal heart", "", GOOD);
                         } else {
                             print_deaths_or_heart("no crystal heart", "", NORMAL);
