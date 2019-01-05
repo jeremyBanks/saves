@@ -1,4 +1,4 @@
- Banks 100🍓
+ Banks 101🍓
       Prologue                                                    
   p   any%:       43.945s   undashable         min deaths:     0  
   1.  Forsaken City                                               
@@ -15,7 +15,7 @@
   B   any%:  1h53m52.181s   min dashes:  123   min deaths:   963  
   4.  Golden Ridge                                                
   A   any%:  1h05m46.346s   min dashes:  227   min deaths:   346  
-  A   14 / 29 red berries   no cassette        no crystal heart   
+  A   15 / 29 red berries   has cassette       has crystal heart  
   5.  Mirror Temple                                               
   A   any%:  1h43m11.553s   min dashes:  618   min deaths:   334  
   A   12 / 31 red berries   no cassette        no crystal heart   
