@@ -180,7 +180,11 @@ fn main() {
                     if let Some(duration) = world_stats.a_side.full_clear {
                         print_time_or_reds("full:", duration.formatted(), BEST);
                         print_dashes_or_cassette("has cassette", "", BEST);
-                        print_deaths_or_heart("has crystal heart", "", BEST);
+                        if world_stats.world == Core {
+                            print_deaths_or_heart("can't skip heart", "", IRRELEVANT);
+                        } else {
+                            print_deaths_or_heart("has crystal heart", "", BEST);
+                        }
                     } else {
                         if world_stats.world.red_berries() > 0 {
                             print_time_or_reds(
