@@ -1,47 +1,81 @@
- Adny 188🍓
-      Prologue                                                    
-  p   any%:       44.387s   undashable         min deaths:     0  
-  1.  Forsaken City                                               
-  A   any%:     1m26.632s   min dashes:   48   has golden berry   
-  A   full:     5m53.124s   has cassette       has crystal heart  
-  B   any%:     3m01.543s   min dashes:   45   has golden berry   
-  C   any%:       45.628s   min dashes:   15   has golden berry   
-  2.  Old Site                                                    
-  A   any%:     3m04.824s   min dashes:  115   has golden berry   
-  A   full:     6m54.086s   has cassette       has crystal heart  
-  B   any%:     3m07.051s   min dashes:  106   has golden berry   
-  C   any%:       33.507s   min dashes:   24   has golden berry   
-  3.  Celestial Resort                                            
-  A   any%:     9m49.985s   min dashes:  249   min deaths:    25  
-  A   full:    19m55.151s   has cassette       has crystal heart  
-  B   any%:    22m58.428s   min dashes:   96   min deaths:   162  
-  C   any%:       45.033s   min dashes:   21   min deaths:     0  
-  4.  Golden Ridge                                                
-  A   any%:     5m38.045s   min dashes:  164   has golden berry   
-  A   full:    22m54.416s   has cassette       has crystal heart  
-  B   any%:    35m14.375s   min dashes:  132   has golden berry   
-  C   any%:       37.604s   min dashes:   14   has golden berry   
-  5.  Mirror Temple                                               
-  A   any%:    28m09.409s   min dashes:  290   min deaths:    61  
-  A   full:    38m00.873s   has cassette       has crystal heart  
-  B   any%:    31m18.466s   min dashes:  125   min deaths:   165  
-  C   any%:       34.476s   min dashes:   19   min deaths:     0  
-  6.  Reflection                                                  
-  A   any%:    29m12.377s   min dashes:  369   min deaths:    56  
-  A   full:    29m12.377s   has cassette       has crystal heart  
-  B   any%:    55m15.816s   min dashes:  192   min deaths:   314  
-  C   any%:       59.143s   min dashes:   29   min deaths:     0  
-  7.  The Summit                                                  
-  A   any%:    24m20.113s   min dashes:  570   min deaths:    78  
-  A   full:  1h23m55.706s   has cassette       has crystal heart  
-  B   any%:  1h03m41.804s   min dashes:  414   min deaths:   417  
-  C   any%:     1m08.289s   min dashes:   71   min deaths:     0  
-      Epilogue                                                    
-  e   timeless              min dashes:    1   undying            
-  8.  Core                                                        
-  A   any%:    11m29.503s   min dashes:  164   min deaths:    35  
-  A   full:    20m44.723s   has cassette       has crystal heart  
-  B   any%:    44m39.948s   min dashes:  134   min deaths:   319  
-  C   any%:     1m20.699s   min dashes:   40   min deaths:     0  
-                                                                  
+ [4mBanks[24m
+[107m[30m Prologue                                                        [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:       43.945s [100m [49m min dashes:    0 [100m [49m min deaths:    0 [100m [49m
+[107m[30m Forsaken City                                                   [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:     1m29.471s [100m [49m min dashes:   54 [100m [49m min deaths:    0 [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:     6m04.038s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:    10m30.887s [100m [49m min dashes:   54 [100m [49m min deaths:   60 [100m [49m
+[107m[30m Old Site                                                        [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:     3m26.210s [100m [49m min dashes:  113 [100m [49m min deaths:    2 [100m [49m
+[100m [49m [97mA[39m [100m [49m [95mhas all red berries[39m [100m [49m [95mhas cassette    [39m [100m [49m [95mhas crystal heart[39m [100m [49m
+[100m [49m [95mB[39m [100m [49m any%:    53m36.808s [100m [49m min dashes:  341 [100m [49m min deaths:  353 [100m [49m
+[107m[30m Celestial Resort                                                [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:    18m31.307s [100m [49m min dashes:  262 [100m [49m min deaths:   79 [100m [49m
+[100m [49m [97mA[39m [100m [49m [95mhas all red berries[39m [100m [49m [95mhas cassette    [39m [100m [49m [95mhas crystal heart[39m [100m [49m
+[100m [49m [95mB[39m [100m [49m any%:  1h53m52.181s [100m [49m min dashes:  123 [100m [49m min deaths:  963 [100m [49m
+[107m[30m Golden Ridge                                                    [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:  1h05m46.346s [100m [49m min dashes:  227 [100m [49m min deaths:  346 [100m [49m
+[100m [49m [97mA[39m [100m [49m [97m15 / 29 red berries[39m [100m [49m [95mhas cassette    [39m [100m [49m [2mno  crystal heart[22m [100m [49m
+[107m[30m Mirror Temple                                                   [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:  1h43m11.553s [100m [49m min dashes:  618 [100m [49m min deaths:  334 [100m [49m
+[100m [49m [97mA[39m [100m [49m [97m12 / 31 red berries[39m [100m [49m [2mno  cassette    [22m [100m [49m [2mno  crystal heart[22m [100m [49m
+[107m[30m Reflection                                                      [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:  2h32m51.313s [100m [49m min dashes:  580 [100m [49m min deaths:  776 [100m [49m
+[100m [49m [97mA[39m [100m [49m                     [100m [49m [95mhas cassette    [39m [100m [49m [2mno  crystal heart[22m [100m [49m
+[107m[30m The Summit                                                      [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:  2h24m13.187s [100m [49m min dashes:  641 [100m [49m min deaths:  701 [100m [49m
+[100m [49m [97mA[39m [100m [49m [97m11 / 47 red berries[39m [100m [49m [2mno  cassette    [22m [100m [49m [2mno  crystal heart[22m [100m [49m
+[107m[30m Epilogue                                                        [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:            0  [100m [49m min dashes:    0 [100m [49m min deaths:    0 [100m [49m
+[107m[30m Core                                                            [39m[49m
+[100m [49m [97mA[39m [100m [49m [90msegmented completion[39m                                      [100m [49m
+[100m [49m [97mA[39m [100m [49m [97m 0 / 5  red berries[39m [100m [49m [95mhas cassette    [39m [100m [49m [95mhas crystal heart[39m [100m [49m
+[107m[30m                                                                 [39m[49m
+
+ [4mAdny[24m
+[107m[30m Prologue                                                        [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:       44.387s [100m [49m min dashes:    0 [100m [49m min deaths:    0 [100m [49m
+[107m[30m Forsaken City                                                   [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:     1m26.632s [100m [49m min dashes:   48 [100m [49m [93mhas golden berry[39m [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:     5m53.124s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:     3m01.543s [100m [49m min dashes:   45 [100m [49m has golden berry [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:       45.628s [100m [49m min dashes:   15 [100m [49m has golden berry [100m [49m
+[107m[30m Old Site                                                        [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:     3m04.824s [100m [49m min dashes:  115 [100m [49m [93mhas golden berry[39m [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:     6m54.086s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:     3m07.051s [100m [49m min dashes:  106 [100m [49m has golden berry [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:       33.507s [100m [49m min dashes:   24 [100m [49m has golden berry [100m [49m
+[107m[30m Celestial Resort                                                [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:     9m49.985s [100m [49m min dashes:  249 [100m [49m min deaths:   25 [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:    19m55.151s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:    22m58.428s [100m [49m min dashes:   96 [100m [49m min deaths:  162 [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:       45.033s [100m [49m min dashes:   21 [100m [49m has golden berry [100m [49m
+[107m[30m Golden Ridge                                                    [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:     5m38.045s [100m [49m min dashes:  164 [100m [49m [93mhas golden berry[39m [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:    22m54.416s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:    35m14.375s [100m [49m min dashes:  132 [100m [49m min deaths:  212 [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:       37.604s [100m [49m min dashes:   14 [100m [49m has golden berry [100m [49m
+[107m[30m Mirror Temple                                                   [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:    28m09.409s [100m [49m min dashes:  290 [100m [49m min deaths:   61 [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:    38m00.873s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:    31m18.466s [100m [49m min dashes:  125 [100m [49m min deaths:  165 [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:       34.476s [100m [49m min dashes:   19 [100m [49m has golden berry [100m [49m
+[107m[30m Reflection                                                      [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:    29m12.377s [100m [49m min dashes:  369 [100m [49m min deaths:   56 [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:    29m12.377s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:    55m15.816s [100m [49m min dashes:  192 [100m [49m min deaths:  314 [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:       59.143s [100m [49m min dashes:   29 [100m [49m has golden berry [100m [49m
+[107m[30m The Summit                                                      [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:    24m20.113s [100m [49m min dashes:  570 [100m [49m min deaths:   78 [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:  1h23m55.706s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:  1h03m41.804s [100m [49m min dashes:  414 [100m [49m min deaths:  417 [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:     1m08.289s [100m [49m min dashes:   71 [100m [49m has golden berry [100m [49m
+[107m[30m Epilogue                                                        [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:            0  [100m [49m min dashes:    1 [100m [49m min deaths:    0 [100m [49m
+[107m[30m Core                                                            [39m[49m
+[100m [49m [97mA[39m [100m [49m any%:    11m29.503s [100m [49m min dashes:  164 [100m [49m min deaths:   35 [100m [49m
+[100m [49m [97mA[39m [100m [49m [93mfull:    20m44.723s[39m                                       [100m [49m 
+[100m [49m [95mB[39m [100m [49m any%:    44m39.948s [100m [49m min dashes:  134 [100m [49m min deaths:  319 [100m [49m
+[100m [49m [93mC[39m [100m [49m any%:     1m20.699s [100m [49m min dashes:   40 [100m [49m has golden berry [100m [49m
+[107m[30m                                                                 [39m[49m
 
