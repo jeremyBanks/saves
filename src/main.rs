@@ -25,6 +25,7 @@ fn main() {
     const DIVIDER: AnsiColor = DarkGray;
 
     const SUBPAR: AnsiColor = DarkGray;
+    const IRRELEVANT: AnsiColor = DarkGray;
     const NORMAL: AnsiColor = White;
     const GOOD: AnsiColor = Magenta;
     const BEST: AnsiColor = Yellow;
@@ -116,9 +117,9 @@ fn main() {
 
             if world_stats.world == Prologue {
                 let duration = world_stats.a_side.common.single_run.unwrap();
-                print_side("p", SUBPAR);
+                print_side("p", IRRELEVANT);
                 print_time_or_reds("any%:", duration.formatted(), NORMAL);
-                print_dashes_or_cassette("undashable", "", NORMAL);
+                print_dashes_or_cassette("undashable", "", IRRELEVANT);
                 let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap();
                 print_deaths_or_heart(
                     "min deaths:",
@@ -128,7 +129,7 @@ fn main() {
                 continue;
             }
             if world_stats.world == Epilogue {
-                print_side("e", SUBPAR);
+                print_side("e", IRRELEVANT);
                 print_time_or_reds("untimed", "", NORMAL);
                 let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
                 print_dashes_or_cassette(
@@ -201,7 +202,7 @@ fn main() {
                                 },
                             );
                         } else {
-                            print_time_or_reds("", "none available here", NORMAL);
+                            print_time_or_reds("", "none available here", IRRELEVANT);
                         }
 
                         if world_stats.a_side.cassette {
@@ -210,7 +211,9 @@ fn main() {
                             print_dashes_or_cassette("no cassette", "", NORMAL);
                         }
 
-                        if world_stats.a_side.heart {
+                        if world_stats.world == Core {
+                            print_deaths_or_heart("mandatory heart", "", IRRELEVANT);
+                        } else if world_stats.a_side.heart {
                             print_deaths_or_heart("has crystal heart", "", GOOD);
                         } else {
                             print_deaths_or_heart("no crystal heart", "", NORMAL);
