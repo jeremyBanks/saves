@@ -30,6 +30,6 @@
   e   not timed here        min dashes:    0   can't die here     
   8.  Core                                                        
   A   segmented             segmented          segmented          
-  A    0 / 5  red berries   has cassette       mandatory heart    
+  A    0 / 5  red berries   has cassette       can't skip heart   
                                                                   
 
