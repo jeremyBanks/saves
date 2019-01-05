@@ -119,7 +119,7 @@ fn main() {
                 let duration = world_stats.a_side.common.single_run.unwrap();
                 print_side("p", IRRELEVANT);
                 print_time_or_reds("any%:", duration.formatted(), NORMAL);
-                print_dashes_or_cassette("can't dash here", "", IRRELEVANT);
+                print_dashes_or_cassette("can't dash", "", IRRELEVANT);
                 let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap();
                 print_deaths_or_heart(
                     "min deaths:",
@@ -130,14 +130,14 @@ fn main() {
             }
             if world_stats.world == Epilogue {
                 print_side("e", IRRELEVANT);
-                print_time_or_reds("not timed here", "", IRRELEVANT);
+                print_time_or_reds("not timed", "", IRRELEVANT);
                 let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
                 print_dashes_or_cassette(
                     "min dashes:",
                     format!("{:>4}", min_dashes),
                     if min_dashes > 0 { NORMAL } else { BEST },
                 );
-                print_deaths_or_heart("can't die here", "", IRRELEVANT);
+                print_deaths_or_heart("can't die", "", IRRELEVANT);
                 continue;
             }
 
@@ -202,7 +202,7 @@ fn main() {
                                 },
                             );
                         } else {
-                            print_time_or_reds("no red berries here", "", IRRELEVANT);
+                            print_time_or_reds("no red berries", "", IRRELEVANT);
                         }
 
                         if world_stats.a_side.cassette {
