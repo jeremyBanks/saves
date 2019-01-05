@@ -1,6 +1,6 @@
  Adny 188🍓
       Prologue                                                    
-  p   any%:       44.387s   can't dash here    min deaths:     0  
+  p   any%:       44.387s   can't dash         min deaths:     0  
   1.  Forsaken City                                               
   A   any%:     1m26.632s   min dashes:   48   has golden berry   
   A   full:     5m53.124s   has cassette       has crystal heart  
@@ -37,7 +37,7 @@
   B   any%:  1h03m41.804s   min dashes:  414   min deaths:   417  
   C   any%:     1m08.289s   min dashes:   71   has golden berry   
       Epilogue                                                    
-  e   not timed here        min dashes:    1   can't die here     
+  e   not timed             min dashes:    1   can't die          
   8.  Core                                                        
   A   any%:    11m29.503s   min dashes:  164   min deaths:    35  
   A   full:    20m44.723s   has cassette       has crystal heart  
