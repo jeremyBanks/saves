@@ -4,7 +4,7 @@
   1.  Forsaken City                                               
   A   any%:     1m29.471s   min dashes:   13   min deaths:     0  
   A   full:     6m04.038s   has cassette       has crystal heart  
-  B   any%:    10m30.887s   min dashes:   54   min deaths:    60  
+  B   any%:     4m15.561s   min dashes:   47   min deaths:    13  
   2.  Old Site                                                    
   A   any%:     3m07.476s   min dashes:  113   min deaths:     1  
   A   18 / 18 red berries   has cassette       has crystal heart  
