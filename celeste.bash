@@ -48,7 +48,7 @@ if -qq git commit . -m "🍓 $user" --allow-empty-message || true; then
     -qq git push && echo "✅ Synced" || echo "⚠ Sync failed";
     diff="$(git diff -U5 --ws-error-highlight=none HEAD~1..HEAD *.celeste.txt | tail -n +6 | egrep '^[\+\-]' -B 5 | grep -v '@@')";
     echo "$diff";
-    -qq yarn run send "$diff";
+    -qq yarn run send "$diff" || true;
 else
     echo "🆗 No changes to sync"
 fi
