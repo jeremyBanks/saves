@@ -2,7 +2,7 @@
 <SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Name>Banks</Name>
-  <Time>1641232870000</Time>
+  <Time>1642071310000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
   <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
@@ -26,8 +26,8 @@
   <TotalDeaths>11385</TotalDeaths>
   <TotalStrawberries>111</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>74641</TotalJumps>
-  <TotalWallJumps>14007</TotalWallJumps>
+  <TotalJumps>74692</TotalJumps>
+  <TotalWallJumps>14008</TotalWallJumps>
   <TotalDashes>50164</TotalDashes>
   <Flags>
     <string>MetTheo</string>
@@ -47,7 +47,7 @@
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="5" TimePlayed="6187150000" BestTime="439450000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="5" TimePlayed="7025590000" BestTime="439450000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
           <Strawberries />
           <Checkpoints />
         </AreaModeStats>
