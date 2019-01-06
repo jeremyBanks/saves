@@ -2,7 +2,7 @@
       Prologue                                                    
   p   any%:       43.945s   can't dash         min deaths:     0  
   1.  Forsaken City                                               
-  A   any%:     1m29.471s   min dashes:   15   min deaths:     0  
+  A   any%:     1m29.471s   min dashes:   13   min deaths:     0  
   A   full:     6m04.038s   has cassette       has crystal heart  
   B   any%:    10m30.887s   min dashes:   54   min deaths:    60  
   2.  Old Site                                                    
