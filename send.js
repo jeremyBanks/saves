@@ -16,5 +16,5 @@ if (!message.trim()) {
 client.on('ready', () => {
     client.channels.get(
         '303217117589667840' || '514230161063804928'
-    ).send(message).then(() => process.exit(0));
+    ).send('```diff\n' + message + '\n```').then(() => process.exit(0));
 });
