@@ -46,7 +46,7 @@ rm -f 2.celeste.txt; target/debug/celeste-saves 2.celeste 1> 2.celeste.txt 2> /d
 
 if -qq git commit . -m "🍓 $user" --allow-empty-message || true; then
     -qq git push && echo "✅ Synced" || echo "⚠ Sync failed";
-    yarn run send '```'"$(echo $'diff\n')""$(git diff -U4 --ws-error-highlight=none HEAD~8..HEAD *.celeste.txt | tail -n +5)""$(echo)"'```';
+    yarn run send '```'"$(echo $'diff\n\n\n')""$(git diff -U4 --ws-error-highlight=none HEAD~8..HEAD *.celeste.txt | tail -n +5)""$(echo)"'```';
 else
     echo "🆗 No changes to sync"
 fi
