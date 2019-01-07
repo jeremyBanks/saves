@@ -38,9 +38,10 @@ test "ON" != "${CELESTE:-ON}" ||\
 /mnt/d/Program\ Files/Celeste/Celeste.exe;
 
 cargo build 2> /dev/null || cargo build;
-rm -f 0.celeste.txt; target/debug/celeste-saves 0.celeste 1> 0.celeste.txt 2> /dev/null || rm -f 0.celeste.txt;
-rm -f 1.celeste.txt; target/debug/celeste-saves 1.celeste 1> 1.celeste.txt 2> /dev/null || rm -f 1.celeste.txt;
-rm -f 2.celeste.txt; target/debug/celeste-saves 2.celeste 1> 2.celeste.txt 2> /dev/null || rm -f 2.celeste.txt;
+for n in 0 1 2; do 
+    rm -f ${n}.celeste.txt; target/debug/celeste-saves ${n}.celeste 1> ${n}.celeste.txt 2> /dev/null || rm -f ${n}.txt;
+    rm -f ${n}.celeste.txt; (cat template.html; CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | yarn run ansi-to-html) 1> ${n}.html 2> /dev/null || rm -f ${n}.html;
+done
 
 -qq git add .;
 
@@ -50,7 +51,7 @@ if -qq git commit . -m "🍓 $user" --allow-empty-message; then
     diff="$(git diff -U5 --ws-error-highlight=none HEAD~1..HEAD 0.celeste.txt | tail -n +6 | egrep '^[\+\-]' -B 5 | grep -v '@@')";
     set -e;
     echo "$diff";
-    -qq yarn run send "$diff" || true;
+    # -qq yarn run send "$diff" || true;
 else
     echo "🆗 No changes to sync"
 fi

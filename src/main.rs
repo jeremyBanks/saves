@@ -32,7 +32,10 @@ fn main() {
 
     fn print_divider(content: impl ToString) {
         let mut s = format!("  {:<62}  ", content.to_string());
-        if atty::is(atty::Stream::Stdout) {
+        let force_color = env::var("CELESTE_SAVE_COLOR")
+            .and_then(|s| Ok(s == "ON"))
+            .unwrap_or(false);
+        if force_color || atty::is(atty::Stream::Stdout) {
             s = s.color(HEADER_FG).background(HEADER_BG)
         }
         println!("{}", s);
