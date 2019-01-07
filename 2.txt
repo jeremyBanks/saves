@@ -4,5 +4,8 @@
   1.  Forsaken City                                               
   A   any%:     1m37.580s   min dashes:   59   min deaths:     0  [0m
   A    0 / 20 red berries   no cassette        no crystal heart   [0m
+  2.  Old Site                                                    
+  A   segmented             segmented          segmented          [0m
+  A    0 / 18 red berries   no cassette        no crystal heart   [0m
                                                                   
 

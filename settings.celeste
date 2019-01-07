@@ -2,7 +2,7 @@
 <Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Fullscreen>false</Fullscreen>
-  <WindowScale>5</WindowScale>
+  <WindowScale>4</WindowScale>
   <ViewportPadding>0</ViewportPadding>
   <VSync>true</VSync>
   <DisableFlashes>false</DisableFlashes>
@@ -49,12 +49,12 @@
   </QuickRestart>
   <BtnGrab>
     <Buttons>RightTrigger</Buttons>
-    <Buttons>LeftTrigger</Buttons>
-    <Buttons>LeftShoulder</Buttons>
     <Buttons>RightShoulder</Buttons>
   </BtnGrab>
   <BtnJump>
     <Buttons>A</Buttons>
+    <Buttons>LeftShoulder</Buttons>
+    <Buttons>LeftTrigger</Buttons>
   </BtnJump>
   <BtnDash>
     <Buttons>X</Buttons>
