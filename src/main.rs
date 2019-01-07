@@ -42,7 +42,10 @@ fn main() {
     }
 
     fn print_side(side: impl ToString, color: AnsiColor) {
-        if atty::is(atty::Stream::Stdout) {
+        let force_color = env::var("CELESTE_SAVE_COLOR")
+            .and_then(|s| Ok(s == "ON"))
+            .unwrap_or(false);
+        if force_color || atty::is(atty::Stream::Stdout) {
             print!("{} ", " ".background(DIVIDER));
             print!("{}", side.to_string().color(color));
             print!(" {}", " ".background(DIVIDER));
@@ -65,7 +68,10 @@ fn main() {
             s.push_str(" ");
         }
         s.push_str(&right);
-        if atty::is(atty::Stream::Stdout) {
+        let force_color = env::var("CELESTE_SAVE_COLOR")
+            .and_then(|s| Ok(s == "ON"))
+            .unwrap_or(false);
+        if force_color || atty::is(atty::Stream::Stdout) {
             print!(" {}", s.color(color));
             print!(" {}", " ".background(DIVIDER));
         } else {
@@ -98,7 +104,10 @@ fn main() {
             _ => panic!("more than 200 berries"),
         };
 
-        if atty::is(atty::Stream::Stdout) {
+        let force_color = env::var("CELESTE_SAVE_COLOR")
+            .and_then(|s| Ok(s == "ON"))
+            .unwrap_or(false);
+        if force_color || atty::is(atty::Stream::Stdout) {
             println!(
                 " {} {}",
                 stats.name.underline().color(White),
