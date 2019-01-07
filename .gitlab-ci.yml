@@ -3,14 +3,10 @@ image: alpine:latest
 pages:
   stage: deploy
   script:
-  - echo 'Nothing to do...'
+  - mkdir public
+  - mv *.html *.txt public
   artifacts:
     paths:
-    - "0.html"
-    - "1.html"
-    - "2.html"
-    - "0.txt"
-    - "1.txt"
-    - "2.txt"
+    - public
   only:
   - master
