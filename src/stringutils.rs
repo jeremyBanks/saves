@@ -2,12 +2,8 @@ pub trait StringUtils {
     fn with_ansi(&self, prefix: u8, suffix: u8) -> String;
     fn color(&self, color: AnsiColor) -> String;
     fn background(&self, color: AnsiColor) -> String;
-    fn bold(&self) -> String;
-    fn dim(&self) -> String;
     fn underline(&self) -> String;
-    fn blink(&self) -> String;
     fn invert(&self) -> String;
-    fn hidden(&self) -> String;
     fn pad_start(&self, len: usize) -> String;
     fn pad_end(&self, len: usize) -> String;
 }
@@ -27,28 +23,12 @@ impl StringUtils for &str {
         self.with_ansi(40 + color.offset(), 49)
     }
 
-    fn bold(&self) -> String {
-        self.with_ansi(1, 21)
-    }
-
-    fn dim(&self) -> String {
-        self.with_ansi(2, 22)
-    }
-
     fn underline(&self) -> String {
         self.with_ansi(4, 24)
     }
 
-    fn blink(&self) -> String {
-        self.with_ansi(5, 25)
-    }
-
     fn invert(&self) -> String {
         self.with_ansi(7, 27)
-    }
-
-    fn hidden(&self) -> String {
-        self.with_ansi(8, 28)
     }
 
     fn pad_start(&self, len: usize) -> String {
@@ -72,30 +52,12 @@ impl StringUtils for String {
         self.as_str().background(color)
     }
 
-    fn bold(&self) -> String {
-        self.as_str().bold()
-    }
-
-    fn dim(&self) -> String {
-        self.as_str().dim()
-    }
-
     fn underline(&self) -> String {
         self.as_str().underline()
     }
-
-    fn blink(&self) -> String {
-        self.as_str().blink()
-    }
-
     fn invert(&self) -> String {
         self.as_str().invert()
     }
-
-    fn hidden(&self) -> String {
-        self.as_str().hidden()
-    }
-
     fn pad_start(&self, len: usize) -> String {
         self.as_str().pad_start(len)
     }
