@@ -89,7 +89,7 @@ fn main() {
 
     fn print_deaths_or_heart(left: impl ToString, right: impl ToString, color: AnsiColor) {
         print_cell(left, right, color, "has crystal heart".len());
-        println!();
+        println!("\x1B[0m");
     }
 
     for save in saves {
