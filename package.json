@@ -5,7 +5,6 @@
     "send": "node send.js"
   },
   "dependencies": {
-    "ansi-to-html": "^0.6.9",
     "discord.js": "^11.4.2"
   }
 }
