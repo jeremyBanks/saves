@@ -20,6 +20,7 @@
   5.  Mirror Temple                                               
   A   any%:  1h43m11.553s   min dashes:  618   min deaths:   334  
   A   20 / 31 red berries   has cassette       no crystal heart   
+  B   any%:  1h24m35.554s   min dashes:  161   min deaths:   617  
   6.  Reflection                                                  
   A   any%:  2h32m51.313s   min dashes:  580   min deaths:   776  
   A   no red berries        has cassette       no crystal heart   
