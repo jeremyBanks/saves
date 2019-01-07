@@ -39,6 +39,7 @@ test "ON" != "${CELESTE:-ON}" ||\
 
 cargo build 2> /dev/null || cargo build;
 for n in 0 1 2; do 
+echo ${n}
     rm -f ${n}.txt; target/debug/celeste-saves ${n}.celeste 1> ${n}.txt 2> /dev/null || rm -f ${n}.txt;
     rm -f ${n}.txt; (cat template.html; CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | yarn run ansi-to-html) 1> ${n}.html 2> /dev/null || rm -f ${n}.html;
 done
