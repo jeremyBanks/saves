@@ -18,6 +18,7 @@ user="$(whoami)@$(hostname)";
 
 -qq git commit -m "⚠ $user old staged" --allow-empty-message || true;
 
+-qq git add .;
 -qq git commit . -m "⚠ $user old unstaged" --allow-empty-message || true;
 
 -qq git fetch;
@@ -46,7 +47,6 @@ for n in 0 1 2; do
 done
 
 -qq git add .;
-
 if -qq git commit . -m "🍓 $user" --allow-empty-message; then
     -qq git push && echo "✅ Synced" || echo "⚠ Sync failed";
     set +e;
