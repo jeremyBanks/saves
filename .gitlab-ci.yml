@@ -6,11 +6,7 @@ pages:
   - echo 'Nothing to do...'
   artifacts:
     paths:
-    - 0.html
-    - 1.html
-    - 2.html
-    - 0.txt
-    - 1.txt
-    - 2.txt
+    - "*.html"
+    - "*.txt"
   only:
   - master
