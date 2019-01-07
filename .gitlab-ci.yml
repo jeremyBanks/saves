@@ -4,7 +4,7 @@ pages:
   stage: deploy
   script:
   - mkdir public
-  - mv *.html *.txt public
+  - "mv *.html *.txt public"
   artifacts:
     paths:
     - public
