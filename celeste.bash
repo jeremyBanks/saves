@@ -38,6 +38,8 @@ test "ON" != "${CELESTE:-ON}" ||\
 /mnt/d/Program\ Files/Celeste/Celeste.exe;
 
 cargo build 2> /dev/null || cargo build;
+-qq yarn install;
+
 for n in 0 1 2; do 
     rm -f ${n}.txt || true; target/debug/celeste-saves ${n}.celeste 1> ${n}.txt 2> /dev/null || rm -f ${n}.txt;
     rm -f ${n}.html || true; (cat template.html; CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | node_modules/.bin/ansi-to-html) 1> ${n}.html 2> /dev/null || rm -f ${n}.html;
