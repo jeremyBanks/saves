@@ -53,7 +53,7 @@ if -qq git commit . -m "🍓 $user" --allow-empty-message; then
     diff="$(git diff -U5 --ws-error-highlight=none HEAD~1..HEAD 0.txt | tail -n +6 | egrep '^[\+\-]' -B 5 | grep -v '@@')";
     set -e;
     echo "$diff";
-    # -qq yarn run send "$diff" || true;
+    -qq yarn run send "$diff" || true;
 else
     echo "🆗 No changes to sync"
 fi
