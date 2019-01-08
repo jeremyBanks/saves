@@ -1,37 +1,37 @@
  Banks 111🍓
       Prologue                                                    
-  p   any%:       43.945s   can't dash         min deaths:     0  [0m
+  p   any%:       43.945s   can't dash         min deaths:     0  [0;1m
   1.  Forsaken City                                               
-  A   any%:     1m29.471s   min dashes:   13   min deaths:     0  [0m
-  A   full:     6m04.038s   has cassette       has crystal heart  [0m
-  B   any%:     4m15.561s   min dashes:   47   min deaths:    13  [0m
+  A   any%:     1m29.471s   min dashes:   13   min deaths:     0  [0;1m
+  A   full:     6m04.038s   has cassette       has crystal heart  [0;1m
+  B   any%:     4m15.561s   min dashes:   47   min deaths:    13  [0;1m
   2.  Old Site                                                    
-  A   any%:     3m07.476s   min dashes:  113   min deaths:     1  [0m
-  A   18 / 18 red berries   has cassette       has crystal heart  [0m
-  B   any%:    53m36.808s   min dashes:  341   min deaths:   353  [0m
+  A   any%:     3m07.476s   min dashes:  113   min deaths:     1  [0;1m
+  A   18 / 18 red berries   has cassette       has crystal heart  [0;1m
+  B   any%:    53m36.808s   min dashes:  341   min deaths:   353  [0;1m
   3.  Celestial Resort                                            
-  A   any%:    18m31.307s   min dashes:  262   min deaths:    79  [0m
-  A   25 / 25 red berries   has cassette       has crystal heart  [0m
-  B   any%:  1h53m52.181s   min dashes:  123   min deaths:   963  [0m
+  A   any%:    18m31.307s   min dashes:  262   min deaths:    79  [0;1m
+  A   25 / 25 red berries   has cassette       has crystal heart  [0;1m
+  B   any%:  1h53m52.181s   min dashes:  123   min deaths:   963  [0;1m
   4.  Golden Ridge                                                
-  A   any%:  1h05m46.346s   min dashes:  227   min deaths:   346  [0m
-  A   15 / 29 red berries   has cassette       no crystal heart   [0m
-  B   any%:  1h44m37.845s   min dashes:  124   min deaths:   837  [0m
+  A   any%:  1h05m46.346s   min dashes:  227   min deaths:   346  [0;1m
+  A   15 / 29 red berries   has cassette       no crystal heart   [0;1m
+  B   any%:  1h44m37.845s   min dashes:  124   min deaths:   837  [0;1m
   5.  Mirror Temple                                               
-  A   any%:  1h43m11.553s   min dashes:  618   min deaths:   334  [0m
-  A   20 / 31 red berries   has cassette       no crystal heart   [0m
-  B   any%:  1h24m35.554s   min dashes:  161   min deaths:   617  [0m
+  A   any%:  1h43m11.553s   min dashes:  618   min deaths:   334  [0;1m
+  A   20 / 31 red berries   has cassette       no crystal heart   [0;1m
+  B   any%:  1h24m35.554s   min dashes:  161   min deaths:   617  [0;1m
   6.  Reflection                                                  
-  A   any%:  2h32m51.313s   min dashes:  580   min deaths:   776  [0m
-  A   no red berries        has cassette       no crystal heart   [0m
-  B   any%:  3h54m01.490s   min dashes:  210   min deaths:  1728  [0m
+  A   any%:  2h32m51.313s   min dashes:  580   min deaths:   776  [0;1m
+  A   no red berries        has cassette       no crystal heart   [0;1m
+  B   any%:  3h54m01.490s   min dashes:  210   min deaths:  1728  [0;1m
   7.  The Summit                                                  
-  A   any%:  2h24m13.187s   min dashes:  641   min deaths:   701  [0m
-  A   13 / 47 red berries   has cassette       no crystal heart   [0m
+  A   any%:  2h24m13.187s   min dashes:  641   min deaths:   701  [0;1m
+  A   13 / 47 red berries   has cassette       no crystal heart   [0;1m
       Epilogue                                                    
-  e   not timed             min dashes:    0   can't die          [0m
+  e   not timed             min dashes:    0   can't die          [0;1m
   8.  Core                                                        
-  A   segmented             segmented          segmented          [0m
-  A    0 / 5  red berries   has cassette       can't skip heart   [0m
+  A   segmented             segmented          segmented          [0;1m
+  A    0 / 5  red berries   has cassette       can't skip heart   [0;1m
                                                                   
 
