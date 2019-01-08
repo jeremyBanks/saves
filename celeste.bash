@@ -44,7 +44,7 @@ cargo build 2> /dev/null || cargo build;
 cat template.html > index.html;
 for n in 0 1 2; do 
     rm -f ${n}.txt || true; target/debug/celeste-saves ${n}.celeste 1> ${n}.txt 2> /dev/null || rm -f ${n}.txt;
-    rm -f ${n}.html || true; (cat template.html; (CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | tee --append index.html) | node_modules/.bin/ansi-to-html) 1> ${n}.html 2> /dev/null || rm -f ${n}.html;
+    rm -f ${n}.html || true; (cat template.html; CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | node_modules/.bin/ansi-to-html | tee --append index.html) 1> ${n}.html 2> /dev/null || rm -f ${n}.html;
 done
 
 -qq git add .;
