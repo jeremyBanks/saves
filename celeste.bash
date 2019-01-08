@@ -41,10 +41,14 @@ test "ON" != "${CELESTE:-ON}" ||\
 cargo build 2> /dev/null || cargo build;
 -qq yarn install;
 
-cat template.html > index.html;
-for n in 0 1 2; do 
+cat template.html > index.html; for n in 0 1 2; do 
     rm -f ${n}.txt || true; target/debug/celeste-saves ${n}.celeste 1> ${n}.txt 2> /dev/null || rm -f ${n}.txt;
-    rm -f ${n}.html || true; (cat template.html; CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | node_modules/.bin/ansi-to-html | tee --append index.html) 1> ${n}.html 2> /dev/null || rm -f ${n}.html;
+    ( \
+        echo -n "<pre id="${n}" style='position: relative;'>"; \
+        echo -n '<div style="position: absolute; top: 0; right: 0;"><a href="'./${n}.celeste'">'${n}'.celeste</a> </div>'
+        CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | head -n -1 | node_modules/.bin/ansi-to-html; \
+        echo -n "</pre>" \
+    ) 1>> index.html 2> /dev/null;
 done
 
 -qq git add .;
