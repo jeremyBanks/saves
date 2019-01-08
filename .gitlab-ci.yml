@@ -4,7 +4,7 @@ pages:
   stage: deploy
   script:
   - mkdir public
-  - "cp index.html *.celeste rb.png public"
+  - "cp *.html *.txt *.celeste rb.png public"
   artifacts:
     paths:
     - public
