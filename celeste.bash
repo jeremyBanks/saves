@@ -47,7 +47,7 @@ cat template.html > index.html; for n in 0 1 2; do
     ( \
         echo -n "<pre id="${n}" style='position: relative;'>"; \
         echo -n '<div style="position: absolute; top: 0; right: 0;"><a href="'./${n}.celeste'">'${n}'.celeste</a> </div>'
-        CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | sed '1d' | node_modules/.bin/ansi-to-html; \
+        CELESTE_SAVE_COLOR=ON target/debug/celeste-saves ${n}.celeste | node_modules/.bin/ansi-to-html; \
         echo -n "</pre>" \
     ) | tee --append ${n}.html 1>> index.html 2> /dev/null;
 done
