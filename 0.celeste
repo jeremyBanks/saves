@@ -2,7 +2,7 @@
 <SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Name>Banks</Name>
-  <Time>1849249120000</Time>
+  <Time>1864888270000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
   <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
@@ -23,12 +23,12 @@
   </Assists>
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>9</UnlockedAreas>
-  <TotalDeaths>13739</TotalDeaths>
+  <TotalDeaths>13956</TotalDeaths>
   <TotalStrawberries>111</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>80205</TotalJumps>
-  <TotalWallJumps>16752</TotalWallJumps>
-  <TotalDashes>56502</TotalDashes>
+  <TotalJumps>80579</TotalJumps>
+  <TotalWallJumps>16850</TotalWallJumps>
+  <TotalDashes>57053</TotalDashes>
   <Flags>
     <string>MetTheo</string>
     <string>TheoKnowsName</string>
@@ -43,100 +43,9 @@
     <string>crr</string>
     <string>csr</string>
     <string>tr</string>
+    <string>tfr</string>
   </Poem>
   <LastArea ID="6" Mode="BSide" />
-  <CurrentSession Level="d-02" Time="124781870000" StartedFromBeginning="true" Deaths="1511" Dashes="164" DashesAtLevelStart="164" DeathsInCurrentLevel="17" InArea="true" FirstLevel="false" Cassette="false" HeartGem="false" Dreaming="false" ColorGrade="reflection" LightingAlphaAdd="0.06" BloomBaseAdd="0" DarkRoomAlpha="0.75" CoreMode="None" GrabbedGolden="false" HitCheckpoint="false">
-    <Area ID="6" Mode="BSide" />
-    <RespawnPoint>
-      <X>12696</X>
-      <Y>4792</Y>
-    </RespawnPoint>
-    <Audio>
-      <Music Event="event:/music/remix/06_reflection">
-        <Parameters>
-          <MEP Key="layer1" Value="1" />
-          <MEP Key="layer2" Value="1" />
-          <MEP Key="layer3" Value="1" />
-          <MEP Key="layer4" Value="1" />
-          <MEP Key="layer6" Value="0" />
-        </Parameters>
-      </Music>
-      <Ambience Event="event:/env/amb/06_main">
-        <Parameters />
-      </Ambience>
-    </Audio>
-    <Inventory>
-      <Dashes>1</Dashes>
-      <DreamDash>true</DreamDash>
-      <Backpack>true</Backpack>
-      <NoRefills>false</NoRefills>
-    </Inventory>
-    <Flags />
-    <LevelFlags>
-      <string>a-00</string>
-      <string>a-01</string>
-      <string>a-02</string>
-      <string>a-03</string>
-      <string>a-04</string>
-      <string>a-05</string>
-      <string>a-06</string>
-      <string>b-00</string>
-      <string>b-01</string>
-      <string>b-02</string>
-      <string>b-03</string>
-      <string>b-04</string>
-      <string>b-05</string>
-      <string>b-06</string>
-      <string>b-07</string>
-      <string>b-08</string>
-      <string>b-10</string>
-      <string>c-00</string>
-      <string>c-01</string>
-      <string>c-02</string>
-      <string>c-03</string>
-      <string>c-04</string>
-      <string>d-00</string>
-      <string>d-01</string>
-      <string>d-02</string>
-    </LevelFlags>
-    <Strawberries />
-    <DoNotLoad />
-    <Keys />
-    <Counters />
-    <SummitGems>
-      <boolean>false</boolean>
-      <boolean>false</boolean>
-      <boolean>false</boolean>
-      <boolean>false</boolean>
-      <boolean>false</boolean>
-      <boolean>false</boolean>
-    </SummitGems>
-    <OldStats ID="6" Cassette="true">
-      <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="776" TimePlayed="96047280000" BestTime="91713130000" BestFullClearTime="0" BestDashes="580" BestDeaths="776" HeartGem="false">
-          <Strawberries />
-          <Checkpoints>
-            <string>00</string>
-            <string>04</string>
-            <string>b-00</string>
-            <string>boss-00</string>
-            <string>after-00</string>
-          </Checkpoints>
-        </AreaModeStats>
-        <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="39" TimePlayed="2803810000" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
-          <Strawberries />
-          <Checkpoints />
-        </AreaModeStats>
-        <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="0" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
-          <Strawberries />
-          <Checkpoints />
-        </AreaModeStats>
-      </Modes>
-    </OldStats>
-    <UnlockedCSide>false</UnlockedCSide>
-    <FurthestSeenLevel>d-02</FurthestSeenLevel>
-    <BeatBestTime>false</BeatBestTime>
-  </CurrentSession>
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
@@ -386,7 +295,7 @@
             <string>after-00</string>
           </Checkpoints>
         </AreaModeStats>
-        <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="1559" TimePlayed="128219440000" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="1776" TimePlayed="143858590000" BestTime="140414900000" BestFullClearTime="0" BestDashes="210" BestDeaths="1728" HeartGem="true">
           <Strawberries />
           <Checkpoints>
             <string>b-00</string>

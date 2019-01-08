@@ -24,6 +24,7 @@
   6.  Reflection                                                  
   A   any%:  2h32m51.313s   min dashes:  580   min deaths:   776  [0m
   A   no red berries        has cassette       no crystal heart   [0m
+  B   any%:  3h54m01.490s   min dashes:  210   min deaths:  1728  [0m
   7.  The Summit                                                  
   A   any%:  2h24m13.187s   min dashes:  641   min deaths:   701  [0m
   A   13 / 47 red berries   has cassette       no crystal heart   [0m

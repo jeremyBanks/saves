@@ -2,14 +2,14 @@
 <Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Fullscreen>false</Fullscreen>
-  <WindowScale>4</WindowScale>
+  <WindowScale>5</WindowScale>
   <ViewportPadding>0</ViewportPadding>
   <VSync>true</VSync>
   <DisableFlashes>false</DisableFlashes>
   <DisableScreenShake>false</DisableScreenShake>
   <Rumble>true</Rumble>
-  <MusicVolume>1</MusicVolume>
-  <SFXVolume>2</SFXVolume>
+  <MusicVolume>5</MusicVolume>
+  <SFXVolume>7</SFXVolume>
   <SpeedrunClock>true</SpeedrunClock>
   <LastSaveFile>0</LastSaveFile>
   <Language>english</Language>
