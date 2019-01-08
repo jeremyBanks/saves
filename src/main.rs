@@ -89,7 +89,14 @@ fn main() {
 
     fn print_deaths_or_heart(left: impl ToString, right: impl ToString, color: AnsiColor) {
         print_cell(left, right, color, "has crystal heart".len());
-        println!("\x1B[00m");
+        let force_color = env::var("CELESTE_SAVE_COLOR")
+            .and_then(|s| Ok(s == "ON"))
+            .unwrap_or(false);
+        if force_color || atty::is(atty::Stream::Stdout) {
+            println!("\x1B[0m");
+        } else {
+            println!();
+        }
     }
 
     for save in saves {
