@@ -2,7 +2,7 @@
 <SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Name>Banks</Name>
-  <Time>1882667720000</Time>
+  <Time>1883899030000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
   <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
@@ -23,11 +23,11 @@
   </Assists>
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>9</UnlockedAreas>
-  <TotalDeaths>14144</TotalDeaths>
+  <TotalDeaths>14146</TotalDeaths>
   <TotalStrawberries>113</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>81226</TotalJumps>
-  <TotalWallJumps>16912</TotalWallJumps>
+  <TotalJumps>81367</TotalJumps>
+  <TotalWallJumps>16914</TotalWallJumps>
   <TotalDashes>57669</TotalDashes>
   <Flags>
     <string>MetTheo</string>
@@ -45,11 +45,11 @@
     <string>tr</string>
     <string>tfr</string>
   </Poem>
-  <LastArea ID="7" Mode="Normal" />
+  <LastArea ID="0" Mode="Normal" />
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="5" TimePlayed="7078970000" BestTime="439450000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="7" TimePlayed="8310280000" BestTime="439450000" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
           <Strawberries />
           <Checkpoints />
         </AreaModeStats>
