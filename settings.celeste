@@ -65,7 +65,7 @@
   </BtnTalk>
   <BtnAltQuickRestart />
   <LaunchWithFMODLiveUpdate>false</LaunchWithFMODLiveUpdate>
-  <LaunchInDebugMode>false</LaunchInDebugMode>
+  <LaunchInDebugMode>true</LaunchInDebugMode>
   <!--
 		LaunchWithFMODLiveUpdate:
 			This Enables FMOD Studio Live Update so you can interact with the sounds in real time.
