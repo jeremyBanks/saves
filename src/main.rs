@@ -31,7 +31,7 @@ fn main() {
     const BEST: AnsiColor = Yellow;
 
     fn print_divider(content: impl ToString) {
-        let mut s = format!("  {:<62}  ", content.to_string());
+        let mut s = format!("  {:<69}", content.to_string());
         let force_color = env::var("CELESTE_SAVE_COLOR")
             .and_then(|s| Ok(s == "ON"))
             .unwrap_or(false);
@@ -57,17 +57,36 @@ fn main() {
     fn print_cell(left: impl ToString, right: impl ToString, color: AnsiColor, max_len: usize) {
         let left = left.to_string();
         let right = right.to_string();
-        let padding = if left.len() + right.len() < max_len {
-            max_len - left.len() - right.len()
-        } else {
-            0
-        };
+        let content_len = left.len() + right.len();
+
         let mut s = String::new();
-        s.push_str(&left);
-        for _ in 0..padding {
-            s.push_str(" ");
+        if content_len <= max_len || true {
+            let padding = if content_len < max_len {
+                max_len - left.len() - right.len()
+            } else {
+                0
+            };
+            s.push_str(&left);
+            for _ in 0..padding {
+                s.push_str(" ");
+            }
+            s.push_str(&right);
+        } else {
+            let mut left = &left[..];
+            let mut right = &right[..];
+            let mut content_len = content_len;
+            while content_len > max_len {
+                if left.len() == 0 || (right.len() > 0 && content_len % 2 == 0) {
+                    right = &right[..right.len() - 1];
+                } else {
+                    left = &left[..left.len() - 1];
+                }
+                content_len -= 1;
+            }
+            s.push_str(left);
+            s.push_str(right);
         }
-        s.push_str(&right);
+
         let force_color = env::var("CELESTE_SAVE_COLOR")
             .and_then(|s| Ok(s == "ON"))
             .unwrap_or(false);
@@ -80,15 +99,15 @@ fn main() {
     }
 
     fn print_time_or_reds(left: impl ToString, right: impl ToString, color: AnsiColor) {
-        print_cell(left, right, color, "any%:    19m55.151s".len());
+        print_cell(left, right, color, 19);
     }
 
     fn print_dashes_or_cassette(left: impl ToString, right: impl ToString, color: AnsiColor) {
-        print_cell(left, right, color, "min dashes:  265".len());
+        print_cell(left, right, color, 19);
     }
 
     fn print_deaths_or_heart(left: impl ToString, right: impl ToString, color: AnsiColor) {
-        print_cell(left, right, color, "has crystal heart".len());
+        print_cell(left, right, color, 19);
         let force_color = env::var("CELESTE_SAVE_COLOR")
             .and_then(|s| Ok(s == "ON"))
             .unwrap_or(false);
@@ -198,10 +217,11 @@ fn main() {
 
                     if let Some(duration) = world_stats.a_side.full_clear {
                         print_time_or_reds("full:", duration.formatted(), BEST);
-                        print_dashes_or_cassette("has cassette", "", BEST);
                         if world_stats.world == Core {
+                            print_dashes_or_cassette("can't skip cassette", "", IRRELEVANT);
                             print_deaths_or_heart("can't skip heart", "", IRRELEVANT);
                         } else {
+                            print_dashes_or_cassette("has cassette", "", BEST);
                             print_deaths_or_heart("has crystal heart", "", BEST);
                         }
                     } else {
@@ -225,10 +245,12 @@ fn main() {
                                 },
                             );
                         } else {
-                            print_time_or_reds("no red berries", "", IRRELEVANT);
+                            print_time_or_reds("no red berries here", "", IRRELEVANT);
                         }
 
-                        if world_stats.a_side.cassette {
+                        if world_stats.world == Core {
+                            print_dashes_or_cassette("can't skip cassette", "", IRRELEVANT);
+                        } else if world_stats.a_side.cassette {
                             print_dashes_or_cassette("has cassette", "", GOOD);
                         } else {
                             print_dashes_or_cassette("no cassette", "", NORMAL);
