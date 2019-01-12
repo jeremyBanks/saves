@@ -7,7 +7,7 @@
   B   any%:     4m15.561s   min dashes:      47   min deaths:      13  
   2.  Old Site                                                         
   A   any%:     3m07.476s   min dashes:     113   min deaths:       1  
-  A   18 / 18 red berries   has cassette          has crystal heart    
+  A   full:    15m16.793s   has cassette          has crystal heart    
   B   any%:    53m36.808s   min dashes:     341   min deaths:     353  
   3.  Celestial Resort                                                 
   A   any%:    18m31.307s   min dashes:     262   min deaths:      79  
