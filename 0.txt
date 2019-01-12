@@ -14,7 +14,7 @@
   A   25 / 25 red berries   has cassette          has crystal heart    
   B   any%:  1h53m52.181s   min dashes:     123   min deaths:     963  
   4.  Golden Ridge                                                     
-  A   any%:     8m10.144s   min dashes:     148   min deaths:      24  
+  A   any%:     7m45.120s   min dashes:     148   min deaths:      24  
   A   26 / 29 red berries   has cassette          has crystal heart    
   B   any%:  1h44m37.845s   min dashes:     124   min deaths:     837  
   5.  Mirror Temple                                                    
