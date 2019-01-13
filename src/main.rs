@@ -260,6 +260,8 @@ fn main() {
                             print_deaths_or_heart("can't skip heart", "", IRRELEVANT);
                         } else if world_stats.a_side.heart {
                             print_deaths_or_heart("has crystal heart", "", GOOD);
+                        } else if world_stats.world == TheSummit {
+                            print_deaths_or_heart(format!("{} / 6 gems", stats.gems), "", NORMAL);
                         } else {
                             print_deaths_or_heart("no crystal heart", "", NORMAL);
                         }
@@ -342,6 +344,7 @@ pub struct Stats {
     pub name: String,
     pub worlds: Vec<WorldStats>,
     pub total_berries: u32,
+    pub gems: u8,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -521,6 +524,12 @@ impl Stats {
 
         let name = save_data.expect_child("Name").text();
 
+        let gems = save_data
+            .expect_child("SummitGems")
+            .children()
+            .filter(|el| el.text() == "true")
+            .count();
+
         let cheat_mode = save_data.expect_parse_child("CheatMode");
         let assist_mode = save_data.expect_parse_child("AssistMode");
         let variant_mode = save_data.expect_parse_child("VariantMode");
@@ -537,6 +546,7 @@ impl Stats {
         Self {
             version,
             name,
+            gems,
             cheat_mode,
             assist_mode,
             variant_mode,
