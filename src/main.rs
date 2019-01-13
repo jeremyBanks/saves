@@ -264,7 +264,7 @@ fn main() {
                             print_deaths_or_heart(
                                 format!("{} / 6 heart gems", stats.gems),
                                 "",
-                                NORMAL,
+                                if stats.gems > 0 { NORMAL } else { SUBPAR },
                             );
                         } else {
                             print_deaths_or_heart("no crystal heart", "", NORMAL);
