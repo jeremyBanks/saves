@@ -1,4 +1,4 @@
- Banks 136🍓
+ Banks 137🍓
       Prologue                                                         
   p   any%:       43.945s   can't dash            min deaths:       0  
   1.  Forsaken City                                                    
@@ -32,9 +32,9 @@
   e   not timed             min dashes:       0   can't die            
   8.  Core                                                             
   A   any%:    38m01.468s   min dashes:     147   min deaths:     237  
-  A    3 / 5  red berries   can't skip cassette   can't skip heart     
+  A    4 / 5  red berries   can't skip cassette   can't skip heart     
       Sum of Bests                                                     
   A   any%:  6h31m28.339s   min dashes:    2219   min deaths:    1876  
-  A   136/175 red berries   has cassette          no crystal heart     
+  A   137/175 red berries   has cassette          no crystal heart     
                                                                        
 
