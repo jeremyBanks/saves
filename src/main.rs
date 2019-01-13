@@ -527,7 +527,8 @@ impl Stats {
         let gem_el = save_data
             .children()
             .filter(|el| el.name() == "SummitGems")
-            .first();
+            .next();
+
         let gems = match gem_el {
             Some(el) => u8::try_from(el.children().filter(|el| el.text() == "true").count())
                 .expect("way too many gems"),
