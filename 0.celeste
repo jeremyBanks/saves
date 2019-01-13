@@ -2,7 +2,7 @@
 <SaveData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.2.5.3</Version>
   <Name>Banks</Name>
-  <Time>2052253260000</Time>
+  <Time>2068957460000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
   <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
@@ -23,12 +23,12 @@
   </Assists>
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>9</UnlockedAreas>
-  <TotalDeaths>15288</TotalDeaths>
-  <TotalStrawberries>127</TotalStrawberries>
+  <TotalDeaths>15359</TotalDeaths>
+  <TotalStrawberries>130</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>89969</TotalJumps>
-  <TotalWallJumps>18568</TotalWallJumps>
-  <TotalDashes>64879</TotalDashes>
+  <TotalJumps>90619</TotalJumps>
+  <TotalWallJumps>18662</TotalWallJumps>
+  <TotalDashes>65282</TotalDashes>
   <Flags>
     <string>MetTheo</string>
     <string>TheoKnowsName</string>
@@ -45,8 +45,9 @@
     <string>tr</string>
     <string>tfr</string>
     <string>cs</string>
+    <string>t</string>
   </Poem>
-  <LastArea ID="3" Mode="BSide" />
+  <LastArea ID="5" Mode="Normal" />
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
@@ -184,7 +185,7 @@
             <string>00-d</string>
           </Checkpoints>
         </AreaModeStats>
-        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="1042" TimePlayed="74320940000" BestTime="68321810000" BestFullClearTime="0" BestDashes="123" BestDeaths="963" HeartGem="true">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="1044" TimePlayed="74439770000" BestTime="68321810000" BestFullClearTime="0" BestDashes="123" BestDeaths="963" HeartGem="true">
           <Strawberries />
           <Checkpoints>
             <string>06</string>
@@ -251,7 +252,7 @@
     </AreaStats>
     <AreaStats ID="5" Cassette="true">
       <Modes>
-        <AreaModeStats TotalStrawberries="20" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="520" TimePlayed="101971610000" BestTime="61915530000" BestFullClearTime="0" BestDashes="618" BestDeaths="334" HeartGem="false">
+        <AreaModeStats TotalStrawberries="23" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="589" TimePlayed="118556980000" BestTime="61915530000" BestFullClearTime="0" BestDashes="618" BestDeaths="334" HeartGem="true">
           <Strawberries>
             <EntityID Key="a-01:164" />
             <EntityID Key="a-04:2" />
@@ -273,6 +274,9 @@
             <EntityID Key="b-17:14" />
             <EntityID Key="b-20:72" />
             <EntityID Key="b-17:10" />
+            <EntityID Key="a-14:12" />
+            <EntityID Key="a-15:182" />
+            <EntityID Key="a-06:2" />
           </Strawberries>
           <Checkpoints>
             <string>b-00</string>
