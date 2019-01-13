@@ -1,4 +1,4 @@
- Banks 132🍓
+ Banks 136🍓
       Prologue                                                         
   p   any%:       43.945s   can't dash            min deaths:       0  
   1.  Forsaken City                                                    
@@ -18,8 +18,8 @@
   A   26 / 29 red berries   has cassette          has crystal heart    
   B   any%:  1h44m37.845s   min dashes:     124   min deaths:     837  
   5.  Mirror Temple                                                    
-  A   any%:  1h43m11.553s   min dashes:     618   min deaths:     334  
-  A   23 / 31 red berries   has cassette          has crystal heart    
+  A   any%:    25m28.997s   min dashes:     315   min deaths:      58  
+  A   25 / 31 red berries   has cassette          has crystal heart    
   B   any%:  1h24m35.554s   min dashes:     161   min deaths:     617  
   6.  Reflection                                                       
   A   any%:  2h32m51.313s   min dashes:     580   min deaths:     776  
@@ -27,14 +27,14 @@
   B   any%:  3h54m01.490s   min dashes:     210   min deaths:    1728  
   7.  The Summit                                                       
   A   any%:  2h24m13.187s   min dashes:     641   min deaths:     701  
-  A   17 / 47 red berries   has cassette          1 / 6 heart gems     
+  A   19 / 47 red berries   has cassette          1 / 6 heart gems     
       Epilogue                                                         
   e   not timed             min dashes:       0   can't die            
   8.  Core                                                             
   A   any%:    38m01.468s   min dashes:     147   min deaths:     237  
   A    3 / 5  red berries   can't skip cassette   can't skip heart     
       Sum of Bests                                                     
-  A   any%:  7h49m10.895s   min dashes:    2522   min deaths:    2152  
-  A   132/175 red berries   has cassette          no crystal heart     
+  A   any%:  6h31m28.339s   min dashes:    2219   min deaths:    1876  
+  A   136/175 red berries   has cassette          no crystal heart     
                                                                        
 
