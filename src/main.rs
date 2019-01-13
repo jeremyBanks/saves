@@ -524,14 +524,15 @@ impl Stats {
 
         let name = save_data.expect_child("Name").text();
 
-        let gems = u8::try_from(
-            save_data
-                .expect_child("SummitGems")
-                .children()
-                .filter(|el| el.text() == "true")
-                .count(),
-        )
-        .expect("way too many gems");
+        let gem_el = save_data
+            .children()
+            .filter(|el| el.name() == "SummitGems")
+            .first();
+        let gems = match gem_el {
+            Some(el) => u8::try_from(el.children().filter(|el| el.text() == "true").count())
+                .expect("way too many gems"),
+            None => 0,
+        };
 
         let cheat_mode = save_data.expect_parse_child("CheatMode");
         let assist_mode = save_data.expect_parse_child("AssistMode");
