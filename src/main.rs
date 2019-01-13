@@ -261,7 +261,11 @@ fn main() {
                         } else if world_stats.a_side.heart {
                             print_deaths_or_heart("has crystal heart", "", GOOD);
                         } else if world_stats.world == TheSummit {
-                            print_deaths_or_heart(format!("{} / 6 gems", stats.gems), "", NORMAL);
+                            print_deaths_or_heart(
+                                format!("{} / 6 heart gems", stats.gems),
+                                "",
+                                NORMAL,
+                            );
                         } else {
                             print_deaths_or_heart("no crystal heart", "", NORMAL);
                         }
