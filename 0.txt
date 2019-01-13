@@ -33,5 +33,8 @@
   8.  Core                                                             
   A   any%:    38m01.468s   min dashes:     147   min deaths:     237  
   A    3 / 5  red berries   can't skip cassette   can't skip heart     
+      Sum of Bests                                                     
+  A   any%:  7h49m10.895s   min dashes:    2522   min deaths:    2152  
+  A   132/175 red berries   has cassette          no crystal heart     
                                                                        
 

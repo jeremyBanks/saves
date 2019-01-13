@@ -43,5 +43,10 @@
   A   full:    20m44.723s   can't skip cassette   can't skip heart     
   B   any%:    44m39.948s   min dashes:     134   min deaths:     319  
   C   any%:     1m20.699s   min dashes:      40   has golden berry     
+      Sum of Bests                                                     
+  A   any%:  1h53m10.888s   min dashes:    1969   min deaths:     255  
+  A   full:  3h47m30.456s   has cassette          has crystal heart    
+  B   any%:  4h19m17.431s   min dashes:    1244   min deaths:    1589  
+  C   any%:     6m44.379s   min dashes:     233   min deaths:       0  
                                                                        
 
