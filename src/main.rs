@@ -227,11 +227,19 @@ fn main() {
                     } else {
                         if world_stats.world.red_berries() > 0 {
                             print_time_or_reds(
-                                format!(
-                                    "{:>2} / {:<2}",
-                                    world_stats.red_berries(),
-                                    world_stats.world.red_berries()
-                                ),
+                                if world_stats.world.red_berries() < 99 {
+                                    format!(
+                                        "{:>2} / {:<2}",
+                                        world_stats.red_berries(),
+                                        world_stats.world.red_berries()
+                                    )
+                                } else {
+                                    format!(
+                                        "{:>3}/{:<3}",
+                                        world_stats.red_berries(),
+                                        world_stats.world.red_berries()
+                                    )
+                                },
                                 "red berries",
                                 if world_stats.red_berries() > 0 {
                                     if world_stats.red_berries() >= world_stats.world.red_berries()
@@ -437,6 +445,7 @@ pub enum World {
     TheSummit,
     Epilogue,
     Core,
+    SumOfBests,
 }
 
 pub use self::World::*;
@@ -454,6 +463,7 @@ impl World {
             TheSummit => "7.  The Summit",
             Epilogue => "    Epilogue",
             Core => "8.  Core",
+            SumOfBests => "    Sum of Bests",
         }
     }
 
@@ -474,6 +484,7 @@ impl World {
             MirrorTemple => 31,
             TheSummit => 47,
             Core => 5,
+            SumOfBests => 20 + 18 + 25 + 29 + 31 + 47 + 5,
         }
     }
 }
@@ -497,6 +508,7 @@ impl From<u32> for World {
             7 => TheSummit,
             8 => Epilogue,
             9 => Core,
+            100 => SumOfBests,
             _ => panic!("unknown world ID"),
         }
     }
@@ -515,6 +527,7 @@ impl Into<u32> for World {
             TheSummit => 7,
             Epilogue => 8,
             Core => 9,
+            SumOfBests => 100,
         }
     }
 }
@@ -545,12 +558,211 @@ impl Stats {
 
         let total_berries = save_data.expect_parse_child("TotalStrawberries");
 
-        let worlds = save_data
+        let mut worlds: Vec<_> = save_data
             .expect_child("Areas")
             .children()
             .map(WorldStats::from_save)
             // .filter(|stats| stats.world.has_unlockables())
             .collect();
+
+        worlds.push(WorldStats {
+            world: SumOfBests,
+            a_side: ASideStats {
+                cassette: worlds
+                    .iter()
+                    .filter(|world_stats| world_stats.world.has_unlockables())
+                    .all(|world_stats| world_stats.a_side.cassette),
+                full_clear: if worlds
+                    .iter()
+                    .filter(|world_stats| world_stats.world.has_unlockables())
+                    .all(|world_stats| world_stats.a_side.full_clear.is_some())
+                {
+                    Some(
+                        worlds
+                            .iter()
+                            .filter(|world_stats| world_stats.world.has_unlockables())
+                            .map(|world_stats| world_stats.a_side.full_clear.unwrap())
+                            .sum(),
+                    )
+                } else {
+                    None
+                },
+                heart: worlds.iter().all(|world_stats| world_stats.a_side.heart),
+                common: SideStatsCommon {
+                    completed: worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.a_side.common.completed),
+                    berries: worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .map(|world_stats| {
+                            (0..world_stats.red_berries()).map(|n| n.to_string()).map(
+                                move |mut s| {
+                                    s.push_str(":");
+                                    s.push_str(world_stats.world.name());
+                                    s
+                                },
+                            )
+                        })
+                        .flatten()
+                        .collect(),
+                    fewest_dashes: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.a_side.common.fewest_dashes.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.a_side.common.fewest_dashes.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                    fewest_deaths: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.a_side.common.fewest_deaths.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.a_side.common.fewest_deaths.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                    single_run: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.a_side.common.single_run.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.a_side.common.single_run.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                },
+            },
+            b_side: BSideStats {
+                common: SideStatsCommon {
+                    completed: worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.b_side.common.completed),
+                    berries: BTreeSet::new(),
+                    fewest_dashes: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.b_side.common.fewest_dashes.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.b_side.common.fewest_dashes.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                    fewest_deaths: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.b_side.common.fewest_deaths.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.b_side.common.fewest_deaths.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                    single_run: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.b_side.common.single_run.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.b_side.common.single_run.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                },
+            },
+            c_side: CSideStats {
+                common: SideStatsCommon {
+                    completed: worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.c_side.common.completed),
+                    berries: BTreeSet::new(),
+                    fewest_dashes: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.c_side.common.fewest_dashes.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.c_side.common.fewest_dashes.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                    fewest_deaths: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.c_side.common.fewest_deaths.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.c_side.common.fewest_deaths.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                    single_run: if worlds
+                        .iter()
+                        .filter(|world_stats| world_stats.world.has_unlockables())
+                        .all(|world_stats| world_stats.c_side.common.single_run.is_some())
+                    {
+                        Some(
+                            worlds
+                                .iter()
+                                .filter(|world_stats| world_stats.world.has_unlockables())
+                                .map(|world_stats| world_stats.c_side.common.single_run.unwrap())
+                                .sum(),
+                        )
+                    } else {
+                        None
+                    },
+                },
+            },
+        });
 
         Self {
             version,
