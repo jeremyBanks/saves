@@ -2,7 +2,7 @@
 use atty;
 use minidom::Element;
 use serde_derive::{Deserialize, Serialize};
-use std::{collections::BTreeSet, env, fs, string::ToString, time::Duration};
+use std::{collections::BTreeSet, env, fs, string::ToString, time::Duration, convert::TryFrom};
 
 mod domutils;
 mod durationutils;
@@ -530,7 +530,7 @@ impl Stats {
                 .children()
                 .filter(|el| el.text() == "true")
                 .count(),
-        )
+        );
         .expect("way too many gems");
 
         let cheat_mode = save_data.expect_parse_child("CheatMode");
