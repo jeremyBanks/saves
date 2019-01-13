@@ -1,4 +1,4 @@
- Banks 130🍓
+ Banks 132🍓
       Prologue                                                         
   p   any%:       43.945s   can't dash            min deaths:       0  
   1.  Forsaken City                                                    
@@ -31,7 +31,7 @@
       Epilogue                                                         
   e   not timed             min dashes:       0   can't die            
   8.  Core                                                             
-  A   segmented             segmented             segmented            
-  A    1 / 5  red berries   can't skip cassette   can't skip heart     
+  A   any%:    38m01.468s   min dashes:     147   min deaths:     237  
+  A    3 / 5  red berries   can't skip cassette   can't skip heart     
                                                                        
 
