@@ -31,10 +31,10 @@
       Epilogue                                                         
   e   not timed             min dashes:       0   can't die            
   8.  Core                                                             
-  A   any%:    38m01.468s   min dashes:     147   min deaths:     237  
-  A    5 / 5  red berries   can't skip cassette   can't skip heart     
+  A   any%:    33m24.130s   min dashes:     147   min deaths:     211  
+  A   full:    33m24.130s   can't skip cassette   can't skip heart     
       Sum of Bests                                                     
-  A   any%:  3h02m21.438s   min dashes:    1969   min deaths:     923  
+  A   any%:  2h57m44.100s   min dashes:    1969   min deaths:     897  
   A   145/175 red berries   has cassette          no crystal heart     
                                                                        
 
