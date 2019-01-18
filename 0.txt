@@ -28,6 +28,7 @@
   7.  The Summit                                                       
   A   any%:  1h01m04.248s   min dashes:     641   min deaths:     391  
   A   26 / 47 red berries   has cassette          2 / 6 heart gems     
+  B   any%:  2h35m38.287s   min dashes:     426   min deaths:    1263  
       Epilogue                                                         
   e   not timed             min dashes:       0   can't die            
   8.  Core                                                             
