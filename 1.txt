@@ -1,0 +1,52 @@
+ Adny 188🍓
+      Prologue                                                         
+  p   any%:       44.387s   can't dash            min deaths:       0  
+  1.  Forsaken City                                                    
+  A   any%:     1m26.632s   min dashes:      48   has golden berry     
+  A   full:     5m53.124s   has cassette          has crystal heart    
+  B   any%:     3m01.543s   min dashes:      45   has golden berry     
+  C   any%:       45.628s   min dashes:      15   has golden berry     
+  2.  Old Site                                                         
+  A   any%:     3m04.824s   min dashes:     115   has golden berry     
+  A   full:     6m54.086s   has cassette          has crystal heart    
+  B   any%:     3m07.051s   min dashes:     106   has golden berry     
+  C   any%:       33.507s   min dashes:      24   has golden berry     
+  3.  Celestial Resort                                                 
+  A   any%:     9m49.985s   min dashes:     249   min deaths:      25  
+  A   full:    19m55.151s   has cassette          has crystal heart    
+  B   any%:    22m58.428s   min dashes:      96   min deaths:     162  
+  C   any%:       45.033s   min dashes:      21   has golden berry     
+  4.  Golden Ridge                                                     
+  A   any%:     5m38.045s   min dashes:     164   has golden berry     
+  A   full:    22m54.416s   has cassette          has crystal heart    
+  B   any%:    35m14.375s   min dashes:     132   min deaths:     212  
+  C   any%:       37.604s   min dashes:      14   has golden berry     
+  5.  Mirror Temple                                                    
+  A   any%:    28m09.409s   min dashes:     290   min deaths:      61  
+  A   full:    38m00.873s   has cassette          has crystal heart    
+  B   any%:    31m18.466s   min dashes:     125   min deaths:     165  
+  C   any%:       34.476s   min dashes:      19   has golden berry     
+  6.  Reflection                                                       
+  A   any%:    29m12.377s   min dashes:     369   min deaths:      56  
+  A   full:    29m12.377s   has cassette          has crystal heart    
+  B   any%:    55m15.816s   min dashes:     192   min deaths:     314  
+  C   any%:       59.143s   min dashes:      29   has golden berry     
+  7.  The Summit                                                       
+  A   any%:    24m20.113s   min dashes:     570   min deaths:      78  
+  A   full:  1h23m55.706s   has cassette          has crystal heart    
+  B   any%:  1h03m41.804s   min dashes:     414   min deaths:     417  
+  C   any%:     1m08.289s   min dashes:      71   has golden berry     
+      Epilogue                                                         
+  e   not timed             min dashes:       1   can't die            
+  8.  Core                                                             
+  A   any%:    11m29.503s   min dashes:     164   min deaths:      35  
+  A   full:    20m44.723s   can't skip cassette   can't skip heart     
+  B   any%:    44m39.948s   min dashes:     134   min deaths:     319  
+  C   any%:     1m20.699s   min dashes:      40   has golden berry     
+      Sum of Bests                                                     
+  A   any%:  1h53m10.888s   min dashes:    1969   min deaths:     255  
+  A   full:  3h47m30.456s   has cassette          has crystal heart    
+  B   any%:  4h19m17.431s   min dashes:    1244   min deaths:    1589  
+  C   any%:     6m44.379s   min dashes:     233   min deaths:       0  
+                                                                       
+
