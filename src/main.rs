@@ -537,7 +537,7 @@ impl Stats {
         assert!(save_data.name() == "SaveData");
 
         let version = save_data.expect_child("Version").text();
-        assert!(version == "1.2.6.1");
+        // assert!(version == "1.2.6.1");
 
         let name = save_data.expect_child("Name").text();
 
