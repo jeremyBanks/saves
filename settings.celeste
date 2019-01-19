@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Version>1.2.5.3</Version>
+  <Version>1.2.6.1</Version>
   <Fullscreen>false</Fullscreen>
   <WindowScale>5</WindowScale>
   <ViewportPadding>0</ViewportPadding>
