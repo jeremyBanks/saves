@@ -1,6 +1,6 @@
  Banks 145🍓
       Prologue                                                         
-  p   any%:       43.945s   can't dash            min deaths:       0  
+  p   any%:       43.588s   can't dash            min deaths:       0  
   1.  Forsaken City                                                    
   A   any%:     1m29.471s   min dashes:      13   min deaths:       0  
   A   full:     6m04.038s   has cassette          has crystal heart    
