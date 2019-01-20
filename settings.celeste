@@ -8,8 +8,8 @@
   <DisableFlashes>false</DisableFlashes>
   <DisableScreenShake>false</DisableScreenShake>
   <Rumble>false</Rumble>
-  <MusicVolume>10</MusicVolume>
-  <SFXVolume>10</SFXVolume>
+  <MusicVolume>5</MusicVolume>
+  <SFXVolume>5</SFXVolume>
   <SpeedrunClock>true</SpeedrunClock>
   <LastSaveFile>0</LastSaveFile>
   <Language>english</Language>
