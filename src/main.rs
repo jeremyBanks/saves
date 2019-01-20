@@ -562,7 +562,7 @@ impl Stats {
             .expect_child("Areas")
             .children()
             .map(WorldStats::from_save)
-            // .filter(|stats| stats.world.has_unlockables())
+            .filter(|stats| stats.world != Epilogue)
             .collect();
 
         worlds.push(WorldStats {
