@@ -6,7 +6,7 @@
   A   full:     6m04.038s   has cassette          has crystal heart    
   B   any%:     4m15.561s   min dashes:      47   min deaths:      13  
   2.  Old Site                                                         
-  A   any%:     3m07.476s   min dashes:     113   min deaths:       1  
+  A   any%:     3m07.476s   min dashes:     110   min deaths:       1  
   A   full:    15m16.793s   has cassette          has crystal heart    
   B   any%:    14m53.197s   min dashes:     220   min deaths:      69  
   3.  Celestial Resort                                                 
@@ -33,7 +33,7 @@
   A   any%:    33m24.130s   min dashes:     147   min deaths:     211  
   A   full:    33m24.130s   can't skip cassette   can't skip heart     
       Sum of Bests                                                     
-  A   any%:  2h36m25.921s   min dashes:    1929   min deaths:     712  
+  A   any%:  2h36m25.921s   min dashes:    1926   min deaths:     712  
   A   150/175 red berries   has cassette          no crystal heart     
                                                                        
 
