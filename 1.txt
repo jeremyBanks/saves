@@ -36,8 +36,6 @@
   A   full:  1h23m55.706s   has cassette          has crystal heart    
   B   any%:  1h03m41.804s   min dashes:     414   min deaths:     417  
   C   any%:     1m08.289s   min dashes:      71   has golden berry     
-      Epilogue                                                         
-  e   not timed             min dashes:       1   can't die            
   8.  Core                                                             
   A   any%:    11m29.503s   min dashes:     164   min deaths:      35  
   A   full:    20m44.723s   can't skip cassette   can't skip heart     

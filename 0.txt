@@ -29,8 +29,6 @@
   A   any%:    39m46.069s   min dashes:     601   min deaths:     206  
   A   30 / 47 red berries   has cassette          has crystal heart    
   B   any%:  2h35m38.287s   min dashes:     426   min deaths:    1263  
-      Epilogue                                                         
-  e   not timed             min dashes:      21   can't die            
   8.  Core                                                             
   A   any%:    33m24.130s   min dashes:     147   min deaths:     211  
   A   full:    33m24.130s   can't skip cassette   can't skip heart     
