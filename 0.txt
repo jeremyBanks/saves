@@ -1,4 +1,4 @@
- Banks 146🍓
+ Banks 148🍓
       Prologue                                                         
   p   any%:       30.430s   can't dash            min deaths:       0  
   1.  Forsaken City                                                    
@@ -27,7 +27,7 @@
   B   any%:  3h54m01.490s   min dashes:     210   min deaths:    1728  
   7.  The Summit                                                       
   A   any%:    39m46.069s   min dashes:     601   min deaths:     206  
-  A   27 / 47 red berries   has cassette          has crystal heart    
+  A   29 / 47 red berries   has cassette          has crystal heart    
   B   any%:  2h35m38.287s   min dashes:     426   min deaths:    1263  
       Epilogue                                                         
   e   not timed             min dashes:       0   can't die            
@@ -36,6 +36,6 @@
   A   full:    33m24.130s   can't skip cassette   can't skip heart     
       Sum of Bests                                                     
   A   any%:  2h36m25.921s   min dashes:    1929   min deaths:     712  
-  A   146/175 red berries   has cassette          no crystal heart     
+  A   148/175 red berries   has cassette          no crystal heart     
                                                                        
 
