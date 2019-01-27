@@ -445,6 +445,7 @@ pub enum World {
     TheSummit,
     Epilogue,
     Core,
+    Farewell,
     SumOfBests,
 }
 
@@ -463,6 +464,7 @@ impl World {
             TheSummit => "7.  The Summit",
             Epilogue => "    Epilogue",
             Core => "8.  Core",
+            Farewell => "9.  Farewell",
             SumOfBests => "    Sum of Bests",
         }
     }
@@ -484,6 +486,7 @@ impl World {
             MirrorTemple => 31,
             TheSummit => 47,
             Core => 5,
+            Farewell => 0, // TODO: when known
             SumOfBests => 20 + 18 + 25 + 29 + 31 + 47 + 5,
         }
     }
@@ -508,6 +511,7 @@ impl From<u32> for World {
             7 => TheSummit,
             8 => Epilogue,
             9 => Core,
+            10 => Farewell,
             100 => SumOfBests,
             _ => panic!("unknown world ID"),
         }
@@ -527,6 +531,7 @@ impl Into<u32> for World {
             TheSummit => 7,
             Epilogue => 8,
             Core => 9,
+            Farewell => 10,
             SumOfBests => 100,
         }
     }
