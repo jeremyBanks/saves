@@ -487,7 +487,7 @@ impl World {
             TheSummit => 47,
             Core => 5,
             Farewell => 0, // TODO: when known
-            SumOfBests => 20 + 18 + 25 + 29 + 31 + 47 + 5,
+            SumOfBests => 20 + 18 + 25 + 29 + 31 + 47 + 5 + 0,
         }
     }
 }
