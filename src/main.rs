@@ -486,7 +486,7 @@ impl World {
             MirrorTemple => 31,
             TheSummit => 47,
             Core => 5,
-            Farewell => 0, // TODO: when known
+            Farewell => 0,
             SumOfBests => 20 + 18 + 25 + 29 + 31 + 47 + 5 + 0,
         }
     }
@@ -542,7 +542,6 @@ impl Stats {
         assert!(save_data.name() == "SaveData");
 
         let version = save_data.expect_child("Version").text();
-        // assert!(version == "1.2.6.1");
 
         let name = save_data.expect_child("Name").text();
 
