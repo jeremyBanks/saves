@@ -3,6 +3,7 @@ name = "celeste-saves"
 version = "0.1.0"
 authors = ["Jeremy Banks <_@jeremy.ca>"]
 edition = "2018"
+publish = false
 
 [dependencies]
 minidom = "0.10.0"
