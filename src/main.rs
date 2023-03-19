@@ -1,9 +1,16 @@
 #![allow(unused)]
 use std::borrow::Cow;
+use std::collections::BTreeSet;
+use std::collections::HashSet;
 use std::path::Path;
 use std::path::PathBuf;
+use std::process::Command;
 use std::sync::Arc;
+use std::thread::sleep;
+use std::time::Duration;
 
+use fork::daemon;
+use tracing::instrument;
 use tracing::trace;
 use tracing::{debug, error, info, warn};
 use tracing_subscriber::prelude::*;
@@ -12,43 +19,110 @@ mod domutils;
 mod durationutils;
 mod old_main;
 mod stringutils;
-use tracing_subscriber::{fmt, prelude::*, EnvFilter};
-use once_cell::sync::Lazy;
-use indexmap::IndexMap;
 use home::home_dir;
+use indexmap::IndexMap;
+use once_cell::sync::Lazy;
+use tracing_subscriber::{fmt, prelude::*, EnvFilter};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-struct ProcInfo {
-    pub pid: u32,
-    pub timestamp: u32,
-    pub exe_path: Arc<PathBuf>,
-    pub cwd_path: Arc<PathBuf>,
+struct CelesteProcess {
+    pub pid: i32,
+    pub timestamp: u64,
+    pub cwd: PathBuf,
+    pub exe: PathBuf,
 }
 
-impl ProcInfo {
-    pub fn for_path(path: impl AsRef<Path>) -> ProcInfo {
-        let path = path.as_ref();
+impl CelesteProcess {
+    #[instrument]
+    pub fn all() -> BTreeSet<CelesteProcess> {
+        let mut celeste_processes = BTreeSet::new();
 
-        let pid: u32 = path.components().last().unwrap().as_os_str().to_str().unwrap().parse().unwrap();
+        for process in procfs::process::all_processes().unwrap() {
+            let process = process.unwrap();
+            let pid = process.pid();
 
-        let mut stat_path = path.to_path_buf();
-        stat_path.push("stat");
-        // read stat file, split by spaces, and then parse 
+            let Ok(cwd) = process.cwd() else { continue };
+            let cwd_file_name = cwd.file_name().unwrap_or_default();
+            if cwd_file_name == "Celeste" {
+                continue;
+            }
 
-        let mut cwd_path = path.to_path_buf();  
-        cwd_path.push("cwd");
-        let cwd_path = cwd_path.read_link().unwrap();
+            let Ok(exe) = process.exe() else { continue };
+            let exe_file_name = exe.file_name().unwrap_or_default().to_string_lossy();
+            if !exe_file_name.starts_with("Celeste") {
+                continue;
+            }
 
-        let mut exe_path = path.to_path_buf();  
-        exe_path.push("exe");
-        let exe_path = exe_path.read_link().unwrap();
+            let Ok(stat) = process.stat() else { continue };
+            let timestamp = stat.starttime;
 
+            celeste_processes.insert(CelesteProcess {
+                pid,
+                timestamp,
+                cwd,
+                exe,
+            });
+        }
 
-        ProcInfo {
-            pid,
-            timestamp: todo!(),
-            cwd_path: cwd_path.into(),
-            exe_path: exe_path.into(),
+        celeste_processes
+    }
+
+    #[instrument]
+    pub fn get_or_new() -> Self {
+        Self::get().unwrap_or_else(Self::new)
+    }
+
+    #[instrument]
+    pub fn new() -> Self {
+        if let Ok(fork::Fork::Child) = daemon(false, false) {
+            std::process::exit(
+                Command::new("steam")
+                    .arg("steam://rungameid/504230")
+                    .status()
+                    .unwrap()
+                    .code()
+                    .unwrap_or_default(),
+            )
+        }
+
+        Self::wait_for_new()
+    }
+
+    #[instrument]
+    pub fn get() -> Option<Self> {
+        for process in Self::all() {
+            return Some(process);
+        }
+        None
+    }
+
+    #[instrument]
+    pub fn wait_for_new() -> Self {
+        loop {
+            for process in Self::all() {
+                return process;
+            }
+            debug!("waiting for Celeste to start");
+            sleep(Duration::from_millis(1024));
+        }
+    }
+
+    #[instrument]
+    pub fn still_alive(&self) -> bool {
+        let pid = self.pid;
+        let Ok(processes) = procfs::process::Process::new(pid) else { return false };
+        let Ok(stat) = processes.stat() else { return false };
+        let timestamp = stat.starttime;
+        self.timestamp == timestamp
+            && self.cwd == processes.cwd().unwrap_or_default()
+            && self.exe == processes.exe().unwrap_or_default()
+    }
+
+    #[instrument]
+    pub fn wait_for_exit(&self) {
+        loop {
+            debug!("waiting for Celeste to exit");
+            sleep(Duration::from_millis(1024));
         }
     }
 }
@@ -71,30 +145,15 @@ fn main() {
 
     trace!("env = {:#?}", std::env::vars().collect::<IndexMap<_, _>>());
 
-    for entry in std::fs::read_dir("/proc").unwrap() {
-        let entry = entry.unwrap();
+    let celeste = CelesteProcess::get_or_new();
 
-        let mut path = entry.path();
-        path.push("cwd");
-
-        // fs.read_link()
-        // entry.file_type().unwrap().is
-    }
-    
-
-    // We launch Celeste through Steam, which can take an inconsistent amount of time. We poll every two seconds
-    // to see if there are any new processes matching our "Celeste process" filter. Once we find one, we wait another
-    // four seconds (to make sure that the actual game process is running, and not just its own launcher), then
-    // we take a snapshot of every process currently matching our "celeste process" filter. We poll every four seconds
-    // (if polling is neccessary, ideally we'd use some event instead) to see determine when Celeste has exited.
+    info!("{celeste:#?}");
 }
-
-static STEAM_GAME_ID: usize = 504_230;
 
 static HOME: Lazy<PathBuf> = Lazy::new(|| home_dir().expect("can't find HOME"));
 
 static SAVE_DIR: Lazy<PathBuf> = Lazy::new(|| {
-    let mut path  = HOME.clone();
+    let mut path = HOME.clone();
     path.push(".local");
     path.push("Celeste");
     path.push("Saves");
@@ -103,9 +162,8 @@ static SAVE_DIR: Lazy<PathBuf> = Lazy::new(|| {
 });
 
 static LOG_DIR: Lazy<PathBuf> = Lazy::new(|| {
-    let mut path  = HOME.clone();
+    let mut path = HOME.clone();
     path.push(".celeste-saves");
     path.push("logs");
     path
 });
-
