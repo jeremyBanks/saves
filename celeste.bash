@@ -65,4 +65,4 @@ else
 fi
 
 echo;
-target/debug/celeste-saves 0.celeste;
+~/.cargo/build/debug/celeste-saves 0.celeste;
