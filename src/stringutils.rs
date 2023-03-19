@@ -1,4 +1,3 @@
-
 use once_cell::sync::Lazy;
 
 #[derive(Debug, PartialEq)]
@@ -9,7 +8,11 @@ pub enum ColorMode {
 }
 pub use ColorMode::*;
 pub static COLOR_MODE: Lazy<ColorMode> = Lazy::new(|| {
-    match (std::env::var("CELESTE_SAVE_COLOR"), std::env::var("NO_COLOR"), atty::is(atty::Stream::Stdout)) {
+    match (
+        std::env::var("CELESTE_SAVE_COLOR"),
+        std::env::var("NO_COLOR"),
+        atty::is(atty::Stream::Stdout),
+    ) {
         (Ok(s), _, _) if s == "ON" => TermColor,
         (Ok(s), _, _) if s == "HTML" => HtmlColor,
         (_, Err(_), true) => TermColor,
@@ -37,7 +40,11 @@ impl StringUtils for &str {
     fn color(&self, color: AnsiColor) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(30 + color.offset(), 39),
-            HtmlColor => format!("<span style=\"color: {};\">{}</span>", color.css_color(), self),
+            HtmlColor => format!(
+                "<span style=\"color: {};\">{}</span>",
+                color.css_color(),
+                self
+            ),
             NoColor => self.to_string(),
         }
     }
@@ -45,7 +52,11 @@ impl StringUtils for &str {
     fn background(&self, color: AnsiColor) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(40 + color.offset(), 49),
-            HtmlColor => format!("<span style=\"background-color: {};\">{}</span>", color.css_color(), self),
+            HtmlColor => format!(
+                "<span style=\"background-color: {};\">{}</span>",
+                color.css_color(),
+                self
+            ),
             NoColor => self.to_string(),
         }
     }
@@ -53,7 +64,10 @@ impl StringUtils for &str {
     fn underline(&self) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(4, 24),
-            HtmlColor => format!("<span style=\"text-decoration: underline;\">{}</span>", self),
+            HtmlColor => format!(
+                "<span style=\"text-decoration: underline;\">{}</span>",
+                self
+            ),
             NoColor => self.to_string(),
         }
     }
