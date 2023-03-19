@@ -24,12 +24,12 @@
   </Assists>
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>10</UnlockedAreas>
-  <TotalDeaths>35</TotalDeaths>
+  <TotalDeaths>36</TotalDeaths>
   <TotalStrawberries>0</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>677</TotalJumps>
+  <TotalJumps>679</TotalJumps>
   <TotalWallJumps>60</TotalWallJumps>
-  <TotalDashes>449</TotalDashes>
+  <TotalDashes>457</TotalDashes>
   <Flags>
     <string>MetTheo</string>
     <string>TheoKnowsName</string>
@@ -37,10 +37,10 @@
   <Poem />
   <RevealedChapter9>true</RevealedChapter9>
   <LastArea ID="8" Mode="Normal" />
-  <CurrentSession Level="bridge" Time="0" StartedFromBeginning="true" Deaths="2" Dashes="40" DashesAtLevelStart="32" DeathsInCurrentLevel="1" InArea="true" FirstLevel="false" Cassette="false" HeartGem="false" Dreaming="false" LightingAlphaAdd="0" BloomBaseAdd="0" DarkRoomAlpha="0.75" CoreMode="None" GrabbedGolden="false" HitCheckpoint="false">
+  <CurrentSession Level="outside" Time="0" StartedFromBeginning="true" Deaths="3" Dashes="48" DashesAtLevelStart="46" DeathsInCurrentLevel="1" InArea="true" FirstLevel="false" Cassette="false" HeartGem="false" Dreaming="false" LightingAlphaAdd="0" BloomBaseAdd="0" DarkRoomAlpha="0.75" CoreMode="None" GrabbedGolden="false" HitCheckpoint="false">
     <Area ID="8" Mode="Normal" />
     <RespawnPoint>
-      <X>176</X>
+      <X>136</X>
       <Y>40</Y>
     </RespawnPoint>
     <Audio>
@@ -240,7 +240,7 @@
     </AreaStats>
     <AreaStats ID="8" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="2" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="3" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
           <Strawberries />
           <Checkpoints />
         </AreaModeStats>
