@@ -40,6 +40,10 @@ test "ON" != "${CELESTE:-ON}" ||\
 -qq /mnt/d/Program\ Files/Celeste/Celeste.exe || \
 steam steam://rungameid/504230;
 
+sleep 10;
+
+-qq wait "$(pidof steam)";
+
 cargo build 2> /dev/null || cargo build;
 
 cat template.html > index.html; for n in 0 1 2; do 
