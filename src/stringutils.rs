@@ -61,7 +61,8 @@ impl StringUtils for &str {
     fn invert(&self) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(4, 24),
-            HtmlColor | NoColor => self.to_string(),
+            HtmlColor => format!("<span style=\"font-weight: bold\">{}</span>", self),
+            NoColor => self.to_string(),
         }
     }
 
