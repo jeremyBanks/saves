@@ -40,8 +40,14 @@ test "ON" != "${CELESTE:-ON}" ||\
 -qq /mnt/d/Program\ Files/Celeste/Celeste.exe || \
 steam steam://rungameid/504230;
 
+set +vx
+pidof gameoverlayui
+pidof pv-bwrap
+pidof steam
+set -vx
+
 sleep 16;
--qq wait "$(pidof gameoverlayui || pidof pv-bwrap || pidof steam || echo "")";
+wait "$(pidof gameoverlayui || pidof pv-bwrap || pidof steam || echo "")";
 
 cargo build 2> /dev/null || cargo build;
 
