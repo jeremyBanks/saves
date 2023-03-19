@@ -42,16 +42,21 @@ test "ON" != "${CELESTE:-ON}" ||\
 -qq /mnt/d/Program\ Files/Celeste/Celeste.exe || \
 steam steam://rungameid/504230;
 
+set -vx
+pid="$(
+    sleep 8 && (
+        pidof gameoverlayui ||
+        pidof pv-bwrap    
+    ) || sleep 8 && (
+        pidof gameoverlayui ||
+        pidof pv-bwrap ||
+        pidof steam ||
+        echo ""
+    )
+)";
 
-sleep 8
-
-pidof gameoverlayui || true
-pidof pv-bwrap || true
-pidof steam || true
+wait "$(pidof $pidof)";
 set +vx
-
-sleep 16;
-wait "$(pidof gameoverlayui || pidof pv-bwrap || pidof steam || echo "")";
 
 cargo build 2> /dev/null || cargo build;
 
