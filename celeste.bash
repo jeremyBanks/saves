@@ -43,12 +43,12 @@ steam steam://rungameid/504230;
 cargo build 2> /dev/null || cargo build;
 
 cat template.html > index.html; for n in 0 1 2; do 
-    rm -f ${n}.txt || true; ~/.cargo/build/target/debug/celeste-saves ${n}.celeste 1> ${n}.txt 2> /dev/null || rm -f ${n}.txt;
+    rm -f ${n}.txt || true; ~/.cargo/build/debug/celeste-saves ${n}.celeste 1> ${n}.txt 2> /dev/null || rm -f ${n}.txt;
     cat template.html > ${n}.html
     ( \
         echo -n "<pre id="${n}" style='position: relative;'>"; \
         echo -n '<div style="position: absolute; top: 0; right: 0;"><a href="'./${n}.celeste'">'${n}'.celeste</a> </div>'
-        CELESTE_SAVE_COLOR=FALSE ~/.cargo/build/target/debug/celeste-saves ${n}.celeste | head -n -1; \
+        CELESTE_SAVE_COLOR=FALSE ~/.cargo/build/debug/celeste-saves ${n}.celeste | head -n -1; \
         echo -n "</pre>" \
     ) | tee --append ${n}.html 1>> index.html 2> /dev/null;
 done
