@@ -1,32 +1,4 @@
-<!doctype html>
-<meta charset="utf-8">
-<link rel="icon" href="rb.png">
-<style>
-    html,
-    body {
-        background: #111;
-        color: white;
-        padding: 0;
-    }
-
-    pre {
-        display: inline-block;
-        vertical-align: top;
-        margin: 2em;
-        font-size: 16px;
-        background: black;
-        box-shadow: 0 0 8px black, 0 0 4px #888;
-        border: 2px solid black;
-    }
-
-    a {
-        color: #840;
-    }
-
-    a:hover {
-        color: #F80;
-    }
-</style><pre id=0 style='position: relative;'><div style="position: absolute; top: 0; right: 0;"><a href="./0.celeste">0.celeste</a> </div> Banks 151🍓
+ Banks 151🍓
       Prologue                                                         
   p   any%:       30.430s   can't dash            min deaths:       0  
   1.  Forsaken City                                                    
@@ -61,4 +33,4 @@
   A   any%:    33m24.130s   min dashes:     147   min deaths:     211  
   A   full:    33m24.130s   can't skip cassette   can't skip heart     
                                                                        
-</pre>
+
