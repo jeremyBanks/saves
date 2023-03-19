@@ -13,7 +13,7 @@ cd ~/Library/"Application Support"/Celeste/Saves &> /dev/null || \
 cd /mnt/d/Program\ Files/Celeste/Saves &> /dev/null || \
 cd ~/.local/share/Celeste/Saves &> /dev/null; 
 
-user="$(whoami)@$(hostname || cat /etc/hostname || echo "unknown")";
+user="$(whoami)@$(cat /etc/hostname || hostname || echo "unknown")";
 
 -qq git add ./*.celeste;
 
