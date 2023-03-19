@@ -45,17 +45,18 @@ steam steam://rungameid/504230;
 set -vx
 pid="$(
     (sleep 8 && (
-        pidof gameoverlayui ||
-        pidof pv-bwrap    
-    )) || (sleep 8 && (
-        pidof gameoverlayui ||
         pidof pv-bwrap ||
+        pidof gameoverlayui ||
+        false
+    )) || (sleep 8 && (
+        pidof pv-bwrap ||
+        pidof gameoverlayui ||
         pidof steam ||
         echo ""
     ))
 )";
 
-wait $pid || true;
+tail --pid=$pid -f /dev/null || true;
 set +vx
 
 cargo build 2> /dev/null || cargo build;
