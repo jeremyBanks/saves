@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Version>1.2.5.3</Version>
+  <Version>1.4.0.0</Version>
+  <DefaultFileName />
   <Fullscreen>true</Fullscreen>
   <WindowScale>4</WindowScale>
   <ViewportPadding>0</ViewportPadding>
   <VSync>true</VSync>
   <DisableFlashes>false</DisableFlashes>
-  <DisableScreenShake>false</DisableScreenShake>
+  <ScreenShake>true</ScreenShake>
   <Rumble>false</Rumble>
+  <GrabMode>Hold</GrabMode>
+  <CrouchDashMode>Press</CrouchDashMode>
   <MusicVolume>5</MusicVolume>
   <SFXVolume>5</SFXVolume>
   <SpeedrunClock>true</SpeedrunClock>
@@ -16,54 +19,193 @@
   <Pico8OnMainMenu>true</Pico8OnMainMenu>
   <SetViewportOnce>true</SetViewportOnce>
   <VariantsUnlocked>true</VariantsUnlocked>
-  <Left>None</Left>
-  <Right>None</Right>
-  <Down>None</Down>
-  <Up>None</Up>
+  <Left>
+    <Keyboard>
+      <Keys>Left</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickLeft</Buttons>
+      <Buttons>DPadLeft</Buttons>
+    </Controller>
+  </Left>
+  <Right>
+    <Keyboard>
+      <Keys>Right</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickRight</Buttons>
+      <Buttons>DPadRight</Buttons>
+    </Controller>
+  </Right>
+  <Down>
+    <Keyboard>
+      <Keys>Down</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickDown</Buttons>
+      <Buttons>DPadDown</Buttons>
+    </Controller>
+  </Down>
+  <Up>
+    <Keyboard>
+      <Keys>Up</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickUp</Buttons>
+      <Buttons>DPadUp</Buttons>
+    </Controller>
+  </Up>
+  <MenuLeft>
+    <Keyboard>
+      <Keys>Left</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickLeft</Buttons>
+      <Buttons>DPadLeft</Buttons>
+    </Controller>
+  </MenuLeft>
+  <MenuRight>
+    <Keyboard>
+      <Keys>Right</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickRight</Buttons>
+      <Buttons>DPadRight</Buttons>
+    </Controller>
+  </MenuRight>
+  <MenuDown>
+    <Keyboard>
+      <Keys>Down</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickDown</Buttons>
+      <Buttons>DPadDown</Buttons>
+    </Controller>
+  </MenuDown>
+  <MenuUp>
+    <Keyboard>
+      <Keys>Up</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftThumbstickUp</Buttons>
+      <Buttons>DPadUp</Buttons>
+    </Controller>
+  </MenuUp>
   <Grab>
-    <Keys>Z</Keys>
-    <Keys>V</Keys>
-    <Keys>LeftShift</Keys>
+    <Keyboard>
+      <Keys>Z</Keys>
+      <Keys>V</Keys>
+      <Keys>LeftShift</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftTrigger</Buttons>
+      <Buttons>RightTrigger</Buttons>
+      <Buttons>LeftShoulder</Buttons>
+      <Buttons>RightShoulder</Buttons>
+    </Controller>
   </Grab>
   <Jump>
-    <Keys>C</Keys>
+    <Keyboard>
+      <Keys>C</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>A</Buttons>
+      <Buttons>Y</Buttons>
+    </Controller>
   </Jump>
   <Dash>
-    <Keys>X</Keys>
+    <Keyboard>
+      <Keys>X</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>X</Buttons>
+      <Buttons>B</Buttons>
+    </Controller>
   </Dash>
   <Talk>
-    <Keys>X</Keys>
+    <Keyboard>
+      <Keys>X</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>B</Buttons>
+    </Controller>
   </Talk>
-  <Pause />
+  <Pause>
+    <Keyboard>
+      <Keys>Enter</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>Start</Buttons>
+    </Controller>
+  </Pause>
   <Confirm>
-    <Keys>C</Keys>
+    <Keyboard>
+      <Keys>C</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>A</Buttons>
+    </Controller>
   </Confirm>
   <Cancel>
-    <Keys>X</Keys>
+    <Keyboard>
+      <Keys>X</Keys>
+      <Keys>Back</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>B</Buttons>
+      <Buttons>X</Buttons>
+    </Controller>
   </Cancel>
   <Journal>
-    <Keys>Tab</Keys>
+    <Keyboard>
+      <Keys>Tab</Keys>
+    </Keyboard>
+    <Controller>
+      <Buttons>LeftTrigger</Buttons>
+    </Controller>
   </Journal>
   <QuickRestart>
-    <Keys>R</Keys>
+    <Keyboard>
+      <Keys>R</Keys>
+    </Keyboard>
+    <Controller />
   </QuickRestart>
-  <BtnGrab>
-    <Buttons>RightTrigger</Buttons>
-    <Buttons>RightShoulder</Buttons>
-  </BtnGrab>
-  <BtnJump>
-    <Buttons>A</Buttons>
-    <Buttons>LeftShoulder</Buttons>
-    <Buttons>LeftTrigger</Buttons>
-  </BtnJump>
-  <BtnDash>
-    <Buttons>X</Buttons>
-    <Buttons>B</Buttons>
-  </BtnDash>
-  <BtnTalk>
-    <Buttons>Y</Buttons>
-  </BtnTalk>
-  <BtnAltQuickRestart />
+  <DemoDash>
+    <Keyboard />
+    <Controller />
+  </DemoDash>
+  <RightMoveOnly>
+    <Keyboard />
+    <Controller />
+  </RightMoveOnly>
+  <LeftMoveOnly>
+    <Keyboard />
+    <Controller />
+  </LeftMoveOnly>
+  <UpMoveOnly>
+    <Keyboard />
+    <Controller />
+  </UpMoveOnly>
+  <DownMoveOnly>
+    <Keyboard />
+    <Controller />
+  </DownMoveOnly>
+  <RightDashOnly>
+    <Keyboard />
+    <Controller />
+  </RightDashOnly>
+  <LeftDashOnly>
+    <Keyboard />
+    <Controller />
+  </LeftDashOnly>
+  <UpDashOnly>
+    <Keyboard />
+    <Controller />
+  </UpDashOnly>
+  <DownDashOnly>
+    <Keyboard />
+    <Controller />
+  </DownDashOnly>
   <LaunchWithFMODLiveUpdate>false</LaunchWithFMODLiveUpdate>
   <LaunchInDebugMode>false</LaunchInDebugMode>
   <!--
