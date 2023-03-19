@@ -57,7 +57,6 @@ pid="$(
 )";
 
 tail --pid=$pid -f /dev/null || true;
-set +vx
 
 cargo build 2> /dev/null || cargo build;
 
@@ -82,6 +81,7 @@ if -qq git commit . -m "🍓 $user" --allow-empty-message; then
 else
     echo "🆗 No changes to sync"
 fi
+set +vx
 
 echo;
 ~/.cargo/build/debug/celeste-saves 0.celeste;
