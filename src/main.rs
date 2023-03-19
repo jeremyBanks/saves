@@ -5,7 +5,6 @@ use std::{collections::BTreeSet, convert::TryFrom, env, fs, string::ToString, ti
 mod domutils;
 mod durationutils;
 mod stringutils;
-use once_cell::sync::Lazy;
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
 // TODO: use once_cell to capture the CELESTE_SAVE_COLOR env instead of repeatedly querying it
@@ -36,27 +35,15 @@ fn main() {
     fn print_divider(content: impl ToString) {
         let mut s = format!("  {:<69}", content.to_string());
         
-        if *COLOR_MODE != NoColor {
-            s = s.color(HEADER_FG).background(HEADER_BG)
-        }
-        if *COLOR_MODE == HtmlColor {
-            s = ansi_to_html::convert_escaped(&s).unwrap();
-        }
+        s = s.color(HEADER_FG).background(HEADER_BG);
 
         println!("{}", s);
     }
 
     fn print_side(side: impl ToString, color: AnsiColor) {
-        let force_color = env::var("CELESTE_SAVE_COLOR")
-            .map(|s| s == "ON")
-            .unwrap_or(false);
-        if force_color || atty::is(atty::Stream::Stdout) {
-            print!("{} ", " ".background(DIVIDER));
-            print!("{}", side.to_string().color(color));
-            print!(" {}", " ".background(DIVIDER));
-        } else {
-            print!("  {}  ", side.to_string());
-        }
+        print!("{} ", " ".background(DIVIDER));
+        print!("{}", side.to_string().color(color));
+        print!(" {}", " ".background(DIVIDER));
     }
 
     fn print_cell(left: impl ToString, right: impl ToString, color: AnsiColor, max_len: usize) {
