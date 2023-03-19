@@ -1,5 +1,3 @@
-#![feature(try_from)]
-use atty;
 use minidom::Element;
 use serde_derive::{Deserialize, Serialize};
 use std::{collections::BTreeSet, convert::TryFrom, env, fs, string::ToString, time::Duration};
@@ -15,7 +13,7 @@ fn main() {
         .map(|name| fs::read_to_string(name).expect("file should exist"))
         .collect::<Vec<_>>();
 
-    if saves.len() == 0 {
+    if saves.is_empty() {
         eprintln!("Error: no arguments provided. One or more Celeste save file paths expected.");
         return;
     }
@@ -33,7 +31,7 @@ fn main() {
     fn print_divider(content: impl ToString) {
         let mut s = format!("  {:<69}", content.to_string());
         let force_color = env::var("CELESTE_SAVE_COLOR")
-            .and_then(|s| Ok(s == "ON"))
+            .map(|s| s == "ON")
             .unwrap_or(false);
         if force_color || atty::is(atty::Stream::Stdout) {
             s = s.color(HEADER_FG).background(HEADER_BG)
@@ -43,7 +41,7 @@ fn main() {
 
     fn print_side(side: impl ToString, color: AnsiColor) {
         let force_color = env::var("CELESTE_SAVE_COLOR")
-            .and_then(|s| Ok(s == "ON"))
+            .map(|s| s == "ON")
             .unwrap_or(false);
         if force_color || atty::is(atty::Stream::Stdout) {
             print!("{} ", " ".background(DIVIDER));
@@ -68,7 +66,7 @@ fn main() {
             };
             s.push_str(&left);
             for _ in 0..padding {
-                s.push_str(" ");
+                s.push(' ');
             }
             s.push_str(&right);
         } else {
@@ -76,7 +74,7 @@ fn main() {
             let mut right = &right[..];
             let mut content_len = content_len;
             while content_len > max_len {
-                if left.len() == 0 || (right.len() > 0 && content_len % 2 == 0) {
+                if left.is_empty() || (!right.is_empty() && content_len % 2 == 0) {
                     right = &right[..right.len() - 1];
                 } else {
                     left = &left[..left.len() - 1];
@@ -88,7 +86,7 @@ fn main() {
         }
 
         let force_color = env::var("CELESTE_SAVE_COLOR")
-            .and_then(|s| Ok(s == "ON"))
+            .map(|s| s == "ON")
             .unwrap_or(false);
         if force_color || atty::is(atty::Stream::Stdout) {
             print!(" {}", s.color(color));
@@ -109,7 +107,7 @@ fn main() {
     fn print_deaths_or_heart(left: impl ToString, right: impl ToString, color: AnsiColor) {
         print_cell(left, right, color, 19);
         let force_color = env::var("CELESTE_SAVE_COLOR")
-            .and_then(|s| Ok(s == "ON"))
+            .map(|s| s == "ON")
             .unwrap_or(false);
         if force_color || atty::is(atty::Stream::Stdout) {
             println!("\x1B[0m");
@@ -131,7 +129,7 @@ fn main() {
         };
 
         let force_color = env::var("CELESTE_SAVE_COLOR")
-            .and_then(|s| Ok(s == "ON"))
+            .map(|s| s == "ON")
             .unwrap_or(false);
         if force_color || atty::is(atty::Stream::Stdout) {
             println!(
@@ -140,7 +138,7 @@ fn main() {
                 format!("{}🍓", stats.total_berries).color(berry_color)
             );
         } else {
-            println!(" {} {}🍓", stats.name, stats.total_berries.to_string());
+            println!(" {} {}🍓", stats.name, stats.total_berries);
         }
 
         for world_stats in stats.worlds {
@@ -487,7 +485,7 @@ impl World {
             TheSummit => 47,
             Core => 5,
             Farewell => 0,
-            SumOfBests => 20 + 18 + 25 + 29 + 31 + 47 + 5 + 0,
+            SumOfBests => 20 + 18 + 25 + 29 + 31 + 47 + 5,
         }
     }
 }
@@ -518,9 +516,9 @@ impl From<u32> for World {
     }
 }
 
-impl Into<u32> for World {
-    fn into(self) -> u32 {
-        match self {
+impl From<World> for u32 {
+    fn from(val: World) -> Self {
+        match val {
             Prologue => 0,
             ForsakenCity => 1,
             OldSite => 2,
@@ -545,10 +543,7 @@ impl Stats {
 
         let name = save_data.expect_child("Name").text();
 
-        let gem_el = save_data
-            .children()
-            .filter(|el| el.name() == "SummitGems")
-            .next();
+        let gem_el = save_data.children().find(|el| el.name() == "SummitGems");
 
         let gems = match gem_el {
             Some(el) => u8::try_from(el.children().filter(|el| el.text() == "true").count())
@@ -600,16 +595,15 @@ impl Stats {
                     berries: worlds
                         .iter()
                         .filter(|world_stats| world_stats.world.has_unlockables())
-                        .map(|world_stats| {
+                        .flat_map(|world_stats| {
                             (0..world_stats.red_berries()).map(|n| n.to_string()).map(
                                 move |mut s| {
-                                    s.push_str(":");
+                                    s.push(':');
                                     s.push_str(world_stats.world.name());
                                     s
                                 },
                             )
                         })
-                        .flatten()
                         .collect(),
                     fewest_dashes: if worlds
                         .iter()
