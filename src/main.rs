@@ -7,10 +7,6 @@ mod durationutils;
 mod stringutils;
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
-// TODO: use once_cell to capture the CELESTE_SAVE_COLOR env instead of repeatedly querying it
-// and modify all of these to use ansi_to_html to produce HTML output instead of the env
-// is set to HTML
-
 fn main() {
     let saves = env::args()
         .skip(1)

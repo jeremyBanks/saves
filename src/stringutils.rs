@@ -37,7 +37,7 @@ impl StringUtils for &str {
     fn color(&self, color: AnsiColor) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(30 + color.offset(), 39),
-            HtmlColor => format!("<span style=\"color: {}\">{}</span>", color.css_color(), self),
+            HtmlColor => format!("<span style=\"color: {};\">{}</span>", color.css_color(), self),
             NoColor => self.to_string(),
         }
     }
@@ -45,7 +45,7 @@ impl StringUtils for &str {
     fn background(&self, color: AnsiColor) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(40 + color.offset(), 49),
-            HtmlColor => format!("<span style=\"background: {}\">{}</span>", color.css_color(), self),
+            HtmlColor => format!("<span style=\"background-color: {};\">{}</span>", color.css_color(), self),
             NoColor => self.to_string(),
         }
     }
@@ -53,7 +53,7 @@ impl StringUtils for &str {
     fn underline(&self) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(4, 24),
-            HtmlColor => format!("<span style=\"text-decoration: underline\">{}</span>", self),
+            HtmlColor => format!("<span style=\"text-decoration: underline;\">{}</span>", self),
             NoColor => self.to_string(),
         }
     }
@@ -61,7 +61,7 @@ impl StringUtils for &str {
     fn invert(&self) -> String {
         match *COLOR_MODE {
             TermColor => self.with_ansi(4, 24),
-            HtmlColor => format!("<span style=\"font-weight: bold\">{}</span>", self),
+            HtmlColor => format!("<span style=\"font-weight: bold;\">{}</span>", self),
             NoColor => self.to_string(),
         }
     }
@@ -156,7 +156,7 @@ impl AnsiColor {
             White => "#FFF",
             Red => "#EF2929",
             Green => "#8AE234",
-            Yellow => "#FCE94f",
+            Yellow => "#FCE94F",
             Blue => "#32AFFF",
             Magenta => "#AD7FA8",
             LightGray => "#D3D7CF",
