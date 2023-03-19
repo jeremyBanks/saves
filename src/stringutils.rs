@@ -1,3 +1,22 @@
+
+use once_cell::sync::Lazy;
+
+#[derive(Debug, PartialEq)]
+pub enum ColorMode {
+    NoColor,
+    TermColor,
+    HtmlColor,
+}
+pub use ColorMode::*;
+pub static COLOR_MODE: Lazy<ColorMode> = Lazy::new(|| {
+    match (std::env::var("CELESTE_SAVE_COLOR"), std::env::var("NO_COLOR"), atty::is(atty::Stream::Stdout)) {
+        (Ok(s), _, _) if s == "ON" => TermColor,
+        (Ok(s), _, _) if s == "HTML" => HtmlColor,
+        (_, Err(_), true) => TermColor,
+        (_, _, _) => NoColor,
+    }
+});
+
 pub trait StringUtils {
     fn with_ansi(&self, prefix: u8, suffix: u8) -> String;
     fn color(&self, color: AnsiColor) -> String;
@@ -16,19 +35,34 @@ impl StringUtils for &str {
     }
 
     fn color(&self, color: AnsiColor) -> String {
-        self.with_ansi(30 + color.offset(), 39)
+        match *COLOR_MODE {
+            TermColor => self.with_ansi(30 + color.offset(), 39),
+            HtmlColor => format!("<span style=\"color: {}\">{}</span>", color.css_color(), self),
+            NoColor => self.to_string(),
+        }
     }
 
     fn background(&self, color: AnsiColor) -> String {
-        self.with_ansi(40 + color.offset(), 49)
+        match *COLOR_MODE {
+            TermColor => self.with_ansi(40 + color.offset(), 49),
+            HtmlColor => format!("<span style=\"background: {}\">{}</span>", color.css_color(), self),
+            NoColor => self.to_string(),
+        }
     }
 
     fn underline(&self) -> String {
-        self.with_ansi(4, 24)
+        match *COLOR_MODE {
+            TermColor => self.with_ansi(4, 24),
+            HtmlColor => format!("<span style=\"text-decoration: underline\">{}</span>", self),
+            NoColor => self.to_string(),
+        }
     }
 
     fn invert(&self) -> String {
-        self.with_ansi(7, 27)
+        match *COLOR_MODE {
+            TermColor => self.with_ansi(4, 24),
+            HtmlColor | NoColor => self.to_string(),
+        }
     }
 
     fn pad_start(&self, len: usize) -> String {
@@ -111,6 +145,28 @@ impl AnsiColor {
             DarkBlue => 4,
             DarkMagenta => 5,
             DarkCyan => 6,
+        }
+    }
+
+    fn css_color(self) -> &'static str {
+        match self {
+            Default => "default",
+            Black => "#000",
+            White => "#FFF",
+            Red => "#EF2929",
+            Green => "#8AE234",
+            Yellow => "#FCE94f",
+            Blue => "#32AFFF",
+            Magenta => "#AD7FA8",
+            LightGray => "#D3D7CF",
+            DarkGray => "#555753",
+            Cyan => "#34E2E2",
+            DarkRed => "#C00",
+            DarkGreen => "#4E9A06",
+            DarkYellow => "#C4A000",
+            DarkBlue => "#729FCF",
+            DarkMagenta => "#75507B",
+            DarkCyan => "#06989A",
         }
     }
 }

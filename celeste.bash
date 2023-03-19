@@ -51,7 +51,7 @@ cat template.html > index.html; for n in 0 1 2; do
     ( \
         echo -n "<pre id="${n}" style='position: relative;'>"; \
         echo -n '<div style="position: absolute; top: 0; right: 0;"><a href="'./${n}.celeste'">'${n}'.celeste</a> </div>'
-        CELESTE_SAVE_COLOR=FALSE ~/.cargo/build/debug/celeste-saves ${n}.celeste | head -n -1; \
+        CELESTE_SAVE_COLOR=HTML ~/.cargo/build/debug/celeste-saves ${n}.celeste | head -n -1; \
         echo -n "</pre>" \
     ) | tee --append ${n}.html 1>> index.html 2> /dev/null;
 done

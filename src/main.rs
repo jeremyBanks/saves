@@ -5,7 +5,7 @@ use std::{collections::BTreeSet, convert::TryFrom, env, fs, string::ToString, ti
 mod domutils;
 mod durationutils;
 mod stringutils;
-use once_cell::Lazy;
+use once_cell::sync::Lazy;
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
 // TODO: use once_cell to capture the CELESTE_SAVE_COLOR env instead of repeatedly querying it
@@ -23,19 +23,6 @@ fn main() {
         return;
     }
 
-    enum ColorMode {
-        NoColor,
-        TermColor,
-        HtmlColor,
-    }
-    static COLOR_MODE: Lazy<ColorMode> = Lazy::new(|| {
-        match env::var("CELESTE_SAVE_COLOR") {
-            Ok(s) if s == "ON" => ColorMode::TermColor,
-            Ok(s) if s == "html" => ColorMode::HtmlColor,
-            _ => ColorMode::NoColor,
-        }
-    });
-
     const HEADER_FG: AnsiColor = Black;
     const HEADER_BG: AnsiColor = White;
     const DIVIDER: AnsiColor = DarkGray;
@@ -48,13 +35,14 @@ fn main() {
 
     fn print_divider(content: impl ToString) {
         let mut s = format!("  {:<69}", content.to_string());
-        let force_color = env::var("CELESTE_SAVE_COLOR")
-            .map(|s| s == "ON")
-            .unwrap_or(false);
-
-        if force_color || atty::is(atty::Stream::Stdout) {
+        
+        if *COLOR_MODE != NoColor {
             s = s.color(HEADER_FG).background(HEADER_BG)
         }
+        if *COLOR_MODE == HtmlColor {
+            s = ansi_to_html::convert_escaped(&s).unwrap();
+        }
+
         println!("{}", s);
     }
 
