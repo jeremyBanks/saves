@@ -34,7 +34,7 @@ echo "✅ Synced"
 
 echo "🍓 Celeste";
 
-set +vx
+set -vx
 
 test "ON" != "${CELESTE:-ON}" ||\
 -qq open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app || \
@@ -45,7 +45,7 @@ steam steam://rungameid/504230;
 pidof gameoverlayui
 pidof pv-bwrap
 pidof steam
-set -vx
+set +vx
 
 sleep 16;
 wait "$(pidof gameoverlayui || pidof pv-bwrap || pidof steam || echo "")";
