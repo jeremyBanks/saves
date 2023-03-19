@@ -55,7 +55,7 @@ pid="$(
     )
 )";
 
-wait "$(pidof $pidof)";
+wait "$(pidof $pid)";
 set +vx
 
 cargo build 2> /dev/null || cargo build;
