@@ -42,6 +42,9 @@ test "ON" != "${CELESTE:-ON}" ||\
 -qq /mnt/d/Program\ Files/Celeste/Celeste.exe || \
 steam steam://rungameid/504230;
 
+
+sleep 8
+
 pidof gameoverlayui || true
 pidof pv-bwrap || true
 pidof steam || true
