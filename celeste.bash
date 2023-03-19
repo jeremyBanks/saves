@@ -41,8 +41,7 @@ test "ON" != "${CELESTE:-ON}" ||\
 steam steam://rungameid/504230;
 
 sleep 10;
-
--qq wait "$(pidof steam)";
+-qq wait "$(pidof gameoverlayui || pidof pv-bwrap || pidof steam || echo "")";
 
 cargo build 2> /dev/null || cargo build;
 
