@@ -34,13 +34,14 @@ echo "✅ Synced"
 
 echo "🍓 Celeste";
 
+set +vx
+
 test "ON" != "${CELESTE:-ON}" ||\
 -qq open -W ~/Library/"Application Support"/itch/apps/celeste/Celeste.app || \
 -qq open -W /Applications/Celeste.app || \
 -qq /mnt/d/Program\ Files/Celeste/Celeste.exe || \
 steam steam://rungameid/504230;
 
-set +vx
 pidof gameoverlayui
 pidof pv-bwrap
 pidof steam
