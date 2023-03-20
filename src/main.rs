@@ -97,15 +97,15 @@ fn main() {
         trace!("No origin remote found, not pushing");
     }
 
-    // info!("Launching Celeste");
+    info!("Launching Celeste");
 
-    // let celeste = CELESTE.launch();
+    let celeste = CELESTE.launch();
 
-    // info!("Waiting for Celeste to exit");
+    info!("Waiting for Celeste to exit");
 
-    // celeste.wait_for_exit();
+    celeste.wait_for_exit();
 
-    // info!("Celeste has exited. Reading save files.");
+    info!("Celeste has exited. Reading save files.");
 
     let mut files = BTreeMap::new();
 
