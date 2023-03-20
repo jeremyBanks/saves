@@ -44,7 +44,7 @@ fn main() {
 
     let celeste = CELESTE.launch();
 
-    info!("Daemonizing to wait for Celeste to exit");
+    info!("Waiting for Celeste to exit");
 
     celeste.wait_for_exit();
 
@@ -57,3 +57,4 @@ static LOG_DIR: Lazy<PathBuf> = Lazy::new(|| {
     path.push("logs");
     path
 });
+ 

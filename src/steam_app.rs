@@ -5,6 +5,7 @@ use fork::Fork;
 use keyvalues_parser::Vdf;
 use procfs;
 use smartstring::alias::String as SmartString;
+use tracing::trace;
 use std::collections::BTreeMap;
 use std::os::unix::process::CommandExt;
 use std::path::PathBuf;
@@ -86,6 +87,7 @@ impl SteamApp {
 
     #[instrument]
     pub fn find_process(&self) -> Option<AppProcess> {
+        trace!("Checking for process...");
         for process in procfs::process::all_processes().unwrap() {
             let process = process.unwrap();
             if process.cwd().unwrap_or_default() == self.app_dir() {
