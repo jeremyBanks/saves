@@ -5,11 +5,14 @@ use std::collections::HashSet;
 use std::path::Path;
 use std::path::PathBuf;
 use std::process::Command;
+use std::process::Stdio;
 use std::sync::Arc;
 use std::thread::sleep;
 use std::time::Duration;
 
+use fork::Fork;
 use fork::daemon;
+use fork::fork;
 use tracing::instrument;
 use tracing::trace;
 use tracing::{debug, error, info, warn};
@@ -43,7 +46,7 @@ impl CelesteProcess {
 
             let Ok(cwd) = process.cwd() else { continue };
             let cwd_file_name = cwd.file_name().unwrap_or_default();
-            if cwd_file_name == "Celeste" {
+            if cwd_file_name != "Celeste" {
                 continue;
             }
 
@@ -68,32 +71,48 @@ impl CelesteProcess {
     }
 
     #[instrument]
+    pub fn get() -> Option<Self> {
+        for process in Self::all() {
+            return Some(process);
+        }
+        None
+    }
+
+    #[instrument]
     pub fn get_or_new() -> Self {
         Self::get().unwrap_or_else(Self::new)
     }
 
     #[instrument]
     pub fn new() -> Self {
-        if let Ok(fork::Fork::Child) = daemon(false, false) {
-            std::process::exit(
-                Command::new("steam")
-                    .arg("steam://rungameid/504230")
-                    .status()
-                    .unwrap()
-                    .code()
-                    .unwrap_or_default(),
-            )
+        info!("Launching Celeste...");
+
+        // Double-fork to make sure we don't end up owning Steam's process.
+        if matches!(fork().unwrap(), Fork::Child) {
+            std::process::exit({
+                fork::setsid().unwrap();
+                fork::chdir().unwrap();
+                // We don't fork::close_fd() because we still want to see errors
+                // from the parent process, if it fails to spawn the child, but
+                // we don't care about Steam/the game's output.
+
+                if matches!(fork().unwrap(), Fork::Child) {
+                    Command::new("steam")
+                        .arg("steam://rungameid/504230")
+                        .stdin(Stdio::null())
+                        .stdout(Stdio::null())
+                        .stderr(Stdio::null())
+                        .status()
+                        .unwrap()
+                        .code()
+                        .unwrap()
+                } else {
+                    0
+                }
+            });
         }
 
         Self::wait_for_new()
-    }
-
-    #[instrument]
-    pub fn get() -> Option<Self> {
-        for process in Self::all() {
-            return Some(process);
-        }
-        None
     }
 
     #[instrument]
@@ -121,6 +140,9 @@ impl CelesteProcess {
     #[instrument]
     pub fn wait_for_exit(&self) {
         loop {
+            if !self.still_alive() {
+                return;
+            }
             debug!("waiting for Celeste to exit");
             sleep(Duration::from_millis(1024));
         }
@@ -145,9 +167,15 @@ fn main() {
 
     trace!("env = {:#?}", std::env::vars().collect::<IndexMap<_, _>>());
 
+    info!("Launching or finding Celeste...");
+
     let celeste = CelesteProcess::get_or_new();
 
-    info!("{celeste:#?}");
+    info!("Celeste is now running. {celeste:?}");
+
+    celeste.wait_for_exit();
+
+    info!("Celeste is now closed.");
 }
 
 static HOME: Lazy<PathBuf> = Lazy::new(|| home_dir().expect("can't find HOME"));
