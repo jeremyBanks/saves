@@ -1,22 +1,19 @@
 use minidom::Element;
 use serde_derive::{Deserialize, Serialize};
-use std::{collections::BTreeSet, convert::TryFrom, env, fs, string::ToString, time::Duration};
+use std::fmt::Write;
+use std::{collections::BTreeSet, convert::TryFrom, env, string::ToString, time::Duration};
 use tracing_unwrap::OptionExt;
 use tracing_unwrap::ResultExt;
 
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
-fn old_main() {
-    let saves = env::args()
-        .skip(1)
-        .map(|name| fs::read_to_string(name).expect("file should exist"))
-        .collect::<Vec<_>>();
+pub fn celeste_stats(save: &str) -> String {
+    let mut output = String::new();
 
-    if saves.is_empty() {
-        eprintln!("Error: no arguments provided. One or more Celeste save file paths expected.");
-        return;
-    }
+    output.push_str(include_str!("template.html"));
 
+    output.push_str("<pre>");
+    
     const HEADER_FG: AnsiColor = Black;
     const HEADER_BG: AnsiColor = White;
     const DIVIDER: AnsiColor = DarkGray;
@@ -27,21 +24,21 @@ fn old_main() {
     const GOOD: AnsiColor = Magenta;
     const BEST: AnsiColor = Yellow;
 
-    fn print_divider(content: impl ToString) {
+    fn print_divider(mut output: &mut String, content: impl ToString) {
         let mut s = format!("  {:<69}", content.to_string());
 
         s = s.color(HEADER_FG).background(HEADER_BG);
 
-        println!("{}", s);
+        writeln!(&mut output, "{}", s).unwrap_or_log();
     }
 
-    fn print_side(side: impl ToString, color: AnsiColor) {
-        print!("{} ", " ".background(DIVIDER));
-        print!("{}", side.to_string().color(color));
-        print!(" {}", " ".background(DIVIDER));
+    fn print_side(mut output: &mut String, side: impl ToString, color: AnsiColor) {
+        write!(&mut output, "{} ", " ".background(DIVIDER)).unwrap_or_log();
+        write!(&mut output, "{}", side.to_string().color(color)).unwrap_or_log();
+        write!(&mut output, " {}", " ".background(DIVIDER)).unwrap_or_log();
     }
 
-    fn print_cell(left: impl ToString, right: impl ToString, color: AnsiColor, max_len: usize) {
+    fn print_cell(mut output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor, max_len: usize) {
         let left = left.to_string();
         let right = right.to_string();
         let content_len = left.len() + right.len();
@@ -74,264 +71,254 @@ fn old_main() {
             s.push_str(right);
         }
 
-        let force_color = env::var("CELESTE_SAVE_COLOR")
-            .map(|s| s == "ON")
-            .unwrap_or(false);
-        if force_color || atty::is(atty::Stream::Stdout) {
-            print!(" {}", s.color(color));
-            print!(" {}", " ".background(DIVIDER));
+        if false {
+            write!(&mut output, " {}", s.color(color)).unwrap_or_log();
+            write!(&mut output, " {}", " ".background(DIVIDER)).unwrap_or_log();
         } else {
-            print!(" {}  ", s);
+            write!(&mut output, " {}  ", s).unwrap_or_log();
         }
     }
 
-    fn print_time_or_reds(left: impl ToString, right: impl ToString, color: AnsiColor) {
-        print_cell(left, right, color, 19);
+    fn print_time_or_reds(output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
+        print_cell(output, left, right, color, 19);
     }
 
-    fn print_dashes_or_cassette(left: impl ToString, right: impl ToString, color: AnsiColor) {
-        print_cell(left, right, color, 19);
+    fn print_dashes_or_cassette(output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
+        print_cell(output, left, right, color, 19);
     }
 
-    fn print_deaths_or_heart(left: impl ToString, right: impl ToString, color: AnsiColor) {
-        print_cell(left, right, color, 19);
-        let force_color = env::var("CELESTE_SAVE_COLOR")
-            .map(|s| s == "ON")
-            .unwrap_or(false);
-        if force_color || atty::is(atty::Stream::Stdout) {
-            println!("\x1B[0m");
+    fn print_deaths_or_heart(mut output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
+        print_cell(output, left, right, color, 19);
+        if false {
+            writeln!(&mut output, "\x1B[0m").unwrap_or_log();
         } else {
-            println!();
+            writeln!(&mut output, ).unwrap_or_log();
         }
     }
 
-    for save in saves {
-        let root = save.parse::<Element>().unwrap_or_log();
-        let stats = Stats::from_save(&root);
+    let root = save.parse::<Element>().unwrap_or_log();
+    let stats = Stats::from_save(&root);
 
-        let berry_color = match stats.total_berries {
-            0 => SUBPAR,
-            1..=174 => NORMAL,
-            175..=199 => GOOD,
-            200 => BEST,
-            _ => panic!("more than 200 berries"),
-        };
+    let berry_color = match stats.total_berries {
+        0 => SUBPAR,
+        1..=174 => NORMAL,
+        175..=199 => GOOD,
+        200 => BEST,
+        _ => panic!("more than 200 berries"),
+    };
 
-        let force_color = env::var("CELESTE_SAVE_COLOR")
-            .map(|s| s == "ON")
-            .unwrap_or(false);
-        if force_color || atty::is(atty::Stream::Stdout) {
-            println!(
-                " {} {}",
-                stats.name.underline().color(White),
-                format!("{}🍓", stats.total_berries).color(berry_color)
+    if false {
+        writeln!(&mut output, 
+            " {} {}",
+            stats.name.underline().color(White),
+            format!("{}🍓", stats.total_berries).color(berry_color)
+        ).unwrap_or_log();
+    } else {
+        writeln!(&mut output, " {} {}🍓", stats.name, stats.total_berries).unwrap_or_log();
+    }
+
+    for world_stats in stats.worlds {
+        if !(world_stats.a_side.common.completed
+            || world_stats.b_side.common.completed
+            || world_stats.c_side.common.completed)
+        {
+            continue;
+        }
+
+        print_divider(&mut output, world_stats.world);
+
+        if world_stats.world == Prologue {
+            let duration = world_stats.a_side.common.single_run.unwrap_or_log();
+            print_side(&mut output,"p", IRRELEVANT);
+            print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
+            print_dashes_or_cassette(&mut output,"can't dash", "", IRRELEVANT);
+            let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
+            print_deaths_or_heart(&mut output,
+                "min deaths:",
+                format!("{:>4}", min_deaths),
+                if min_deaths > 0 { NORMAL } else { BEST },
             );
-        } else {
-            println!(" {} {}🍓", stats.name, stats.total_berries);
+            continue;
+        }
+        if world_stats.world == Epilogue {
+            print_side(&mut output,"e", IRRELEVANT);
+            print_time_or_reds(&mut output,"not timed", "", IRRELEVANT);
+            let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
+            print_dashes_or_cassette(&mut output,
+                "min dashes:",
+                format!("{:>4}", min_dashes),
+                if min_dashes > 0 { NORMAL } else { BEST },
+            );
+            print_deaths_or_heart(&mut output,"can't die", "", IRRELEVANT);
+            continue;
         }
 
-        for world_stats in stats.worlds {
-            if !(world_stats.a_side.common.completed
-                || world_stats.b_side.common.completed
-                || world_stats.c_side.common.completed)
-            {
-                continue;
+        if world_stats.a_side.common.completed {
+            print_side(&mut output,"A", NORMAL);
+
+            if let Some(duration) = world_stats.a_side.common.single_run {
+                print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
+
+                if !world_stats.has_winged_golden() {
+                    let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
+                    print_dashes_or_cassette(&mut output,
+                        "min dashes:",
+                        format!("{:>4}", min_dashes),
+                        if min_dashes > 0 { NORMAL } else { BEST },
+                    );
+                } else {
+                    print_dashes_or_cassette(&mut output,"has winged berry", "", BEST);
+                }
+
+                if !world_stats.has_golden_a() {
+                    let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
+                    print_deaths_or_heart(&mut output,
+                        "min deaths:",
+                        format!("{:>4}", min_deaths),
+                        if min_deaths > 0 { NORMAL } else { BEST },
+                    );
+                } else {
+                    print_deaths_or_heart(&mut output,"has golden berry", "", BEST);
+                }
+            } else {
+                print_time_or_reds(&mut output,"segmented", "", SUBPAR);
+                print_dashes_or_cassette(&mut output,"segmented", "", SUBPAR);
+                print_deaths_or_heart(&mut output,"segmented", "", SUBPAR);
             }
 
-            print_divider(world_stats.world);
+            if world_stats.world.has_unlockables() {
+                print_side(&mut output,"A", NORMAL);
 
-            if world_stats.world == Prologue {
-                let duration = world_stats.a_side.common.single_run.unwrap_or_log();
-                print_side("p", IRRELEVANT);
-                print_time_or_reds("any%:", duration.formatted(), NORMAL);
-                print_dashes_or_cassette("can't dash", "", IRRELEVANT);
-                let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
-                print_deaths_or_heart(
-                    "min deaths:",
-                    format!("{:>4}", min_deaths),
-                    if min_deaths > 0 { NORMAL } else { BEST },
-                );
-                continue;
+                if let Some(duration) = world_stats.a_side.full_clear {
+                    print_time_or_reds(&mut output,"full:", duration.formatted(), BEST);
+                    if world_stats.world == Core {
+                        print_dashes_or_cassette(&mut output,"can't skip cassette", "", IRRELEVANT);
+                        print_deaths_or_heart(&mut output,"can't skip heart", "", IRRELEVANT);
+                    } else {
+                        print_dashes_or_cassette(&mut output,"has cassette", "", BEST);
+                        print_deaths_or_heart(&mut output,"has crystal heart", "", BEST);
+                    }
+                } else {
+                    if world_stats.world.red_berries() > 0 {
+                        print_time_or_reds(
+                            &mut output,if world_stats.world.red_berries() < 99 {
+                                format!(
+                                    "{:>2} / {:<2}",
+                                    world_stats.red_berries(),
+                                    world_stats.world.red_berries()
+                                )
+                            } else {
+                                format!(
+                                    "{:>3}/{:<3}",
+                                    world_stats.red_berries(),
+                                    world_stats.world.red_berries()
+                                )
+                            },
+                            "red berries",
+                            if world_stats.red_berries() > 0 {
+                                if world_stats.red_berries() >= world_stats.world.red_berries()
+                                {
+                                    GOOD
+                                } else {
+                                    NORMAL
+                                }
+                            } else {
+                                SUBPAR
+                            },
+                        );
+                    } else {
+                        print_time_or_reds(&mut output,"no red berries here", "", IRRELEVANT);
+                    }
+
+                    if world_stats.world == Core {
+                        print_dashes_or_cassette(&mut output,"can't skip cassette", "", IRRELEVANT);
+                    } else if world_stats.a_side.cassette {
+                        print_dashes_or_cassette(&mut output,"has cassette", "", GOOD);
+                    } else {
+                        print_dashes_or_cassette(&mut output,"no cassette", "", NORMAL);
+                    }
+
+                    if world_stats.world == Core {
+                        print_deaths_or_heart(&mut output,"can't skip heart", "", IRRELEVANT);
+                    } else if world_stats.a_side.heart {
+                        print_deaths_or_heart(&mut output,"has crystal heart", "", GOOD);
+                    } else if world_stats.world == TheSummit {
+                        print_deaths_or_heart(&mut output,
+                            format!("{} / 6 heart gems", stats.gems),
+                            "",
+                            if stats.gems > 0 { NORMAL } else { SUBPAR },
+                        );
+                    } else {
+                        print_deaths_or_heart(&mut output,"no crystal heart", "", NORMAL);
+                    }
+                }
             }
-            if world_stats.world == Epilogue {
-                print_side("e", IRRELEVANT);
-                print_time_or_reds("not timed", "", IRRELEVANT);
-                let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
+        }
+
+        if world_stats.b_side.common.completed {
+            print_side(&mut output,"B", GOOD);
+
+            if let Some(duration) = world_stats.b_side.common.single_run {
+                print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
+
+                let min_dashes = world_stats.b_side.common.fewest_dashes.unwrap_or_log();
                 print_dashes_or_cassette(
-                    "min dashes:",
+                    &mut output,"min dashes:",
                     format!("{:>4}", min_dashes),
                     if min_dashes > 0 { NORMAL } else { BEST },
                 );
-                print_deaths_or_heart("can't die", "", IRRELEVANT);
-                continue;
-            }
 
-            if world_stats.a_side.common.completed {
-                print_side("A", NORMAL);
-
-                if let Some(duration) = world_stats.a_side.common.single_run {
-                    print_time_or_reds("any%:", duration.formatted(), NORMAL);
-
-                    if !world_stats.has_winged_golden() {
-                        let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
-                        print_dashes_or_cassette(
-                            "min dashes:",
-                            format!("{:>4}", min_dashes),
-                            if min_dashes > 0 { NORMAL } else { BEST },
-                        );
-                    } else {
-                        print_dashes_or_cassette("has winged berry", "", BEST);
-                    }
-
-                    if !world_stats.has_golden_a() {
-                        let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
-                        print_deaths_or_heart(
-                            "min deaths:",
-                            format!("{:>4}", min_deaths),
-                            if min_deaths > 0 { NORMAL } else { BEST },
-                        );
-                    } else {
-                        print_deaths_or_heart("has golden berry", "", BEST);
-                    }
-                } else {
-                    print_time_or_reds("segmented", "", SUBPAR);
-                    print_dashes_or_cassette("segmented", "", SUBPAR);
-                    print_deaths_or_heart("segmented", "", SUBPAR);
-                }
-
-                if world_stats.world.has_unlockables() {
-                    print_side("A", NORMAL);
-
-                    if let Some(duration) = world_stats.a_side.full_clear {
-                        print_time_or_reds("full:", duration.formatted(), BEST);
-                        if world_stats.world == Core {
-                            print_dashes_or_cassette("can't skip cassette", "", IRRELEVANT);
-                            print_deaths_or_heart("can't skip heart", "", IRRELEVANT);
-                        } else {
-                            print_dashes_or_cassette("has cassette", "", BEST);
-                            print_deaths_or_heart("has crystal heart", "", BEST);
-                        }
-                    } else {
-                        if world_stats.world.red_berries() > 0 {
-                            print_time_or_reds(
-                                if world_stats.world.red_berries() < 99 {
-                                    format!(
-                                        "{:>2} / {:<2}",
-                                        world_stats.red_berries(),
-                                        world_stats.world.red_berries()
-                                    )
-                                } else {
-                                    format!(
-                                        "{:>3}/{:<3}",
-                                        world_stats.red_berries(),
-                                        world_stats.world.red_berries()
-                                    )
-                                },
-                                "red berries",
-                                if world_stats.red_berries() > 0 {
-                                    if world_stats.red_berries() >= world_stats.world.red_berries()
-                                    {
-                                        GOOD
-                                    } else {
-                                        NORMAL
-                                    }
-                                } else {
-                                    SUBPAR
-                                },
-                            );
-                        } else {
-                            print_time_or_reds("no red berries here", "", IRRELEVANT);
-                        }
-
-                        if world_stats.world == Core {
-                            print_dashes_or_cassette("can't skip cassette", "", IRRELEVANT);
-                        } else if world_stats.a_side.cassette {
-                            print_dashes_or_cassette("has cassette", "", GOOD);
-                        } else {
-                            print_dashes_or_cassette("no cassette", "", NORMAL);
-                        }
-
-                        if world_stats.world == Core {
-                            print_deaths_or_heart("can't skip heart", "", IRRELEVANT);
-                        } else if world_stats.a_side.heart {
-                            print_deaths_or_heart("has crystal heart", "", GOOD);
-                        } else if world_stats.world == TheSummit {
-                            print_deaths_or_heart(
-                                format!("{} / 6 heart gems", stats.gems),
-                                "",
-                                if stats.gems > 0 { NORMAL } else { SUBPAR },
-                            );
-                        } else {
-                            print_deaths_or_heart("no crystal heart", "", NORMAL);
-                        }
-                    }
-                }
-            }
-
-            if world_stats.b_side.common.completed {
-                print_side("B", GOOD);
-
-                if let Some(duration) = world_stats.b_side.common.single_run {
-                    print_time_or_reds("any%:", duration.formatted(), NORMAL);
-
-                    let min_dashes = world_stats.b_side.common.fewest_dashes.unwrap_or_log();
-                    print_dashes_or_cassette(
-                        "min dashes:",
-                        format!("{:>4}", min_dashes),
-                        if min_dashes > 0 { NORMAL } else { BEST },
+                if !world_stats.has_golden_b() {
+                    let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap_or_log();
+                    print_deaths_or_heart(
+                        &mut output,"min deaths:",
+                        format!("{:>4}", min_deaths),
+                        if min_deaths > 0 { NORMAL } else { BEST },
                     );
-
-                    if !world_stats.has_golden_b() {
-                        let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap_or_log();
-                        print_deaths_or_heart(
-                            "min deaths:",
-                            format!("{:>4}", min_deaths),
-                            if min_deaths > 0 { NORMAL } else { BEST },
-                        );
-                    } else {
-                        print_deaths_or_heart("has golden berry", "", BEST);
-                    }
                 } else {
-                    print_time_or_reds("segmented", "", SUBPAR);
-                    print_dashes_or_cassette("segmented", "", SUBPAR);
-                    print_deaths_or_heart("segmented", "", SUBPAR);
+                    print_deaths_or_heart(&mut output,"has golden berry", "", BEST);
                 }
-            }
-
-            if world_stats.c_side.common.completed {
-                print_side("C", BEST);
-
-                if let Some(duration) = world_stats.c_side.common.single_run {
-                    print_time_or_reds("any%:", duration.formatted(), NORMAL);
-
-                    let min_dashes = world_stats.c_side.common.fewest_dashes.unwrap_or_log();
-                    print_dashes_or_cassette(
-                        "min dashes:",
-                        format!("{:>4}", min_dashes),
-                        if min_dashes > 0 { NORMAL } else { BEST },
-                    );
-
-                    if !world_stats.has_golden_c() {
-                        let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap_or_log();
-                        print_deaths_or_heart(
-                            "min deaths:",
-                            format!("{:>4}", min_deaths),
-                            if min_deaths > 0 { NORMAL } else { BEST },
-                        );
-                    } else {
-                        print_deaths_or_heart("has golden berry", "", BEST);
-                    }
-                } else {
-                    print_time_or_reds("segmented", "", SUBPAR);
-                    print_dashes_or_cassette("segmented", "", SUBPAR);
-                    print_deaths_or_heart("segmented", "", SUBPAR);
-                }
+            } else {
+                print_time_or_reds(&mut output,"segmented", "", SUBPAR);
+                print_dashes_or_cassette(&mut output,"segmented", "", SUBPAR);
+                print_deaths_or_heart(&mut output,"segmented", "", SUBPAR);
             }
         }
 
-        print_divider("");
-        println!();
+        if world_stats.c_side.common.completed {
+            print_side(&mut output,"C", BEST);
+
+            if let Some(duration) = world_stats.c_side.common.single_run {
+                print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
+
+                let min_dashes = world_stats.c_side.common.fewest_dashes.unwrap_or_log();
+                print_dashes_or_cassette(
+                    &mut output,"min dashes:",
+                    format!("{:>4}", min_dashes),
+                    if min_dashes > 0 { NORMAL } else { BEST },
+                );
+
+                if !world_stats.has_golden_c() {
+                    let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap_or_log();
+                    print_deaths_or_heart(
+                        &mut output,"min deaths:",
+                        format!("{:>4}", min_deaths),
+                        if min_deaths > 0 { NORMAL } else { BEST },
+                    );
+                } else {
+                    print_deaths_or_heart(&mut output,"has golden berry", "", BEST);
+                }
+            } else {
+                print_time_or_reds(&mut output,"segmented", "", SUBPAR);
+                print_dashes_or_cassette(&mut output,"segmented", "", SUBPAR);
+                print_deaths_or_heart(&mut output,"segmented", "", SUBPAR);
+            }
+        }
     }
+
+    output.push_str("</pre>");
+
+    output
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

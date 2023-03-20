@@ -1,7 +1,5 @@
 #![allow(non_upper_case_globals)]
 
-use fork::fork;
-use fork::Fork;
 use keyvalues_parser::Vdf;
 use procfs;
 use smartstring::alias::String as SmartString;
@@ -10,7 +8,6 @@ use std::os::unix::process::CommandExt;
 use std::path::PathBuf;
 use std::process::exit;
 use std::process::Command;
-use std::process::Stdio;
 use std::str::FromStr;
 use std::thread::sleep;
 use std::time::Duration;

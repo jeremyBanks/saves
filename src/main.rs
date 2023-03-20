@@ -5,15 +5,13 @@ use itertools::Itertools;
 use std::collections::BTreeMap;
 use std::io::Write;
 use std::path::PathBuf;
-use tracing::debug;
-use tracing::error;
 use tracing::info;
 use tracing::trace;
 use tracing_subscriber::prelude::*;
 
 mod domutils;
 mod durationutils;
-mod old_main;
+mod celeste_stats;
 mod steam_app;
 mod stringutils;
 use home::home_dir;
@@ -21,6 +19,7 @@ use once_cell::sync::Lazy;
 use tracing_unwrap::OptionExt;
 use tracing_unwrap::ResultExt;
 mod daemon;
+use crate::celeste_stats::celeste_stats;
 use crate::daemon::*;
 
 use crate::steam_app::CELESTE;
@@ -84,6 +83,20 @@ fn main() {
         info!("Not in Steam environment");
     }
 
+    let repo = git_repo();
+    
+    if let Ok(mut _origin) = repo.find_remote("origin") {
+        info!("Pulling changes from remote origin");
+        let mut cmd = std::process::Command::new("git");
+        cmd.arg("fetch");
+        cmd.arg("--verbose");
+        cmd.arg("origin");
+        cmd.env("GIT_DIR", &*GIT_DIR);
+        cmd.status().unwrap_or_log();
+    } else {
+        trace!("No origin remote found, not pushing");
+    }
+
     // info!("Launching Celeste");
 
     // let celeste = CELESTE.launch();
@@ -105,7 +118,19 @@ fn main() {
         }
     }
 
-    let mut repo = git_repo();
+    let mut generated = BTreeMap::new();
+    for (name, body) in files.iter() {
+        let name = name.to_str().unwrap_or_log();
+        if name == "settings.celeste" {
+            continue;
+        }
+        let stats = celeste_stats(&body);
+        generated.insert(name.replace(".celeste", ".html"), stats);
+    }
+
+    for (name, stats) in generated.into_iter() {
+        files.insert(name.into(), stats);
+    }
 
     let mut tree = repo.treebuilder(None).unwrap_or_log();
     for (name, body) in files.iter() {
@@ -125,6 +150,7 @@ fn main() {
     if Some(tree.id()) == existing_tree.map(|t| t.id()) {
         info!("No changes to save.");
     } else {
+        // TODO: if upstream doesn't match, add both as parents?
         let parents = branch
             .map(|b| vec![b.get().peel_to_commit().unwrap_or_log()])
             .unwrap_or_default();
@@ -145,12 +171,12 @@ fn main() {
 
         if let Ok(mut _origin) = repo.find_remote("origin") {
             info!("Pushing changes to remote 'origin");
-            // I don't want to figure out auth so let's just shell out
-            // instead of doing this: origin.push(&["refs/heads/celeste"], None).unwrap_or_log();
+            // We shell out instead of figuring out the auth dance.
             let mut cmd = std::process::Command::new("git");
             cmd.arg("push");
+            cmd.arg("--verbose");
             cmd.arg("origin");
-            cmd.arg("celeste");
+            cmd.arg("celeste:celeste");
             cmd.env("GIT_DIR", &*GIT_DIR);
             cmd.status().unwrap_or_log();
         } else {

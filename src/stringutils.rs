@@ -8,6 +8,7 @@ pub enum ColorMode {
 }
 pub use ColorMode::*;
 pub static COLOR_MODE: Lazy<ColorMode> = Lazy::new(|| {
+    return ColorMode::HtmlColor;
     match (
         std::env::var("CELESTE_SAVE_COLOR"),
         std::env::var("NO_COLOR"),
