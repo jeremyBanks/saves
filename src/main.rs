@@ -1,11 +1,6 @@
 #![allow(dead_code)]
 use std::collections::BTreeMap;
 use std::path::PathBuf;
-use std::process::exit;
-
-use fork::fork;
-use fork::Fork;
-use tracing::debug;
 use tracing::info;
 use tracing::trace;
 use tracing_subscriber::prelude::*;
@@ -16,10 +11,10 @@ mod old_main;
 mod steam_app;
 mod stringutils;
 use home::home_dir;
-use indexmap::IndexMap;
 use once_cell::sync::Lazy;
 use tracing_unwrap::OptionExt;
-use tracing_unwrap::ResultExt;
+mod proc;
+use crate::proc::*;
 
 use crate::steam_app::CELESTE;
 
@@ -46,21 +41,6 @@ impl SteamEnv {
             steam_exe,
             username
         })
-    }
-}
-
-fn daemonize() {
-    trace!("Daemonizing with PID {}...", std::process::id());
-    if matches!(fork().unwrap_or_log(), Fork::Child) {
-        fork::close_fd().unwrap_or_log();
-        fork::setsid().unwrap_or_log();
-        if matches!(fork().unwrap_or_log(), Fork::Child) {
-            trace!("Continuing as daemon with PID {}...", std::process::id());
-        } else {
-            exit(0)
-        }
-    } else {
-        exit(0)
     }
 }
 
