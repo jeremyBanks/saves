@@ -71,12 +71,8 @@ pub fn celeste_stats(save: &str) -> String {
             s.push_str(right);
         }
 
-        if false {
-            write!(&mut output, " {}", s.color(color)).unwrap_or_log();
-            write!(&mut output, " {}", " ".background(DIVIDER)).unwrap_or_log();
-        } else {
-            write!(&mut output, " {}  ", s).unwrap_or_log();
-        }
+        write!(&mut output, " {}", s.color(color)).unwrap_or_log();
+        write!(&mut output, " {}", " ".background(DIVIDER)).unwrap_or_log();
     }
 
     fn print_time_or_reds(output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
@@ -89,11 +85,7 @@ pub fn celeste_stats(save: &str) -> String {
 
     fn print_deaths_or_heart(mut output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
         print_cell(output, left, right, color, 19);
-        if false {
-            writeln!(&mut output, "\x1B[0m").unwrap_or_log();
-        } else {
-            writeln!(&mut output, ).unwrap_or_log();
-        }
+        writeln!(&mut output, ).unwrap_or_log();
     }
 
     let root = save.parse::<Element>().unwrap_or_log();
@@ -107,15 +99,11 @@ pub fn celeste_stats(save: &str) -> String {
         _ => panic!("more than 200 berries"),
     };
 
-    if false {
-        writeln!(&mut output, 
-            " {} {}",
-            stats.name.underline().color(White),
-            format!("{}🍓", stats.total_berries).color(berry_color)
-        ).unwrap_or_log();
-    } else {
-        writeln!(&mut output, " {} {}🍓", stats.name, stats.total_berries).unwrap_or_log();
-    }
+    writeln!(&mut output, 
+        " {} {}",
+        stats.name.underline().color(White),
+        format!("{}🍓", stats.total_berries).color(berry_color)
+    ).unwrap_or_log();
 
     for world_stats in stats.worlds {
         if !(world_stats.a_side.common.completed
