@@ -59,22 +59,20 @@ impl SteamApp {
 
         let mut command = Command::new("steam");
         command.arg(format!("steam://rungameid/{}", self.id()));
-        command.stdin(Stdio::null());
 
         info!("Launching {:?} as {:?}", self.name, &command);
 
-        // Double-fork to make sure we don't end up owning Steam's process.
         if matches!(fork().unwrap_or_log(), Fork::Child) {
-            std::process::exit({
-                fork::setsid().unwrap_or_log();
+            fork::close_fd().unwrap_or_log();
+            fork::setsid().unwrap_or_log();
 
-                if matches!(fork().unwrap_or_log(), Fork::Child) {
-                    error!("{:?}", command.exec());
-                    1
-                } else {
-                    0
-                }
-            });
+            if matches!(fork().unwrap_or_log(), Fork::Child) {
+                let error = command.exec();
+                error!("{error:#?}");
+                exit(1)
+            } else {
+                exit(0)
+            }
         }
 
         debug!("Waiting for {:?} to start...", self.name);

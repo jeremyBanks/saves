@@ -1,8 +1,11 @@
 #![allow(dead_code)]
+use std::collections::BTreeMap;
 use std::path::PathBuf;
+use std::process::exit;
 
 use fork::fork;
 use fork::Fork;
+use tracing::debug;
 use tracing::info;
 use tracing::trace;
 use tracing_subscriber::prelude::*;
@@ -16,8 +19,50 @@ use home::home_dir;
 use indexmap::IndexMap;
 use once_cell::sync::Lazy;
 use tracing_unwrap::OptionExt;
+use tracing_unwrap::ResultExt;
 
 use crate::steam_app::CELESTE;
+
+#[derive(Debug)]
+struct SteamEnv {
+    steam_exe: PathBuf,
+    username: String,
+
+}
+
+impl SteamEnv {
+    pub fn get() -> Option<Self> {
+        let env = std::env::vars().collect::<BTreeMap<_, _>>();
+        
+        if env.get("SteamEnv").map(|s| s.as_str()) == Some("1") {
+            return None;
+        }
+
+        let steam_exe = env.get("STEAMSCRIPT").unwrap_or_log().into();
+
+        let username = env.get("SteamUser").unwrap_or_log().into();
+
+        Some(SteamEnv {
+            steam_exe,
+            username
+        })
+    }
+}
+
+fn daemonize() {
+    trace!("Daemonizing with PID {}...", std::process::id());
+    if matches!(fork().unwrap_or_log(), Fork::Child) {
+        fork::close_fd().unwrap_or_log();
+        fork::setsid().unwrap_or_log();
+        if matches!(fork().unwrap_or_log(), Fork::Child) {
+            trace!("Continuing as daemon with PID {}...", std::process::id());
+        } else {
+            exit(0)
+        }
+    } else {
+        exit(0)
+    }
+}
 
 fn main() {
     let file_appender =
@@ -36,7 +81,16 @@ fn main() {
         )
         .init();
 
-    trace!("env = {:#?}", std::env::vars().collect::<IndexMap<_, _>>());
+    trace!("env = {:#?}", std::env::vars().collect::<BTreeMap<_, _>>());
+
+    let steam = SteamEnv::get();
+
+    if let Some(steam) = steam {
+        info!("Steam environment detected: {steam:#?}");
+        daemonize();
+    } else {
+        info!("Not in Steam environment");
+    }
 
     info!("Launching Celeste");
 
