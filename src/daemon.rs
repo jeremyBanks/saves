@@ -1,8 +1,7 @@
-
 use std::process::exit;
 
-use fork::Fork;
 use fork::fork;
+use fork::Fork;
 use tracing::instrument;
 use tracing::trace;
 use tracing_unwrap::ResultExt;
