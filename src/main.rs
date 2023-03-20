@@ -19,6 +19,10 @@ use once_cell::sync::Lazy;
 use crate::steam_app::CELESTE;
 
 fn main() {
+    if let Fork::Parent(_) = fork::daemon(false, false).unwrap() {
+        return;
+    }
+
     let file_appender = tracing_appender::rolling::hourly(LOG_DIR.clone(), "log");
     let (file_appender, _guard) = tracing_appender::non_blocking(file_appender);
 
@@ -41,16 +45,6 @@ fn main() {
     let celeste = CELESTE.launch();
 
     info!("Daemonizing to wait for Celeste to exit");
-
-    // Double-fork to detach from the process Steam's going to kill for never launching a UI.
-    let Fork::Child = fork().unwrap() else {
-        std::process::exit(0);
-    };
-    let Fork::Child = fork().unwrap() else {
-        std::process::exit(0);
-    };
-    
-    info!("I'm a daemon!");
 
     celeste.wait_for_exit();
 
