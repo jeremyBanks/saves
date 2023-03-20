@@ -30,6 +30,6 @@ fork = "0.1.21"
 keyvalues-parser = "0.1.0"
 keyvalues-serde = "0.1.0"
 smartstring = "1.0.1"
-tracing-unwrap = "0.10.0"
+tracing-unwrap = { version = "0.10", default-features = false, features = ["log-location"] }
 git2 = "0.16.1"
 slint = "0.3.5"

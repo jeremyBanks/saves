@@ -13,8 +13,8 @@ mod stringutils;
 use home::home_dir;
 use once_cell::sync::Lazy;
 use tracing_unwrap::OptionExt;
-mod proc;
-use crate::proc::*;
+mod daemon;
+use crate::daemon::*;
 
 use crate::steam_app::CELESTE;
 
@@ -29,7 +29,7 @@ impl SteamEnv {
     pub fn get() -> Option<Self> {
         let env = std::env::vars().collect::<BTreeMap<_, _>>();
         
-        if env.get("SteamEnv").map(|s| s.as_str()) == Some("1") {
+        if env.get("SteamEnv").map(|s| s.as_str())? != "1" {
             return None;
         }
 
@@ -45,9 +45,10 @@ impl SteamEnv {
 }
 
 fn main() {
+    // This is blocking and probably slow, but the easiest alternatives didn't work once
+    // we had forked daemon threads going.
     let file_appender =
         tracing_appender::rolling::never(LOG_DIR.clone(), concat!(env!("CARGO_PKG_NAME"), ".log"));
-    let (file_appender, _guard) = tracing_appender::non_blocking(file_appender);
 
     tracing_subscriber::registry()
         .with(
@@ -66,7 +67,7 @@ fn main() {
     let steam = SteamEnv::get();
 
     if let Some(steam) = steam {
-        info!("Steam environment detected: {steam:#?}");
+        info!("Steam environment detected: {steam:#?}. Daemonizing.");
         daemonize();
     } else {
         info!("Not in Steam environment");

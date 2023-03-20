@@ -25,6 +25,8 @@ use tracing_unwrap::ResultExt;
 use home::home_dir;
 use once_cell::sync::Lazy;
 
+use crate::daemon::forked_daemon;
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct SteamApp {
     pub id: u32,
@@ -62,17 +64,10 @@ impl SteamApp {
 
         info!("Launching {:?} as {:?}", self.name, &command);
 
-        if matches!(fork().unwrap_or_log(), Fork::Child) {
-            fork::close_fd().unwrap_or_log();
-            fork::setsid().unwrap_or_log();
-
-            if matches!(fork().unwrap_or_log(), Fork::Child) {
-                let error = command.exec();
-                error!("{error:#?}");
-                exit(1)
-            } else {
-                exit(0)
-            }
+        if forked_daemon() {
+            let error = command.exec();
+            error!("{error:#?}");
+            exit(1)
         }
 
         debug!("Waiting for {:?} to start...", self.name);
@@ -132,11 +127,13 @@ impl SteamApp {
 }
 
 impl AppProcess {
+    #[instrument]
     pub fn still_alive(&self) -> bool {
         // if we can't read this file, we assume the process is terminated.
         self.process.stat().is_ok()
     }
 
+    #[instrument]
     pub fn wait_for_exit(&self) {
         debug!("Waiting for {:?} to exit...", self.app.name);
         while self.still_alive() {
@@ -158,8 +155,6 @@ pub static STEAM_APPS_DIR: Lazy<PathBuf> = Lazy::new(|| {
 pub static ALL_APPS: Lazy<BTreeMap<u32, SteamApp>> = Lazy::new(|| {
     let mut all_apps = BTreeMap::new();
 
-    // TODO: check all libraries, not just the primary one
-
     for entry in STEAM_APPS_DIR.read_dir().unwrap_or_log() {
         let entry = entry.unwrap_or_log();
         let path = entry.path();
@@ -176,7 +171,6 @@ pub static ALL_APPS: Lazy<BTreeMap<u32, SteamApp>> = Lazy::new(|| {
         let manifest = Vdf::parse(&manifest).unwrap_or_log();
         let manifest = manifest.value.clone();
         let manifest = manifest.get_obj().unwrap_or_log();
-        dbg!(&manifest);
         let path = manifest
             .get("installdir")
             .clone()
