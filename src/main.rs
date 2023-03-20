@@ -1,8 +1,8 @@
 #![allow(dead_code)]
 use std::path::PathBuf;
 
-use fork::Fork;
 use fork::fork;
+use fork::Fork;
 use tracing::info;
 use tracing::trace;
 use tracing_subscriber::prelude::*;
@@ -15,15 +15,13 @@ mod stringutils;
 use home::home_dir;
 use indexmap::IndexMap;
 use once_cell::sync::Lazy;
+use tracing_unwrap::OptionExt;
 
 use crate::steam_app::CELESTE;
 
 fn main() {
-    if let Fork::Parent(_) = fork::daemon(false, false).unwrap() {
-        return;
-    }
-
-    let file_appender = tracing_appender::rolling::hourly(LOG_DIR.clone(), "log");
+    let file_appender =
+        tracing_appender::rolling::never(LOG_DIR.clone(), concat!(env!("CARGO_PKG_NAME"), ".log"));
     let (file_appender, _guard) = tracing_appender::non_blocking(file_appender);
 
     tracing_subscriber::registry()
@@ -52,9 +50,7 @@ fn main() {
 }
 
 static LOG_DIR: Lazy<PathBuf> = Lazy::new(|| {
-    let mut path = home_dir().unwrap();
-    path.push(".celeste-saves");
+    let mut path = home_dir().unwrap_or_log();
     path.push("logs");
     path
 });
- 

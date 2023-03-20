@@ -8,7 +8,7 @@ pub trait ElementUtils {
 
 impl ElementUtils for Element {
     fn expect_parse_attr<T: std::str::FromStr>(&self, name: &str) -> T {
-        self.attr(name).expect(name).parse::<T>().ok().unwrap()
+        self.attr(name).expect(name).parse::<T>().ok().unwrap_or_log()
     }
 
     fn expect_child(&self, name: &str) -> &Self {
@@ -20,6 +20,6 @@ impl ElementUtils for Element {
     fn expect_parse_child<T: std::str::FromStr>(&self, name: &str) -> T {
         let matches: Vec<&Self> = self.children().filter(|el| el.name() == name).collect();
         assert!(matches.len() == 1);
-        matches[0].text().parse::<T>().ok().unwrap()
+        matches[0].text().parse::<T>().ok().unwrap_or_log()
     }
 }

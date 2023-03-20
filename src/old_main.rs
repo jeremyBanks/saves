@@ -1,6 +1,8 @@
 use minidom::Element;
 use serde_derive::{Deserialize, Serialize};
 use std::{collections::BTreeSet, convert::TryFrom, env, fs, string::ToString, time::Duration};
+use tracing_unwrap::OptionExt;
+use tracing_unwrap::ResultExt;
 
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
@@ -104,7 +106,7 @@ fn old_main() {
     }
 
     for save in saves {
-        let root = save.parse::<Element>().unwrap();
+        let root = save.parse::<Element>().unwrap_or_log();
         let stats = Stats::from_save(&root);
 
         let berry_color = match stats.total_berries {
@@ -139,11 +141,11 @@ fn old_main() {
             print_divider(world_stats.world);
 
             if world_stats.world == Prologue {
-                let duration = world_stats.a_side.common.single_run.unwrap();
+                let duration = world_stats.a_side.common.single_run.unwrap_or_log();
                 print_side("p", IRRELEVANT);
                 print_time_or_reds("any%:", duration.formatted(), NORMAL);
                 print_dashes_or_cassette("can't dash", "", IRRELEVANT);
-                let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap();
+                let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
                 print_deaths_or_heart(
                     "min deaths:",
                     format!("{:>4}", min_deaths),
@@ -154,7 +156,7 @@ fn old_main() {
             if world_stats.world == Epilogue {
                 print_side("e", IRRELEVANT);
                 print_time_or_reds("not timed", "", IRRELEVANT);
-                let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
+                let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
                 print_dashes_or_cassette(
                     "min dashes:",
                     format!("{:>4}", min_dashes),
@@ -171,7 +173,7 @@ fn old_main() {
                     print_time_or_reds("any%:", duration.formatted(), NORMAL);
 
                     if !world_stats.has_winged_golden() {
-                        let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap();
+                        let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
                         print_dashes_or_cassette(
                             "min dashes:",
                             format!("{:>4}", min_dashes),
@@ -182,7 +184,7 @@ fn old_main() {
                     }
 
                     if !world_stats.has_golden_a() {
-                        let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap();
+                        let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
                         print_deaths_or_heart(
                             "min deaths:",
                             format!("{:>4}", min_deaths),
@@ -272,7 +274,7 @@ fn old_main() {
                 if let Some(duration) = world_stats.b_side.common.single_run {
                     print_time_or_reds("any%:", duration.formatted(), NORMAL);
 
-                    let min_dashes = world_stats.b_side.common.fewest_dashes.unwrap();
+                    let min_dashes = world_stats.b_side.common.fewest_dashes.unwrap_or_log();
                     print_dashes_or_cassette(
                         "min dashes:",
                         format!("{:>4}", min_dashes),
@@ -280,7 +282,7 @@ fn old_main() {
                     );
 
                     if !world_stats.has_golden_b() {
-                        let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap();
+                        let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap_or_log();
                         print_deaths_or_heart(
                             "min deaths:",
                             format!("{:>4}", min_deaths),
@@ -302,7 +304,7 @@ fn old_main() {
                 if let Some(duration) = world_stats.c_side.common.single_run {
                     print_time_or_reds("any%:", duration.formatted(), NORMAL);
 
-                    let min_dashes = world_stats.c_side.common.fewest_dashes.unwrap();
+                    let min_dashes = world_stats.c_side.common.fewest_dashes.unwrap_or_log();
                     print_dashes_or_cassette(
                         "min dashes:",
                         format!("{:>4}", min_dashes),
@@ -310,7 +312,7 @@ fn old_main() {
                     );
 
                     if !world_stats.has_golden_c() {
-                        let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap();
+                        let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap_or_log();
                         print_deaths_or_heart(
                             "min deaths:",
                             format!("{:>4}", min_deaths),
@@ -567,7 +569,7 @@ impl Stats {
                         worlds
                             .iter()
                             .filter(|world_stats| world_stats.world.has_unlockables())
-                            .map(|world_stats| world_stats.a_side.full_clear.unwrap())
+                            .map(|world_stats| world_stats.a_side.full_clear.unwrap_or_log())
                             .sum(),
                     )
                 } else {
@@ -601,7 +603,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.a_side.common.fewest_dashes.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.a_side.common.fewest_dashes.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -616,7 +620,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.a_side.common.fewest_deaths.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.a_side.common.fewest_deaths.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -631,7 +637,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.a_side.common.single_run.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.a_side.common.single_run.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -655,7 +663,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.b_side.common.fewest_dashes.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.b_side.common.fewest_dashes.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -670,7 +680,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.b_side.common.fewest_deaths.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.b_side.common.fewest_deaths.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -685,7 +697,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.b_side.common.single_run.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.b_side.common.single_run.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -709,7 +723,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.c_side.common.fewest_dashes.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.c_side.common.fewest_dashes.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -724,7 +740,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.c_side.common.fewest_deaths.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.c_side.common.fewest_deaths.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -739,7 +757,9 @@ impl Stats {
                             worlds
                                 .iter()
                                 .filter(|world_stats| world_stats.world.has_unlockables())
-                                .map(|world_stats| world_stats.c_side.common.single_run.unwrap())
+                                .map(|world_stats| {
+                                    world_stats.c_side.common.single_run.unwrap_or_log()
+                                })
                                 .sum(),
                         )
                     } else {
@@ -836,7 +856,7 @@ impl SideStatsCommon {
         let berries = area_mode_stats
             .expect_child("Strawberries")
             .children()
-            .map(|entity_id| entity_id.attr("Key").unwrap().to_string())
+            .map(|entity_id| entity_id.attr("Key").unwrap_or_log().to_string())
             .collect::<BTreeSet<_>>();
 
         Self {

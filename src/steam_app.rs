@@ -5,18 +5,22 @@ use fork::Fork;
 use keyvalues_parser::Vdf;
 use procfs;
 use smartstring::alias::String as SmartString;
-use tracing::trace;
 use std::collections::BTreeMap;
 use std::os::unix::process::CommandExt;
 use std::path::PathBuf;
+use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
 use std::str::FromStr;
 use std::thread::sleep;
 use std::time::Duration;
 use tracing::debug;
+use tracing::error;
 use tracing::info;
 use tracing::instrument;
+use tracing::trace;
+use tracing_unwrap::OptionExt;
+use tracing_unwrap::ResultExt;
 
 use home::home_dir;
 use once_cell::sync::Lazy;
@@ -60,15 +64,13 @@ impl SteamApp {
         info!("Launching {:?} as {:?}", self.name, &command);
 
         // Double-fork to make sure we don't end up owning Steam's process.
-        if matches!(fork().unwrap(), Fork::Child) {
+        if matches!(fork().unwrap_or_log(), Fork::Child) {
             std::process::exit({
-                fork::setsid().unwrap();
-                // We don't fork::close_fd() because we still want to see errors
-                // from the parent process, if it fails to spawn the child, but
-                // we don't care about Steam/the game's output.
+                fork::setsid().unwrap_or_log();
 
-                if matches!(fork().unwrap(), Fork::Child) {
-                    panic!("{:?}", command.exec())
+                if matches!(fork().unwrap_or_log(), Fork::Child) {
+                    error!("{:?}", command.exec());
+                    1
                 } else {
                     0
                 }
@@ -77,9 +79,15 @@ impl SteamApp {
 
         debug!("Waiting for {:?} to start...", self.name);
 
+        let start = std::time::Instant::now();
         loop {
             if let Some(process) = self.find_process() {
                 return process;
+            }
+            let elapsed = start.elapsed();
+            if elapsed > Duration::from_secs(24) {
+                error!("No {:?} process after {:?}", self.name, elapsed);
+                exit(0);
             }
             sleep(Duration::from_millis(1024));
         }
@@ -88,14 +96,14 @@ impl SteamApp {
     #[instrument]
     pub fn find_process(&self) -> Option<AppProcess> {
         trace!("Checking for process...");
-        for process in procfs::process::all_processes().unwrap() {
-            let process = process.unwrap();
+        for process in procfs::process::all_processes().unwrap_or_log() {
+            let process = process.unwrap_or_log();
             if process.cwd().unwrap_or_default() == self.app_dir() {
                 return Some(AppProcess {
                     app: self.clone(),
-                    stat: process.stat().unwrap(),
-                    cwd: process.cwd().unwrap(),
-                    exe: process.exe().unwrap(),
+                    stat: process.stat().unwrap_or_log(),
+                    cwd: process.cwd().unwrap_or_log(),
+                    exe: process.exe().unwrap_or_log(),
                     process,
                 });
             }
@@ -105,7 +113,7 @@ impl SteamApp {
     }
 
     pub fn app_dir(&self) -> PathBuf {
-        let mut path = home_dir().unwrap();
+        let mut path = home_dir().unwrap_or_log();
         path.push(".local");
         path.push("share");
         path.push("Steam");
@@ -116,7 +124,7 @@ impl SteamApp {
     }
 
     pub fn saves_dir(&self) -> PathBuf {
-        let mut path = home_dir().unwrap();
+        let mut path = home_dir().unwrap_or_log();
         path.push(".local");
         path.push("share");
         path.push(self.path.as_str());
@@ -140,7 +148,7 @@ impl AppProcess {
 }
 
 pub static STEAM_APPS_DIR: Lazy<PathBuf> = Lazy::new(|| {
-    let mut path = home_dir().unwrap();
+    let mut path = home_dir().unwrap_or_log();
     path.push(".local");
     path.push("share");
     path.push("Steam");
@@ -154,10 +162,10 @@ pub static ALL_APPS: Lazy<BTreeMap<u32, SteamApp>> = Lazy::new(|| {
 
     // TODO: check all libraries, not just the primary one
 
-    for entry in STEAM_APPS_DIR.read_dir().unwrap() {
-        let entry = entry.unwrap();
+    for entry in STEAM_APPS_DIR.read_dir().unwrap_or_log() {
+        let entry = entry.unwrap_or_log();
         let path = entry.path();
-        let file_name = path.file_name().unwrap().to_string_lossy();
+        let file_name = path.file_name().unwrap_or_log().to_string_lossy();
         if !file_name.starts_with("appmanifest_") {
             continue;
         }
@@ -165,30 +173,30 @@ pub static ALL_APPS: Lazy<BTreeMap<u32, SteamApp>> = Lazy::new(|| {
             continue;
         }
         let id = u32::from_str(&file_name["appmanifest_".len()..file_name.len() - ".acf".len()])
-            .unwrap();
-        let manifest = std::fs::read_to_string(entry.path()).unwrap();
-        let manifest = Vdf::parse(&manifest).unwrap();
+            .unwrap_or_log();
+        let manifest = std::fs::read_to_string(entry.path()).unwrap_or_log();
+        let manifest = Vdf::parse(&manifest).unwrap_or_log();
         let manifest = manifest.value.clone();
-        let manifest = manifest.get_obj().unwrap();
+        let manifest = manifest.get_obj().unwrap_or_log();
         dbg!(&manifest);
         let path = manifest
             .get("installdir")
             .clone()
-            .unwrap()
+            .unwrap_or_log()
             .get(0)
-            .unwrap()
+            .unwrap_or_log()
             .get_str()
-            .unwrap()
+            .unwrap_or_log()
             .to_string()
             .into();
         let name = manifest
             .get("name")
             .clone()
-            .unwrap()
+            .unwrap_or_log()
             .get(0)
-            .unwrap()
+            .unwrap_or_log()
             .get_str()
-            .unwrap()
+            .unwrap_or_log()
             .to_string()
             .into();
 
@@ -198,4 +206,4 @@ pub static ALL_APPS: Lazy<BTreeMap<u32, SteamApp>> = Lazy::new(|| {
     all_apps
 });
 
-pub static CELESTE: Lazy<&'static SteamApp> = Lazy::new(|| ALL_APPS.get(&504230).unwrap());
+pub static CELESTE: Lazy<&'static SteamApp> = Lazy::new(|| ALL_APPS.get(&504230).unwrap_or_log());
