@@ -1,0 +1,23 @@
+[package]
+name = "celeste"
+description = "Read Celeste save game files."
+version = "0.1.0"
+authors = ["Jeremy Banks <_@jeremy.ca>"]
+edition = "2018"
+publish = false
+
+[lib]
+name = "celeste"
+path = "src/lib.rs"
+
+[[bin]]
+name = "celeste"
+path = "src/main.rs"
+doc = false
+
+[dependencies]
+minidom = "0.10.0"
+itertools = "0.8.0"
+derive_more = "0.14.0"
+serde = {version = "1.0.84", features = ["derive"]}
+dirs = "1.0.4"
