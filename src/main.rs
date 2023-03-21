@@ -5,6 +5,7 @@ use itertools::Itertools;
 use std::collections::BTreeMap;
 use std::fs;
 use std::io::Write;
+use std::os::unix::prelude::PermissionsExt;
 use std::path::PathBuf;
 use tracing::info;
 use tracing::trace;
@@ -24,8 +25,6 @@ use crate::celeste_stats::celeste_stats;
 use crate::daemon::*;
 
 use crate::steam_app::CELESTE;
-
-static RB_PNG: &[u8] = include_bytes!("../assets/rb.png");
 
 fn main() {
     // This is blocking and probably slow, but the easiest alternatives didn't work once
@@ -54,17 +53,30 @@ fn main() {
 
         info!("Installing.");
 
-        fs::create_dir_all(&*BIN_DIR).unwrap_or_log();
-
         let bin_path = BIN_DIR.join(NAME);
+        fs::create_dir_all(&*BIN_DIR).unwrap_or_log();
         fs::write(&bin_path, &own_binary).unwrap_or_log();
+        let mut perms = fs::metadata(&bin_path).unwrap_or_log().permissions();
+        perms.set_mode(0o755);
+        fs::set_permissions(&bin_path, perms).unwrap_or_log();
         let bin_path = bin_path.to_str().unwrap_or_log();
 
-        let png_path = DATA_DIR.join(format!("{NAME}.png"));
-        fs::write(&png_path, RB_PNG).unwrap_or_log();
-        let png_path = png_path.to_str().unwrap_or_log();
+        let icon_path = ETC_DIR.join(format!("icon.png"));
+        fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
+        fs::write(&icon_path, include_bytes!("../assets/icon.png")).unwrap_or_log();
+        let icon_path = icon_path.to_str().unwrap_or_log();
 
-        let desktop_path = DATA_DIR.join(format!("{NAME}.desktop"));
+        let banner_path = ETC_DIR.join(format!("banner.png"));
+        fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
+        fs::write(&banner_path, include_bytes!("../assets/banner.png")).unwrap_or_log();
+        let _banner_path = banner_path.to_str().unwrap_or_log();
+
+        let poster_path = ETC_DIR.join(format!("poster.png"));
+        fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
+        fs::write(&poster_path, include_bytes!("../assets/poster.png")).unwrap_or_log();
+        let _poster_path = poster_path.to_str().unwrap_or_log();
+
+        let desktop_path = ETC_DIR.join(format!("{NAME}.desktop"));
         fs::write(
             &desktop_path,
             format!(
@@ -72,15 +84,17 @@ fn main() {
 [Desktop Entry]
 Type=Application
 Name=Celeste with Sync
-GenericName=Celeste
 Comment=Play Celeste and sync saves to git
 Categories=Game
 Exec={bin_path}
-Icon={png_path}
+Icon={icon_path}
 "
             ),
         )
         .unwrap_or_log();
+        let mut perms = fs::metadata(&desktop_path).unwrap_or_log().permissions();
+        perms.set_mode(0o755);
+        fs::set_permissions(&desktop_path, perms).unwrap_or_log();
 
         info!("Attempting to install with xdg-desktop-menu.");
         let mut cmd = std::process::Command::new("xdg-desktop-menu");
@@ -211,6 +225,8 @@ static DATA_DIR: Lazy<PathBuf> = Lazy::new(|| {
 static BIN_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("bin"));
 
 static LOG_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("log"));
+
+static ETC_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("etc"));
 
 static GIT_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("git"));
 
