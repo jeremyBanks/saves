@@ -3,6 +3,7 @@ use git2::BranchType;
 use git2::Repository;
 use itertools::Itertools;
 use std::collections::BTreeMap;
+use std::fs;
 use std::io::Write;
 use std::path::PathBuf;
 use tracing::info;
@@ -24,35 +25,7 @@ use crate::daemon::*;
 
 use crate::steam_app::CELESTE;
 
-#[derive(Debug)]
-struct SteamEnv {
-    steam_exe: PathBuf,
-    username: String,
-}
-
-impl SteamEnv {
-    pub fn get() -> Option<Self> {
-        let env = std::env::vars().collect::<BTreeMap<_, _>>();
-
-        if env.get("SteamEnv").map(|s| s.as_str())? != "1" {
-            return None;
-        }
-
-        let steam_exe = env.get("STEAMSCRIPT").unwrap_or_log().into();
-
-        let username = env.get("SteamUser").unwrap_or_log().into();
-
-        Some(SteamEnv {
-            steam_exe,
-            username,
-        })
-    }
-}
-
-pub const NAME: &str = match option_env!("CARGO_PKG_NAME") {
-    Some(name) => name,
-    None => "celeste-save",
-};
+static RB_PNG: &[u8] = include_bytes!("../assets/rb.png");
 
 fn main() {
     // This is blocking and probably slow, but the easiest alternatives didn't work once
@@ -73,6 +46,50 @@ fn main() {
         .init();
 
     trace!("env = {:#?}", std::env::vars().collect::<BTreeMap<_, _>>());
+    trace!("argv = {:#?}", std::env::args().collect::<Vec<_>>());
+
+    let argv = std::env::args().collect_vec();
+    if &argv[1..] == &["install"] {
+        let own_binary = fs::read(&argv[0]).unwrap_or_log();
+
+        info!("Installing.");
+
+        fs::create_dir_all(&*BIN_DIR).unwrap_or_log();
+
+        let bin_path = BIN_DIR.join(NAME);
+        fs::write(&bin_path, &own_binary).unwrap_or_log();
+        let bin_path = bin_path.to_str().unwrap_or_log();
+
+        let png_path = DATA_DIR.join(format!("{NAME}.png"));
+        fs::write(&png_path, RB_PNG).unwrap_or_log();
+        let png_path = png_path.to_str().unwrap_or_log();
+
+        let desktop_path = DATA_DIR.join(format!("{NAME}.desktop"));
+        fs::write(
+            &desktop_path,
+            format!(
+                "#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=Celeste with Sync
+GenericName=Celeste
+Comment=Play Celeste and sync saves to git
+Categories=Game
+Exec={bin_path}
+Icon={png_path}
+"
+            ),
+        )
+        .unwrap_or_log();
+
+        info!("Attempting to install with xdg-desktop-menu.");
+        let mut cmd = std::process::Command::new("xdg-desktop-menu");
+        cmd.arg("install");
+        cmd.arg(&desktop_path);
+        cmd.status().unwrap_or_log();
+
+        return;
+    }
 
     let steam = SteamEnv::get();
 
@@ -185,19 +202,17 @@ fn main() {
     }
 }
 
-static LOG_DIR: Lazy<PathBuf> = Lazy::new(|| {
+static DATA_DIR: Lazy<PathBuf> = Lazy::new(|| {
     let mut path = home_dir().unwrap_or_log();
     path.push(String::new() + "." + crate::NAME);
-    path.push("logs");
     path
 });
 
-static GIT_DIR: Lazy<PathBuf> = Lazy::new(|| {
-    let mut path = home_dir().unwrap_or_log();
-    path.push(String::new() + "." + crate::NAME);
-    path.push("git");
-    path
-});
+static BIN_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("bin"));
+
+static LOG_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("log"));
+
+static GIT_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("git"));
 
 pub fn git_repo() -> Repository {
     match Repository::open_bare(&*GIT_DIR) {
@@ -210,3 +225,33 @@ pub fn git_repo() -> Repository {
         }
     }
 }
+
+#[derive(Debug)]
+struct SteamEnv {
+    steam_exe: PathBuf,
+    username: String,
+}
+
+impl SteamEnv {
+    pub fn get() -> Option<Self> {
+        let env = std::env::vars().collect::<BTreeMap<_, _>>();
+
+        if env.get("SteamEnv").map(|s| s.as_str())? != "1" {
+            return None;
+        }
+
+        let steam_exe = env.get("STEAMSCRIPT").unwrap_or_log().into();
+
+        let username = env.get("SteamUser").unwrap_or_log().into();
+
+        Some(SteamEnv {
+            steam_exe,
+            username,
+        })
+    }
+}
+
+pub const NAME: &str = match option_env!("CARGO_PKG_NAME") {
+    Some(name) => name,
+    None => "celeste-save",
+};
