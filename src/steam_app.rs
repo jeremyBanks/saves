@@ -31,6 +31,20 @@ pub struct SteamApp {
     pub path: SmartString,
 }
 
+struct KnownSteamApp {
+    pub id: u32,
+    pub name: &'static str,
+    pub path: &'static str,
+    pub emoji: &'static str,
+}
+
+static KNOWN_STEAM_APPS: &[KnownSteamApp] = &[KnownSteamApp {
+    id: 504230,
+    name: "Celeste",
+    path: "Celeste",
+    emoji: "🍓",
+}];
+
 #[derive(Debug)]
 pub struct AppProcess {
     pub app: SteamApp,

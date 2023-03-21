@@ -9,9 +9,9 @@ use tracing::info;
 use tracing::trace;
 use tracing_subscriber::prelude::*;
 
+mod celeste_stats;
 mod domutils;
 mod durationutils;
-mod celeste_stats;
 mod steam_app;
 mod stringutils;
 use home::home_dir;
@@ -84,7 +84,7 @@ fn main() {
     }
 
     let repo = git_repo();
-    
+
     if let Ok(mut _origin) = repo.find_remote("origin") {
         info!("Pulling changes from remote origin");
         let mut cmd = std::process::Command::new("git");

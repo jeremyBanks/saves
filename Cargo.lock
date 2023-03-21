@@ -131,6 +131,7 @@ dependencies = [
  "itertools",
  "keyvalues-parser",
  "keyvalues-serde",
+ "markup",
  "minidom",
  "once_cell",
  "procfs",
@@ -640,6 +641,27 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "abb12e687cfb44aa40f41fc3978ef76448f9b6038cad6aef4259d3c095a2382e"
 dependencies = [
  "cfg-if",
+]
+
+[[package]]
+name = "markup"
+version = "0.13.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bd9196a235d499738d04f6a2466ce2610bf6b84730610efea8bee1b90d028b0d"
+dependencies = [
+ "itoa",
+ "markup-proc-macro",
+]
+
+[[package]]
+name = "markup-proc-macro"
+version = "0.13.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1a927f0e237dcbdd8c1a8ab03c4e1e8b1999804c448ebf06ff3b5512506c8150"
+dependencies = [
+ "proc-macro2 1.0.52",
+ "quote 1.0.26",
+ "syn 1.0.109",
 ]
 
 [[package]]

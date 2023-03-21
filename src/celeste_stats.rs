@@ -7,22 +7,56 @@ use tracing_unwrap::ResultExt;
 
 use crate::{domutils::*, durationutils::*, stringutils::*};
 
+markup::define! {
+    CelestePage {
+        @markup::raw("<!doctype html>")
+        meta[charset="utf-8"];
+        link[rel="icon", href="rb.png"];
+        style "
+            html,
+            body {
+                background: #111;
+                color: white;
+                padding: 0;
+            }
+
+            pre {
+                display: inline-block;
+                vertical-align: top;
+                margin: 2em;
+                font-size: 16px;
+                background: black;
+                box-shadow: 0 0 8px black, 0 0 4px #888;
+                border: 2px solid black;
+            }
+
+            a {
+                color: #840;
+            }
+
+            a:hover {
+                color: #F80;
+            }
+        "
+    }
+}
+
 pub fn celeste_stats(save: &str) -> String {
     let mut output = String::new();
 
     output.push_str(include_str!("template.html"));
 
     output.push_str("<pre>");
-    
-    const HEADER_FG: AnsiColor = Black;
-    const HEADER_BG: AnsiColor = White;
-    const DIVIDER: AnsiColor = DarkGray;
 
-    const IRRELEVANT: AnsiColor = DarkGray;
-    const SUBPAR: AnsiColor = DarkRed;
-    const NORMAL: AnsiColor = White;
-    const GOOD: AnsiColor = Magenta;
-    const BEST: AnsiColor = Yellow;
+    const HEADER_FG: Color = Black;
+    const HEADER_BG: Color = White;
+    const DIVIDER: Color = DarkGray;
+
+    const IRRELEVANT: Color = DarkGray;
+    const SUBPAR: Color = DarkRed;
+    const NORMAL: Color = White;
+    const GOOD: Color = Magenta;
+    const BEST: Color = Yellow;
 
     fn print_divider(mut output: &mut String, content: impl ToString) {
         let mut s = format!("  {:<69}", content.to_string());
@@ -32,13 +66,19 @@ pub fn celeste_stats(save: &str) -> String {
         writeln!(&mut output, "{}", s).unwrap_or_log();
     }
 
-    fn print_side(mut output: &mut String, side: impl ToString, color: AnsiColor) {
+    fn print_side(mut output: &mut String, side: impl ToString, color: Color) {
         write!(&mut output, "{} ", " ".background(DIVIDER)).unwrap_or_log();
         write!(&mut output, "{}", side.to_string().color(color)).unwrap_or_log();
         write!(&mut output, " {}", " ".background(DIVIDER)).unwrap_or_log();
     }
 
-    fn print_cell(mut output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor, max_len: usize) {
+    fn print_cell(
+        mut output: &mut String,
+        left: impl ToString,
+        right: impl ToString,
+        color: Color,
+        max_len: usize,
+    ) {
         let left = left.to_string();
         let right = right.to_string();
         let content_len = left.len() + right.len();
@@ -75,17 +115,32 @@ pub fn celeste_stats(save: &str) -> String {
         write!(&mut output, " {}", " ".background(DIVIDER)).unwrap_or_log();
     }
 
-    fn print_time_or_reds(output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
+    fn print_time_or_reds(
+        output: &mut String,
+        left: impl ToString,
+        right: impl ToString,
+        color: Color,
+    ) {
         print_cell(output, left, right, color, 19);
     }
 
-    fn print_dashes_or_cassette(output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
+    fn print_dashes_or_cassette(
+        output: &mut String,
+        left: impl ToString,
+        right: impl ToString,
+        color: Color,
+    ) {
         print_cell(output, left, right, color, 19);
     }
 
-    fn print_deaths_or_heart(mut output: &mut String, left: impl ToString, right: impl ToString, color: AnsiColor) {
+    fn print_deaths_or_heart(
+        mut output: &mut String,
+        left: impl ToString,
+        right: impl ToString,
+        color: Color,
+    ) {
         print_cell(output, left, right, color, 19);
-        writeln!(&mut output, ).unwrap_or_log();
+        writeln!(&mut output,).unwrap_or_log();
     }
 
     let root = save.parse::<Element>().unwrap_or_log();
@@ -99,11 +154,13 @@ pub fn celeste_stats(save: &str) -> String {
         _ => panic!("more than 200 berries"),
     };
 
-    writeln!(&mut output, 
+    writeln!(
+        &mut output,
         " {} {}",
         stats.name.underline().color(White),
         format!("{}🍓", stats.total_berries).color(berry_color)
-    ).unwrap_or_log();
+    )
+    .unwrap_or_log();
 
     for world_stats in stats.worlds {
         if !(world_stats.a_side.common.completed
@@ -117,11 +174,12 @@ pub fn celeste_stats(save: &str) -> String {
 
         if world_stats.world == Prologue {
             let duration = world_stats.a_side.common.single_run.unwrap_or_log();
-            print_side(&mut output,"p", IRRELEVANT);
-            print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
-            print_dashes_or_cassette(&mut output,"can't dash", "", IRRELEVANT);
+            print_side(&mut output, "p", IRRELEVANT);
+            print_time_or_reds(&mut output, "any%:", duration.formatted(), NORMAL);
+            print_dashes_or_cassette(&mut output, "can't dash", "", IRRELEVANT);
             let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
-            print_deaths_or_heart(&mut output,
+            print_deaths_or_heart(
+                &mut output,
                 "min deaths:",
                 format!("{:>4}", min_deaths),
                 if min_deaths > 0 { NORMAL } else { BEST },
@@ -129,67 +187,76 @@ pub fn celeste_stats(save: &str) -> String {
             continue;
         }
         if world_stats.world == Epilogue {
-            print_side(&mut output,"e", IRRELEVANT);
-            print_time_or_reds(&mut output,"not timed", "", IRRELEVANT);
+            print_side(&mut output, "e", IRRELEVANT);
+            print_time_or_reds(&mut output, "not timed", "", IRRELEVANT);
             let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
-            print_dashes_or_cassette(&mut output,
+            print_dashes_or_cassette(
+                &mut output,
                 "min dashes:",
                 format!("{:>4}", min_dashes),
                 if min_dashes > 0 { NORMAL } else { BEST },
             );
-            print_deaths_or_heart(&mut output,"can't die", "", IRRELEVANT);
+            print_deaths_or_heart(&mut output, "can't die", "", IRRELEVANT);
             continue;
         }
 
         if world_stats.a_side.common.completed {
-            print_side(&mut output,"A", NORMAL);
+            print_side(&mut output, "A", NORMAL);
 
             if let Some(duration) = world_stats.a_side.common.single_run {
-                print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
+                print_time_or_reds(&mut output, "any%:", duration.formatted(), NORMAL);
 
                 if !world_stats.has_winged_golden() {
                     let min_dashes = world_stats.a_side.common.fewest_dashes.unwrap_or_log();
-                    print_dashes_or_cassette(&mut output,
+                    print_dashes_or_cassette(
+                        &mut output,
                         "min dashes:",
                         format!("{:>4}", min_dashes),
                         if min_dashes > 0 { NORMAL } else { BEST },
                     );
                 } else {
-                    print_dashes_or_cassette(&mut output,"has winged berry", "", BEST);
+                    print_dashes_or_cassette(&mut output, "has winged berry", "", BEST);
                 }
 
                 if !world_stats.has_golden_a() {
                     let min_deaths = world_stats.a_side.common.fewest_deaths.unwrap_or_log();
-                    print_deaths_or_heart(&mut output,
+                    print_deaths_or_heart(
+                        &mut output,
                         "min deaths:",
                         format!("{:>4}", min_deaths),
                         if min_deaths > 0 { NORMAL } else { BEST },
                     );
                 } else {
-                    print_deaths_or_heart(&mut output,"has golden berry", "", BEST);
+                    print_deaths_or_heart(&mut output, "has golden berry", "", BEST);
                 }
             } else {
-                print_time_or_reds(&mut output,"segmented", "", SUBPAR);
-                print_dashes_or_cassette(&mut output,"segmented", "", SUBPAR);
-                print_deaths_or_heart(&mut output,"segmented", "", SUBPAR);
+                print_time_or_reds(&mut output, "segmented", "", SUBPAR);
+                print_dashes_or_cassette(&mut output, "segmented", "", SUBPAR);
+                print_deaths_or_heart(&mut output, "segmented", "", SUBPAR);
             }
 
             if world_stats.world.has_unlockables() {
-                print_side(&mut output,"A", NORMAL);
+                print_side(&mut output, "A", NORMAL);
 
                 if let Some(duration) = world_stats.a_side.full_clear {
-                    print_time_or_reds(&mut output,"full:", duration.formatted(), BEST);
+                    print_time_or_reds(&mut output, "full:", duration.formatted(), BEST);
                     if world_stats.world == Core {
-                        print_dashes_or_cassette(&mut output,"can't skip cassette", "", IRRELEVANT);
-                        print_deaths_or_heart(&mut output,"can't skip heart", "", IRRELEVANT);
+                        print_dashes_or_cassette(
+                            &mut output,
+                            "can't skip cassette",
+                            "",
+                            IRRELEVANT,
+                        );
+                        print_deaths_or_heart(&mut output, "can't skip heart", "", IRRELEVANT);
                     } else {
-                        print_dashes_or_cassette(&mut output,"has cassette", "", BEST);
-                        print_deaths_or_heart(&mut output,"has crystal heart", "", BEST);
+                        print_dashes_or_cassette(&mut output, "has cassette", "", BEST);
+                        print_deaths_or_heart(&mut output, "has crystal heart", "", BEST);
                     }
                 } else {
                     if world_stats.world.red_berries() > 0 {
                         print_time_or_reds(
-                            &mut output,if world_stats.world.red_berries() < 99 {
+                            &mut output,
+                            if world_stats.world.red_berries() < 99 {
                                 format!(
                                     "{:>2} / {:<2}",
                                     world_stats.red_berries(),
@@ -204,8 +271,7 @@ pub fn celeste_stats(save: &str) -> String {
                             },
                             "red berries",
                             if world_stats.red_berries() > 0 {
-                                if world_stats.red_berries() >= world_stats.world.red_berries()
-                                {
+                                if world_stats.red_berries() >= world_stats.world.red_berries() {
                                     GOOD
                                 } else {
                                     NORMAL
@@ -215,43 +281,50 @@ pub fn celeste_stats(save: &str) -> String {
                             },
                         );
                     } else {
-                        print_time_or_reds(&mut output,"no red berries here", "", IRRELEVANT);
+                        print_time_or_reds(&mut output, "no red berries here", "", IRRELEVANT);
                     }
 
                     if world_stats.world == Core {
-                        print_dashes_or_cassette(&mut output,"can't skip cassette", "", IRRELEVANT);
+                        print_dashes_or_cassette(
+                            &mut output,
+                            "can't skip cassette",
+                            "",
+                            IRRELEVANT,
+                        );
                     } else if world_stats.a_side.cassette {
-                        print_dashes_or_cassette(&mut output,"has cassette", "", GOOD);
+                        print_dashes_or_cassette(&mut output, "has cassette", "", GOOD);
                     } else {
-                        print_dashes_or_cassette(&mut output,"no cassette", "", NORMAL);
+                        print_dashes_or_cassette(&mut output, "no cassette", "", NORMAL);
                     }
 
                     if world_stats.world == Core {
-                        print_deaths_or_heart(&mut output,"can't skip heart", "", IRRELEVANT);
+                        print_deaths_or_heart(&mut output, "can't skip heart", "", IRRELEVANT);
                     } else if world_stats.a_side.heart {
-                        print_deaths_or_heart(&mut output,"has crystal heart", "", GOOD);
+                        print_deaths_or_heart(&mut output, "has crystal heart", "", GOOD);
                     } else if world_stats.world == TheSummit {
-                        print_deaths_or_heart(&mut output,
+                        print_deaths_or_heart(
+                            &mut output,
                             format!("{} / 6 heart gems", stats.gems),
                             "",
                             if stats.gems > 0 { NORMAL } else { SUBPAR },
                         );
                     } else {
-                        print_deaths_or_heart(&mut output,"no crystal heart", "", NORMAL);
+                        print_deaths_or_heart(&mut output, "no crystal heart", "", NORMAL);
                     }
                 }
             }
         }
 
         if world_stats.b_side.common.completed {
-            print_side(&mut output,"B", GOOD);
+            print_side(&mut output, "B", GOOD);
 
             if let Some(duration) = world_stats.b_side.common.single_run {
-                print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
+                print_time_or_reds(&mut output, "any%:", duration.formatted(), NORMAL);
 
                 let min_dashes = world_stats.b_side.common.fewest_dashes.unwrap_or_log();
                 print_dashes_or_cassette(
-                    &mut output,"min dashes:",
+                    &mut output,
+                    "min dashes:",
                     format!("{:>4}", min_dashes),
                     if min_dashes > 0 { NORMAL } else { BEST },
                 );
@@ -259,29 +332,31 @@ pub fn celeste_stats(save: &str) -> String {
                 if !world_stats.has_golden_b() {
                     let min_deaths = world_stats.b_side.common.fewest_deaths.unwrap_or_log();
                     print_deaths_or_heart(
-                        &mut output,"min deaths:",
+                        &mut output,
+                        "min deaths:",
                         format!("{:>4}", min_deaths),
                         if min_deaths > 0 { NORMAL } else { BEST },
                     );
                 } else {
-                    print_deaths_or_heart(&mut output,"has golden berry", "", BEST);
+                    print_deaths_or_heart(&mut output, "has golden berry", "", BEST);
                 }
             } else {
-                print_time_or_reds(&mut output,"segmented", "", SUBPAR);
-                print_dashes_or_cassette(&mut output,"segmented", "", SUBPAR);
-                print_deaths_or_heart(&mut output,"segmented", "", SUBPAR);
+                print_time_or_reds(&mut output, "segmented", "", SUBPAR);
+                print_dashes_or_cassette(&mut output, "segmented", "", SUBPAR);
+                print_deaths_or_heart(&mut output, "segmented", "", SUBPAR);
             }
         }
 
         if world_stats.c_side.common.completed {
-            print_side(&mut output,"C", BEST);
+            print_side(&mut output, "C", BEST);
 
             if let Some(duration) = world_stats.c_side.common.single_run {
-                print_time_or_reds(&mut output,"any%:", duration.formatted(), NORMAL);
+                print_time_or_reds(&mut output, "any%:", duration.formatted(), NORMAL);
 
                 let min_dashes = world_stats.c_side.common.fewest_dashes.unwrap_or_log();
                 print_dashes_or_cassette(
-                    &mut output,"min dashes:",
+                    &mut output,
+                    "min dashes:",
                     format!("{:>4}", min_dashes),
                     if min_dashes > 0 { NORMAL } else { BEST },
                 );
@@ -289,17 +364,18 @@ pub fn celeste_stats(save: &str) -> String {
                 if !world_stats.has_golden_c() {
                     let min_deaths = world_stats.c_side.common.fewest_deaths.unwrap_or_log();
                     print_deaths_or_heart(
-                        &mut output,"min deaths:",
+                        &mut output,
+                        "min deaths:",
                         format!("{:>4}", min_deaths),
                         if min_deaths > 0 { NORMAL } else { BEST },
                     );
                 } else {
-                    print_deaths_or_heart(&mut output,"has golden berry", "", BEST);
+                    print_deaths_or_heart(&mut output, "has golden berry", "", BEST);
                 }
             } else {
-                print_time_or_reds(&mut output,"segmented", "", SUBPAR);
-                print_dashes_or_cassette(&mut output,"segmented", "", SUBPAR);
-                print_deaths_or_heart(&mut output,"segmented", "", SUBPAR);
+                print_time_or_reds(&mut output, "segmented", "", SUBPAR);
+                print_dashes_or_cassette(&mut output, "segmented", "", SUBPAR);
+                print_deaths_or_heart(&mut output, "segmented", "", SUBPAR);
             }
         }
     }
