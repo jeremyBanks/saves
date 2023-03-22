@@ -24,25 +24,34 @@ pub fn install() {
     fs::set_permissions(&bin_path, perms).unwrap_or_log();
     let bin_path = bin_path.to_str().unwrap_or_log();
 
-    let icon_path = ETC_DIR.join(format!("icon.png"));
+    let icon_path = ETC_DIR.join(format!("0_icon.png"));
     fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
-    fs::write(&icon_path, include_bytes!("../assets/icon.png")).unwrap_or_log();
+    fs::write(&icon_path, include_bytes!("../assets/0_icon.png")).unwrap_or_log();
     let icon_path = icon_path.to_str().unwrap_or_log();
 
-    let banner_path = ETC_DIR.join(format!("banner.png"));
+    let hero_path = ETC_DIR.join(format!("0_hero.png"));
     fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
-    fs::write(&banner_path, include_bytes!("../assets/banner.png")).unwrap_or_log();
-    let _banner_path = banner_path.to_str().unwrap_or_log();
+    fs::write(&hero_path, include_bytes!("../assets/0_hero.png")).unwrap_or_log();
 
-    let capsule_path = ETC_DIR.join(format!("capsule.png"));
+    let capsule_path = ETC_DIR.join(format!("0.png"));
     fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
-    fs::write(&capsule_path, include_bytes!("../assets/capsule.png")).unwrap_or_log();
-    let _capsule_path = capsule_path.to_str().unwrap_or_log();
+    fs::write(&capsule_path, include_bytes!("../assets/0.png")).unwrap_or_log();
 
-    let logo_path = ETC_DIR.join(format!("logo.png"));
+    let logo_path = ETC_DIR.join(format!("0_logo.png"));
     fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
-    fs::write(&logo_path, include_bytes!("../assets/logo.png")).unwrap_or_log();
-    let _logo_path = logo_path.to_str().unwrap_or_log();
+    fs::write(&logo_path, include_bytes!("../assets/0_logo.png")).unwrap_or_log();
+
+    let logo_path = ETC_DIR.join(format!("0_logo.png"));
+    fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
+    fs::write(&logo_path, include_bytes!("../assets/0_logo.png")).unwrap_or_log();
+
+    let logo_config_path = ETC_DIR.join(format!("0.json"));
+    fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
+    fs::write(&logo_config_path, include_bytes!("../assets/0.json")).unwrap_or_log();
+
+    let poster_path = ETC_DIR.join(format!("0p.png"));
+    fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
+    fs::write(&poster_path, include_bytes!("../assets/0p.png")).unwrap_or_log();
 
     let desktop_path = ETC_DIR.join(format!("{NAME}.desktop"));
     fs::write(
