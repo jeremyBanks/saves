@@ -2,7 +2,7 @@
 <SaveData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Version>1.4.0.0</Version>
   <Name>Madeline</Name>
-  <Time>0</Time>
+  <Time>683400000</Time>
   <LastSave>0001-01-01T00:00:00</LastSave>
   <CheatMode>false</CheatMode>
   <AssistMode>false</AssistMode>
@@ -24,19 +24,20 @@
   </Assists>
   <TheoSisterName>Alex</TheoSisterName>
   <UnlockedAreas>1</UnlockedAreas>
-  <TotalDeaths>0</TotalDeaths>
+  <TotalDeaths>1</TotalDeaths>
   <TotalStrawberries>0</TotalStrawberries>
   <TotalGoldenStrawberries>0</TotalGoldenStrawberries>
-  <TotalJumps>43</TotalJumps>
-  <TotalWallJumps>0</TotalWallJumps>
+  <TotalJumps>97</TotalJumps>
+  <TotalWallJumps>2</TotalWallJumps>
   <TotalDashes>0</TotalDashes>
   <Flags />
   <Poem />
   <RevealedChapter9>false</RevealedChapter9>
+  <LastArea ID="0" Mode="Normal" />
   <Areas>
     <AreaStats ID="0" Cassette="false">
       <Modes>
-        <AreaModeStats TotalStrawberries="0" Completed="false" SingleRunCompleted="false" FullClear="false" Deaths="0" TimePlayed="0" BestTime="0" BestFullClearTime="0" BestDashes="0" BestDeaths="0" HeartGem="false">
+        <AreaModeStats TotalStrawberries="0" Completed="true" SingleRunCompleted="true" FullClear="false" Deaths="1" TimePlayed="683400000" BestTime="667590000" BestFullClearTime="0" BestDashes="0" BestDeaths="1" HeartGem="false">
           <Strawberries />
           <Checkpoints />
         </AreaModeStats>
