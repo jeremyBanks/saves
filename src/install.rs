@@ -2,17 +2,27 @@ use std::fs;
 use std::os::unix::prelude::PermissionsExt;
 
 use itertools::Itertools;
+use steamlocate::SteamDir;
 use tracing::info;
 use tracing_unwrap::OptionExt;
 use tracing_unwrap::ResultExt;
 
-use crate::BIN_DIR;
-use crate::ETC_DIR;
+use crate::dirs::BIN_DIR;
+use crate::dirs::ETC_DIR;
+use crate::dirs::STEAM_USER_DATA_DIR;
 use crate::NAME;
+
+use steamlocate;
 
 pub fn install() {
     let argv = std::env::args().collect_vec();
     let own_binary = fs::read(&argv[0]).unwrap_or_log();
+
+    let mut steam = SteamDir::locate().unwrap_or_log();
+    let shortcuts = steam.shortcuts();
+
+    dbg!(shortcuts);
+    return;
 
     info!("Installing.");
 

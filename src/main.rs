@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+use dirs::GIT_DIR;
 use git2::BranchType;
 use git2::Repository;
 use itertools::Itertools;
@@ -12,11 +13,12 @@ use tracing::trace;
 use tracing_subscriber::prelude::*;
 
 mod celeste_stats;
+mod dirs;
 mod domutils;
 mod durationutils;
+mod install;
 mod steam_app;
 mod stringutils;
-mod install;
 use home::home_dir;
 use once_cell::sync::Lazy;
 use tracing_unwrap::OptionExt;
@@ -25,6 +27,7 @@ mod daemon;
 use crate::celeste_stats::celeste_stats;
 use crate::daemon::*;
 
+use crate::dirs::LOG_DIR;
 use crate::steam_app::CELESTE;
 
 fn main() {
@@ -170,20 +173,6 @@ fn main() {
         }
     }
 }
-
-static DATA_DIR: Lazy<PathBuf> = Lazy::new(|| {
-    let mut path = home_dir().unwrap_or_log();
-    path.push(String::new() + "." + crate::NAME);
-    path
-});
-
-static BIN_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("bin"));
-
-static LOG_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("log"));
-
-static ETC_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("etc"));
-
-static GIT_DIR: Lazy<PathBuf> = Lazy::new(|| DATA_DIR.join("git"));
 
 pub fn git_repo() -> Repository {
     match Repository::open_bare(&*GIT_DIR) {
