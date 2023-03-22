@@ -16,6 +16,7 @@ mod domutils;
 mod durationutils;
 mod steam_app;
 mod stringutils;
+mod install;
 use home::home_dir;
 use once_cell::sync::Lazy;
 use tracing_unwrap::OptionExt;
@@ -49,59 +50,7 @@ fn main() {
 
     let argv = std::env::args().collect_vec();
     if &argv[1..] == &["install"] {
-        let own_binary = fs::read(&argv[0]).unwrap_or_log();
-
-        info!("Installing.");
-
-        let bin_path = BIN_DIR.join(NAME);
-        fs::create_dir_all(&*BIN_DIR).unwrap_or_log();
-        fs::write(&bin_path, &own_binary).unwrap_or_log();
-        let mut perms = fs::metadata(&bin_path).unwrap_or_log().permissions();
-        perms.set_mode(0o755);
-        fs::set_permissions(&bin_path, perms).unwrap_or_log();
-        let bin_path = bin_path.to_str().unwrap_or_log();
-
-        let icon_path = ETC_DIR.join(format!("icon.png"));
-        fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
-        fs::write(&icon_path, include_bytes!("../assets/icon.png")).unwrap_or_log();
-        let icon_path = icon_path.to_str().unwrap_or_log();
-
-        let banner_path = ETC_DIR.join(format!("banner.png"));
-        fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
-        fs::write(&banner_path, include_bytes!("../assets/banner.png")).unwrap_or_log();
-        let _banner_path = banner_path.to_str().unwrap_or_log();
-
-        let poster_path = ETC_DIR.join(format!("poster.png"));
-        fs::create_dir_all(&*ETC_DIR).unwrap_or_log();
-        fs::write(&poster_path, include_bytes!("../assets/poster.png")).unwrap_or_log();
-        let _poster_path = poster_path.to_str().unwrap_or_log();
-
-        let desktop_path = ETC_DIR.join(format!("{NAME}.desktop"));
-        fs::write(
-            &desktop_path,
-            format!(
-                "#!/usr/bin/env xdg-open
-[Desktop Entry]
-Type=Application
-Name=Celeste with Sync
-Comment=Play Celeste and sync saves to git
-Categories=Game
-Exec={bin_path}
-Icon={icon_path}
-"
-            ),
-        )
-        .unwrap_or_log();
-        let mut perms = fs::metadata(&desktop_path).unwrap_or_log().permissions();
-        perms.set_mode(0o755);
-        fs::set_permissions(&desktop_path, perms).unwrap_or_log();
-
-        info!("Attempting to install with xdg-desktop-menu.");
-        let mut cmd = std::process::Command::new("xdg-desktop-menu");
-        cmd.arg("install");
-        cmd.arg(&desktop_path);
-        cmd.status().unwrap_or_log();
-
+        crate::install::install();
         return;
     }
 
@@ -125,8 +74,14 @@ Icon={icon_path}
         cmd.env("GIT_DIR", &*GIT_DIR);
         cmd.status().unwrap_or_log();
     } else {
-        trace!("No origin remote found, not pushing");
+        trace!("No origin remote found, not pulling");
     }
+
+    // XXX: Celeste will use existing save files from the disk, if no save file exists in that
+    // slot in the cloud. If we want to prevent this, we can delete the existing save files
+    // before launching Celeste with Steam. If we wanted to be ambitious we could check Steam's
+    // local cache metadata (it's a vdf file somewhere) to find out what files already match
+    // this account's known cloud save.
 
     info!("Launching Celeste");
 

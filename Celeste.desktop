@@ -1,9 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Type=Application
-Name=Celeste with Sync
-GenericName=Celeste
-Comment=Play Celeste and sync saves to git
-Categories=Game
-Exec=/home/deck/.cargo/build/debug/celeste-saves
-Icon=steam_icon_504230
